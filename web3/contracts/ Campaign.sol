@@ -39,6 +39,8 @@ contract Campaign {
     error sendermustbeSameasCreator();
     error fundgoalnotmet();
     error campaignNotEndedYet();
+    error donationsNotFound();
+    error fundgoalmet();
 
     /////////////////////////         events      //////////////////////////////
 
@@ -55,8 +57,9 @@ contract Campaign {
         bool active
     );
 
-    event Donate(uint256 id, address donor, uint256 value);
+    event Donate(uint256 id, address donor, uint256 amount);
     event Withdraw(uint256 id, address creator, uint256 raised);
+    event Refund(uint256 id, address donor, uint256 amount);
 
     function createCampaign(
         string memory title,
@@ -129,7 +132,6 @@ contract Campaign {
             revert sendermustdifferentToCreator();
         }
 
-
         c.raised = c.raised + msg.value;
 
         contributions[_id][msg.sender] += msg.value;
@@ -139,35 +141,65 @@ contract Campaign {
 
     // Withdraw by campaign creator (only if goal is met)
     function withdrawFund(uint256 _id) public {
-         if (_id <= 0 || _id > CampaignCount) {
+        if (_id <= 0 || _id > CampaignCount) {
             revert campaignNotFound();
         }
 
         Campaigns storage c = campaigns[_id];
 
-        if(c.active==false){
+        if (c.active == false) {
             revert campaignIsNotActive();
         }
-        if(c.withdrawn==true){
+        if (c.withdrawn == true) {
             revert fundsalreadyWithdrawn();
         }
-        if(msg.sender!=c.creator){
+        if (msg.sender != c.creator) {
             revert sendermustbeSameasCreator();
         }
-        if(c.goal>c.raised){
+        if (c.goal > c.raised) {
             revert fundgoalnotmet();
         }
-        if(block.timestamp<c.deadline){
+        if (block.timestamp < c.deadline) {
             revert campaignNotEndedYet();
         }
 
         c.active = false;
         c.withdrawn = true;
 
-       (bool success, ) = payable(c.creator).call{value: c.raised}("");
-        require(success,"Transaction Failed");
+        (bool success, ) = payable(c.creator).call{value: c.raised}("");
+        require(success, "Transaction Failed");
 
         emit Withdraw(c.id, c.creator, c.raised);
+    }
+
+    // Refund to donors (only if goal NOT met after deadline)
+    function refund(uint256 _id) public {
+        if (_id <= 0 || _id > CampaignCount) {
+            revert campaignNotFound();
+        }
+        Campaigns storage c = campaigns[_id];
+
+        if (block.timestamp < c.deadline) {
+            revert campaignNotEndedYet();
+        }
+
+          if (c.goal < c.raised) {
+            revert fundgoalmet();
+        }
+
+        //check donation
+        uint256 amountToDonate = getcontributions(_id, msg.sender);
+        if (amountToDonate == 0) {
+            revert donationsNotFound();
+        }
+
+        // refund amount
+        (bool success, ) = payable(msg.sender).call{value: amountToDonate}("");
+        require(success, "Transaction Failed");
+
+        contributions[_id][msg.sender]=0;
+
+        emit Refund(_id, msg.sender, amountToDonate);
     }
 
     // use only for test
