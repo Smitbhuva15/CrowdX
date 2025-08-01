@@ -36,7 +36,7 @@ contract Campaign {
     error sendermustdifferentToCreator();
     error amoutMustbValid();
     error fundsalreadyWithdrawn();
-    error sendermustbeSametoCreator();
+    error sendermustbeSameasCreator();
     error fundgoalnotmet();
     error campaignNotEndedYet();
 
@@ -107,6 +107,8 @@ contract Campaign {
             revert campaignNotFound();
         }
 
+        Campaigns storage c = campaigns[_id];
+
         if (msg.value <= 0) {
             revert paymustBeGreaterThanZero();
         }
@@ -115,19 +117,18 @@ contract Campaign {
             revert sendermustBeValid();
         }
 
-        if (campaigns[_id].active == false) {
+        if (c.active == false) {
             revert campaignIsNotActive();
         }
 
-        if (block.timestamp > campaigns[_id].deadline) {
+        if (block.timestamp > c.deadline) {
             revert timeStampExceeded();
         }
 
-        if (msg.sender == campaigns[_id].creator) {
+        if (msg.sender == c.creator) {
             revert sendermustdifferentToCreator();
         }
 
-        Campaigns storage c = campaigns[_id];
 
         c.raised = c.raised + msg.value;
 
@@ -151,7 +152,7 @@ contract Campaign {
             revert fundsalreadyWithdrawn();
         }
         if(msg.sender!=c.creator){
-            revert sendermustbeSametoCreator();
+            revert sendermustbeSameasCreator();
         }
         if(c.goal>c.raised){
             revert fundgoalnotmet();
@@ -163,7 +164,8 @@ contract Campaign {
         c.active = false;
         c.withdrawn = true;
 
-        payable(c.creator).call{value: c.raised}("");
+       (bool success, ) = payable(c.creator).call{value: c.raised}("");
+        require(success,"Transaction Failed");
 
         emit Withdraw(c.id, c.creator, c.raised);
     }

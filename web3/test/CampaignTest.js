@@ -88,17 +88,6 @@ describe("Campaign", () => {
 
 
         describe("success", async () => {
-            let currentTimestamp, durationInSeconds, durationInDays;
-            beforeEach(async () => {
-
-                // Get current block timestamp
-                const blockNum = await ethers.provider.getBlockNumber();
-                const block = await ethers.provider.getBlock(blockNum);
-                currentTimestamp = block.timestamp;
-                durationInDays = 7;
-                durationInSeconds = durationInDays * 24 * 60 * 60;
-
-            })
 
             it("donate ETH", async () => {
                 const donationAmount = await ethers.utils.parseEther("1.0");
@@ -163,6 +152,91 @@ describe("Campaign", () => {
 
             it("handel sender failure", async () => {
                 await expect(campaign.connect(deployer).donate(1, { value: donationAmount })).to.be.reverted;
+            })
+        })
+
+
+    })
+
+
+    describe("withdrawCampaign", () => {
+
+
+        describe("success", async () => {
+
+            beforeEach(async () => {
+
+                const donationAmount = await ethers.utils.parseEther("2.0");
+                await campaign.connect(signer).donate(1, { value: donationAmount });
+
+            })
+
+            it("withdraw ETH", async () => {
+
+                // Fast forward time by 7 days
+                await network.provider.send("evm_increaseTime", [7 * 24 * 60 * 60]);
+                await network.provider.send("evm_mine");
+
+                transaction = await campaign.connect(deployer).withdrawFund(1);
+                result = await transaction.wait();
+            })
+
+            it("emit Withdraw event", async () => {
+                // Fast forward time by 7 days
+                await network.provider.send("evm_increaseTime", [7 * 24 * 60 * 60]);
+                await network.provider.send("evm_mine");
+
+                transaction = await campaign.connect(deployer).withdrawFund(1);
+                result = await transaction.wait();
+
+                const campaignData = await campaign.campaigns(1);
+                const event = result.events[0];
+                const args = event.args;
+                expect(event.event).to.be.equal('Withdraw');
+                expect(args.id).to.be.equal(1);
+                expect(args.creator).to.be.equal(deployer.address);
+                expect(args.raised).to.be.equal(campaignData.raised);
+
+            })
+
+        })
+
+        describe("failure", () => {
+            it("handel id failure", async () => {
+                await expect(campaign.connect(deployer).withdrawFund(2)).to.be.reverted;
+            })
+
+            it("handel campaign active failure", async () => {
+                //donate 2 ETH
+                const donationAmount = await ethers.utils.parseEther("2.0");
+                await campaign.connect(signer).donate(1, { value: donationAmount });
+
+                // Fast forward time by 7 days
+                await network.provider.send("evm_increaseTime", [7 * 24 * 60 * 60]);
+                await network.provider.send("evm_mine");
+
+                //first time withdraw
+                transaction = await campaign.connect(deployer).withdrawFund(1);
+                result = await transaction.wait();
+
+                // second time withdraw
+                await expect(campaign.connect(deployer).withdrawFund(1)).to.be.reverted;
+            })
+
+             it("handel creator failure", async () => {
+                await expect(campaign.connect(signer).withdrawFund(1)).to.be.reverted;
+            })
+
+              it("handel goal not met failure", async () => {
+                await expect(campaign.connect(deployer).withdrawFund(1)).to.be.reverted;
+            })
+
+            it("handel campaign Not Ended failure", async () => {
+                //donate 2 ETH
+                 const donationAmount = await ethers.utils.parseEther("2.0");
+                await campaign.connect(signer).donate(1, { value: donationAmount });
+
+                await expect(campaign.connect(deployer).withdrawFund(1)).to.be.reverted;
             })
         })
 
