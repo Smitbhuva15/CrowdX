@@ -9,7 +9,7 @@ import "hardhat/console.sol";
  * @dev A crowdfunding contract that allows users to create campaigns, donate ETH, withdraw funds if the goal is met, or refund donors if the campaign fails.
  */
 contract Campaign {
-    
+
     uint256 CampaignCount = 0;
 
     /**
