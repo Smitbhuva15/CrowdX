@@ -109,7 +109,7 @@ describe("Campaign", () => {
                 expect(event.event).to.be.equal('Donate');
                 expect(args.id).to.be.equal(1);
                 expect(args.donor).to.be.equal(signer.address);
-                expect(args.value).to.be.equal(ethers.utils.parseEther('1'));
+                expect(args.amount).to.be.equal(ethers.utils.parseEther('1'));
 
             })
         })
@@ -223,17 +223,17 @@ describe("Campaign", () => {
                 await expect(campaign.connect(deployer).withdrawFund(1)).to.be.reverted;
             })
 
-             it("handel creator failure", async () => {
+            it("handel creator failure", async () => {
                 await expect(campaign.connect(signer).withdrawFund(1)).to.be.reverted;
             })
 
-              it("handel goal not met failure", async () => {
+            it("handel goal not met failure", async () => {
                 await expect(campaign.connect(deployer).withdrawFund(1)).to.be.reverted;
             })
 
             it("handel campaign Not Ended failure", async () => {
                 //donate 2 ETH
-                 const donationAmount = await ethers.utils.parseEther("2.0");
+                const donationAmount = await ethers.utils.parseEther("2.0");
                 await campaign.connect(signer).donate(1, { value: donationAmount });
 
                 await expect(campaign.connect(deployer).withdrawFund(1)).to.be.reverted;
@@ -243,5 +243,81 @@ describe("Campaign", () => {
 
     })
 
+
+    describe("Refund Donation", () => {
+
+
+        describe("success", async () => {
+
+            beforeEach(async () => {
+
+                const donationAmount = await ethers.utils.parseEther("1.0");
+                await campaign.connect(signer).donate(1, { value: donationAmount });
+
+                // Fast forward time by 7 days
+                await network.provider.send("evm_increaseTime", [7 * 24 * 60 * 60]);
+                await network.provider.send("evm_mine");
+
+            })
+
+            it("Refund ETH", async () => {
+
+                await campaign.connect(signer).refund(1);
+
+                const amountToDonation = await campaign.getcontributions(1, signer.address);
+
+                expect(amountToDonation).to.be.equal(0);
+            })
+
+            it("emit Refund event", async () => {
+
+                const amountToDonation = await campaign.getcontributions(1, signer.address);
+
+                transaction = await campaign.connect(signer).refund(1);;
+                result = await transaction.wait();
+
+                const event = result.events[0];
+                const args = event.args;
+                expect(event.event).to.be.equal('Refund');
+                expect(args.id).to.be.equal(1);
+                expect(args.donor).to.be.equal(signer.address);
+                expect(args.amount).to.be.equal(amountToDonation);
+
+            })
+
+        })
+
+        describe("failure", () => {
+            it("handel id failure", async () => {
+                await expect(campaign.connect(signer).refund(2)).to.be.reverted;
+            })
+
+            it("handel deadline failure", async () => {
+                await expect(campaign.connect(signer).refund(1)).to.be.reverted;
+            })
+
+            it("handel goal failure", async () => {
+
+                const donationAmount = await ethers.utils.parseEther("3.0");
+                await campaign.connect(signer).donate(1, { value: donationAmount });
+
+                // Fast forward time by 7 days
+                await network.provider.send("evm_increaseTime", [7 * 24 * 60 * 60]);
+                await network.provider.send("evm_mine");
+
+                await expect(campaign.connect(signer).refund(1)).to.be.reverted;
+            })
+
+            it("handel donation zero", async () => {
+                // Fast forward time by 7 days
+                await network.provider.send("evm_increaseTime", [7 * 24 * 60 * 60]);
+                await network.provider.send("evm_mine");
+                await expect(campaign.connect(receiver).refund(1)).to.be.reverted;
+            })
+
+        })
+
+
+    })
 
 })
