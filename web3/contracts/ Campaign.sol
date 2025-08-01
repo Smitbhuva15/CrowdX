@@ -35,6 +35,10 @@ contract Campaign {
     error timeStampExceeded();
     error sendermustdifferentToCreator();
     error amoutMustbValid();
+    error fundsalreadyWithdrawn();
+    error sendermustbeSametoCreator();
+    error fundgoalnotmet();
+    error campaignNotEndedYet();
 
     /////////////////////////         events      //////////////////////////////
 
@@ -52,6 +56,7 @@ contract Campaign {
     );
 
     event Donate(uint256 id, address donor, uint256 value);
+    event Withdraw(uint256 id, address creator, uint256 raised);
 
     function createCampaign(
         string memory title,
@@ -131,6 +136,39 @@ contract Campaign {
         emit Donate(c.id, msg.sender, msg.value);
     }
 
+    // Withdraw by campaign creator (only if goal is met)
+    function withdrawFund(uint256 _id) public {
+         if (_id <= 0 || _id > CampaignCount) {
+            revert campaignNotFound();
+        }
+
+        Campaigns storage c = campaigns[_id];
+
+        if(c.active==false){
+            revert campaignIsNotActive();
+        }
+        if(c.withdrawn==true){
+            revert fundsalreadyWithdrawn();
+        }
+        if(msg.sender!=c.creator){
+            revert sendermustbeSametoCreator();
+        }
+        if(c.goal>c.raised){
+            revert fundgoalnotmet();
+        }
+        if(block.timestamp<c.deadline){
+            revert campaignNotEndedYet();
+        }
+
+        c.active = false;
+        c.withdrawn = true;
+
+        payable(c.creator).call{value: c.raised}("");
+
+        emit Withdraw(c.id, c.creator, c.raised);
+    }
+
+    // use only for test
     function deactivateCampaign(uint256 _id) public {
         campaigns[_id].active = false;
     }
