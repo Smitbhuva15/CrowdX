@@ -28,11 +28,13 @@ contract Campaign {
 
     error goalmustBeGreaterThanZero();
     error durationmustBeGreaterThanZero();
-    error  CampaignNotFound();
+    error campaignNotFound();
     error paymustBeGreaterThanZero();
     error sendermustBeValid();
     error campaignIsNotActive();
     error timeStampExceeded();
+    error sendermustdifferentToCreator();
+    error amoutMustbValid();
 
     /////////////////////////         events      //////////////////////////////
 
@@ -96,32 +98,47 @@ contract Campaign {
 
     // Donate ETH to a campaign
     function donate(uint256 _id) public payable {
-         
-         if(_id<=0 && _id>CampaignCount){
-            revert CampaignNotFound(); 
-         }
+        if (_id <= 0 || _id > CampaignCount) {
+            revert campaignNotFound();
+        }
 
-         if(msg.value<=0){
+        if (msg.value <= 0) {
             revert paymustBeGreaterThanZero();
-         }
+        }
 
-         if(msg.sender == address(0)){
+        if (msg.sender == address(0)) {
             revert sendermustBeValid();
-         }
+        }
 
-         if(campaigns[_id].active == false){
+        if (campaigns[_id].active == false) {
             revert campaignIsNotActive();
-         }
+        }
 
-         if(block.timestamp > campaigns[_id].deadline){
+        if (block.timestamp > campaigns[_id].deadline) {
             revert timeStampExceeded();
-         }
+        }
+
+        if (msg.sender == campaigns[_id].creator) {
+            revert sendermustdifferentToCreator();
+        }
 
         Campaigns storage c = campaigns[_id];
 
         c.raised = c.raised + msg.value;
+
         contributions[_id][msg.sender] += msg.value;
 
         emit Donate(c.id, msg.sender, msg.value);
+    }
+
+    function deactivateCampaign(uint256 _id) public {
+        campaigns[_id].active = false;
+    }
+
+    function getcontributions(
+        uint256 _id,
+        address user
+    ) public view returns (uint256) {
+        return contributions[_id][user];
     }
 }
