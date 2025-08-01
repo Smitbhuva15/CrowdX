@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
-
+import '../utils/errors.sol';
 import "hardhat/console.sol";
+import '../utils/events.sol';
 
 /**
  * @title Campaign
@@ -36,42 +37,8 @@ contract Campaign {
     // Maps campaign ID => donor address => contribution amount
     mapping(uint256 => mapping(address => uint256)) public contributions;
 
-    ////////////////////////// ERRORS ///////////////////////////////
+   
 
-    error goalmustBeGreaterThanZero();
-    error durationmustBeGreaterThanZero();
-    error campaignNotFound();
-    error paymustBeGreaterThanZero();
-    error sendermustBeValid();
-    error campaignIsNotActive();
-    error timeStampExceeded();
-    error sendermustdifferentToCreator();
-    error amoutMustbValid();
-    error fundsalreadyWithdrawn();
-    error sendermustbeSameasCreator();
-    error fundgoalnotmet();
-    error campaignNotEndedYet();
-    error donationsNotFound();
-    error fundgoalmet();
-
-    ////////////////////////// EVENTS ///////////////////////////////
-
-    event CampaignCreated(
-        uint256 id,
-        address creator,
-        string title,
-        string description,
-        string imageUrl,
-        uint256 goal,
-        uint256 raised,
-        uint256 deadline,
-        bool withdrawn,
-        bool active
-    );
-
-    event Donate(uint256 id, address donor, uint256 amount);
-    event Withdraw(uint256 id, address creator, uint256 raised);
-    event Refund(uint256 id, address donor, uint256 amount);
 
     /////////////////////// CREATE CAMPAIGN /////////////////////////
 
@@ -91,10 +58,10 @@ contract Campaign {
         uint256 durationinDay
     ) public {
         if (goal <= 0) {
-            revert goalmustBeGreaterThanZero();
+            revert GoalMustBeGreaterThanZero();
         }
         if (durationinDay <= 0) {
-            revert durationmustBeGreaterThanZero();
+            revert DurationMustBeGreaterThanZero();
         }
 
         CampaignCount++;
@@ -135,29 +102,29 @@ contract Campaign {
      */
     function donate(uint256 _id) public payable {
         if (_id <= 0 || _id > CampaignCount) {
-            revert campaignNotFound();
+            revert CampaignNotFound();
         }
 
         Campaigns storage c = campaigns[_id];
 
         if (msg.value <= 0) {
-            revert paymustBeGreaterThanZero();
+            revert PayMustBeGreaterThanZero();
         }
 
         if (msg.sender == address(0)) {
-            revert sendermustBeValid();
+            revert SenderMustBeValid();
         }
 
         if (c.active == false) {
-            revert campaignIsNotActive();
+            revert CampaignIsNotActive();
         }
 
         if (block.timestamp > c.deadline) {
-            revert timeStampExceeded();
+            revert TimeStampExceeded();
         }
 
         if (msg.sender == c.creator) {
-            revert sendermustdifferentToCreator();
+            revert SenderMustDifferentToCreator();
         }
 
         // Update raised amount
@@ -177,29 +144,29 @@ contract Campaign {
      */
     function withdrawFund(uint256 _id) public {
         if (_id <= 0 || _id > CampaignCount) {
-            revert campaignNotFound();
+            revert CampaignNotFound();
         }
 
         Campaigns storage c = campaigns[_id];
 
         if (c.active == false) {
-            revert campaignIsNotActive();
+            revert CampaignIsNotActive();
         }
 
         if (c.withdrawn == true) {
-            revert fundsalreadyWithdrawn();
+            revert FundsAlreadyWithdrawn();
         }
 
         if (msg.sender != c.creator) {
-            revert sendermustbeSameasCreator();
+            revert SenderMustBeSameAsCreator();
         }
 
         if (c.goal > c.raised) {
-            revert fundgoalnotmet();
+            revert FundGoalNotMet();
         }
 
         if (block.timestamp < c.deadline) {
-            revert campaignNotEndedYet();
+            revert CampaignNotEndedYet();
         }
 
         c.active = false;
@@ -220,22 +187,22 @@ contract Campaign {
      */
     function refund(uint256 _id) public {
         if (_id <= 0 || _id > CampaignCount) {
-            revert campaignNotFound();
+            revert CampaignNotFound();
         }
 
         Campaigns storage c = campaigns[_id];
 
         if (block.timestamp < c.deadline) {
-            revert campaignNotEndedYet();
+            revert CampaignNotEndedYet();
         }
 
         if (c.goal < c.raised) {
-            revert fundgoalmet();
+            revert FundGoalMet();
         }
 
         uint256 amountToRefund = getcontributions(_id, msg.sender);
         if (amountToRefund == 0) {
-            revert donationsNotFound();
+            revert DonationsNotFound();
         }
 
         // Refund the donor
