@@ -1,16 +1,28 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { createThirdwebClient } from "thirdweb";
-import { ConnectButton } from "thirdweb/react";
+import { ConnectButton, useActiveAccount } from "thirdweb/react";
 import { createWallet } from "thirdweb/wallets";
 import { sepolia } from "thirdweb/chains";
 import { Search, TextSearch } from 'lucide-react';
+import { LoadallData } from "@/lib/LoadData";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 const client = createThirdwebClient({
   clientId: process.env.NEXT_PUBLIC_CLIENT_ID,
 });
 
 const Navbar = () => {
+  const dipatch=useDispatch();
+  const chainId=useSelector((state)=>state?.champaign?.chainId)
+
+  const account=useActiveAccount();
+ 
+  useEffect(()=>{
+   LoadallData(dipatch);
+  },[account])
+
   return (
  <div className="mt-8 text-white px-4 w-full">
 

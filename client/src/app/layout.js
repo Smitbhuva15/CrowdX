@@ -27,9 +27,8 @@ export default function RootLayout({ children }) {
 
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased w-[92%] mx-auto`}   >
         < ThirdWebprovider>
-         <Navbar />
-
           <ReduxProvider>
+            <Navbar />
             {children}
           </ReduxProvider>
         </ThirdWebprovider>
