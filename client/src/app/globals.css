@@ -1,7 +1,15 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-
+@theme {
+  --breakpoint-xs:425px;
+  --breakpoint-sm: 640px;
+  --breakpoint-md:820px;
+  --breakpoint-lg:1024px;
+  --breakpoint-xl:1280px;
+  --breakpoint-2xl: 1536px;
+  --breakpoint-3xl: 120rem;
+}
 
 * {
   background-color: #0a0a0a;

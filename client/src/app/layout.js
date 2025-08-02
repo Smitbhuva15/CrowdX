@@ -1,10 +1,12 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+
 import { ReduxProvider } from "../provider/ReduxProvider";
 import { ThirdWebprovider } from "@/provider/ThirdWebprovider";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+
 import Navbar from "@/components/Navbar/Navbar";
-
-
+import { SideBar } from "@/components/Sidebar/SideBar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,16 +25,30 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased w-[92%] mx-auto`}   >
-        < ThirdWebprovider>
+   <html lang="en">
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased w-full min-h-screen`}>
+        <ThirdWebprovider>
           <ReduxProvider>
-            <Navbar />
-            {children}
+            <SidebarProvider >
+              <div className="flex min-h-screen w-full bg-black text-white">
+                {/* Sidebar with trigger inside */}
+                <div className="flex flex-col items-center bg-[#0a0a0a]">
+                  <SideBar />
+                </div>
+                  <SidebarTrigger />
+
+                {/* Main content */}
+                <div className="flex-1 flex flex-col px-6 py-4">
+                  <Navbar />
+                  <main className="mt-4">{children}</main>
+                </div>
+              </div>
+            </SidebarProvider>
           </ReduxProvider>
         </ThirdWebprovider>
       </body>
     </html>
   );
 }
+
+

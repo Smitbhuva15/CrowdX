@@ -5,4 +5,8 @@ export const store = configureStore({
   reducer: {
      campaign: campaignReducer
   },
+    middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false, 
+    }),
 })
