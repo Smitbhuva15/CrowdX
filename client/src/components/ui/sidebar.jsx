@@ -236,13 +236,12 @@ function SidebarTrigger({
       variant="ghost"
       size="icon"
       // className={cn("size-7", className)}
-     
       onClick={(event) => {
         onClick?.(event)
         toggleSidebar()
       }}
       {...props}>
-        <div >
+      <div >
          <PanelRightClose className="size-7  mt-4 ml-4 text-[#8b5cf6]"/>
         </div>
       <span className="sr-only">Toggle Sidebar</span>

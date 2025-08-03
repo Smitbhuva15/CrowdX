@@ -38,7 +38,7 @@ export default function RootLayout({ children }) {
                   <SidebarTrigger />
 
                 {/* Main content */}
-                <div className="flex-1 flex flex-col px-6 py-4">
+                <div className="flex-1 flex flex-col pr-7 py-4">
                   <Navbar />
                   <main className="mt-4">{children}</main>
                 </div>

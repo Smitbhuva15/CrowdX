@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+
 @theme {
   --breakpoint-xs:425px;
   --breakpoint-sm: 640px;
@@ -11,13 +12,14 @@
   --breakpoint-3xl: 120rem;
 }
 
-* {
+/* * {
   background-color: #0a0a0a;
- 
-}
+
+} */
 
 .title {
   font-family: 'Orbitron', sans-serif;
   font-size: 35px;
   letter-spacing: 1px;
 }
+
