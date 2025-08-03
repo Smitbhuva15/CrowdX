@@ -1,67 +1,99 @@
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react"
+"use client";
+
+import {
+  Home,
+  PlusCircle,
+  Search,
+  Megaphone,
+  Banknote,
+  HandCoins,
+  Info,
+} from "lucide-react";
 
 import {
   Sidebar,
   SidebarContent,
   SidebarGroup,
-  SidebarGroupContent,
   SidebarGroupLabel,
+  SidebarGroupContent,
   SidebarMenu,
-  SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar"
+  SidebarMenuButton,
+} from "@/components/ui/sidebar"; // Update path based on your project
 
-// Menu items.
 const items = [
   {
     title: "Home",
-    url: "#",
+    url: "/",
     icon: Home,
   },
   {
-    title: "Inbox",
-    url: "#",
-    icon: Inbox,
+    title: "Create Campaign",
+    url: "/CreatCampaign",
+    icon: PlusCircle,
+  },
+ 
+  {
+    title: "Launchpad",
+    url: "/lanchpad",
+    icon: Megaphone,
   },
   {
-    title: "Calendar",
-    url: "#",
-    icon: Calendar,
+    title: "Withdraw Funds",
+    url: "/withdraw",
+    icon: Banknote,
   },
   {
+    title: "Claim Refund",
+    url: "/refund",
+    icon: HandCoins,
+  },
+   {
     title: "Search",
-    url: "#",
+    url: "/search",
     icon: Search,
   },
   {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
+    title: "More Info",
+    url: "/info",
+    icon: Info,
   },
-]
+];
 
 export function SideBar() {
   return (
     <Sidebar>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-3xl font-extrabold mb-5 mt-2 text-[#8b5cf6]">
+            Crowd<span className="text-white font-extrabold text-5xl">X</span>
+          </SidebarGroupLabel>
+
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <a href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              {items.map((item) => {
+                const Icon = item.icon;
+
+                return (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton asChild>
+                      <a
+                        href={item.url}
+                        className="flex items-center gap-3 px-2 py-2 rounded hover:bg-[#1a1a1a] transition-all"
+                      >
+                        <Icon className="w-5 h-5 text-[#8b5cf6]" />
+                        <span className="text-[#8b5cf6] font-medium">
+                          {item.title}
+                        </span>
+                      </a>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                );
+              })}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
     </Sidebar>
-  )
+  );
 }

@@ -243,7 +243,7 @@ function SidebarTrigger({
       }}
       {...props}>
         <div >
-         <PanelRightClose className="size-7  mt-4 ml-4"/>
+         <PanelRightClose className="size-7  mt-4 ml-4 text-[#8b5cf6]"/>
         </div>
       <span className="sr-only">Toggle Sidebar</span>
     </Button>

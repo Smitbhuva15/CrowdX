@@ -25,7 +25,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-   <html lang="en">
+  <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased w-full min-h-screen`}>
         <ThirdWebprovider>
           <ReduxProvider>
@@ -47,7 +47,8 @@ export default function RootLayout({ children }) {
           </ReduxProvider>
         </ThirdWebprovider>
       </body>
-    </html>
+    </html>    
+
   );
 }
 
