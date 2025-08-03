@@ -2,10 +2,13 @@
 import { useForm } from 'react-hook-form';
 import { Banner } from '@/components/Banner/Banner'
 import React from 'react'
-
+import { useActiveAccount } from 'thirdweb/react';
+import { TriangleAlert } from 'lucide-react';
 
 
 const page = () => {
+
+  const account = useActiveAccount();
 
   const {
     register,
@@ -73,7 +76,7 @@ const page = () => {
           <input
             type="file"
             {...register("file", { required: "Campaign image is required" })}
-             accept=".jpg, .jpeg, .png"
+            accept=".jpg, .jpeg, .png"
             className="w-full text-white file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-[#8b5cf6] file:text-white hover:file:bg-[#7c3aed]"
           />
           {errors.file && (
@@ -89,12 +92,13 @@ const page = () => {
             step="0.01"
             placeholder="e.g. 100"
             {...register("amount",
-               { required: "Campaign target amount required", 
-                min:{
-                  value:0.01,
-                  message:"Target amount must be greater than 0.01 ETH"
+              {
+                required: "Campaign target amount required",
+                min: {
+                  value: 0.01,
+                  message: "Target amount must be greater than 0.01 ETH"
                 }
-               })}
+              })}
             className="w-full px-4 py-2 rounded-md border border-gray-300 text-white focus:outline-none focus:ring-2 focus:ring-[#8b5cf6]"
           />
           {errors.amount && (
@@ -123,14 +127,27 @@ const page = () => {
         </div>
 
         {/* Submit Button */}
-        <div className="text-center pt-4">
+        {account ? (<div className="text-center pt-4">
           <button
             type="submit"
             className="bg-[#8b5cf6] hover:bg-[#7c3aed] text-white font-semibold py-3 px-6 rounded-lg shadow-md transition-all duration-300 w-full "
           >
             Create Campaign
           </button>
-        </div>
+        </div>) : (<div className="text-center pt-4">
+          <button
+            disabled
+            className="bg-[#8b5cf6] hover:bg-[#7c3aed] text-white font-semibold py-3 px-6 rounded-lg shadow-md transition-all duration-300 w-full "
+          >
+            Connect Wallet
+          </button>
+          <div className="mt-4 flex items-start gap-2 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded-md">
+            <TriangleAlert className="mt-0.5 w-5 h-5 text-yellow-600" />
+            <p className="text-sm font-medium">
+              Please connect your wallet first to create a campaign.
+            </p>
+          </div>
+        </div>)}
       </form>
     </div>
   )
