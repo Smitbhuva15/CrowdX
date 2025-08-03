@@ -1,25 +1,78 @@
 "use client"
 import { useForm } from 'react-hook-form';
 import { Banner } from '@/components/Banner/Banner'
-import React from 'react'
+import React, { useState } from 'react'
 import { useActiveAccount } from 'thirdweb/react';
-import { TriangleAlert } from 'lucide-react';
+import { Loader2, TriangleAlert } from 'lucide-react';
+import { ThirdwebStorage } from "@thirdweb-dev/storage";
+import { useSelector } from 'react-redux';
+import { ethers } from 'ethers';
+import toast, { Toaster } from 'react-hot-toast';
 
 
 const page = () => {
 
   const account = useActiveAccount();
 
+  const [loading, setLoading] = useState(false);
+  const storage = new ThirdwebStorage({ clientId: process.env.NEXT_PUBLIC_CLIENT_ID });
+
+  const campaignContract = useSelector((state) => state?.campaign?.champaignContract)
+  const provider = useSelector((state) => state?.campaign?.provider)
+
+  // use form submit form
   const {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
   } = useForm()
 
-  const onSubmit = (data) => {
-    console.log(data)
+  const onSubmit = async (data) => {
+
+    // store full metadata
+
+    // const metadata = {
+    //   name: data.name,
+    //   description: data.description,
+    //   image: data?.file[0],
+    // };
+
+    // const cid = await storage.upload(metadata);
+    setLoading(true)
+    const signer = await provider.getSigner();
+    toast('Campaign Creation pending...', {
+      icon: '⏳',
+    });
+    const cid = await storage.upload(data?.file[0]);
+    const ipfsUrl = storage.resolveScheme(cid);
+
+    const goal = ethers.utils.parseEther(data?.amount.toString());
+    const transaction = await campaignContract.connect(signer).createCampaign(data?.name, data?.description, ipfsUrl, goal, data?.duration);
+    const recipt = await transaction.wait();
+    console.log(recipt);
+    if (recipt.status !== 1) {
+      toast.error(" Campaign Creation failed!")
+      setLoading(false)
+      return;
+    }
+    else if (recipt.status === 1) {
+      const event = recipt.events?.find(e => e.event === "CampaignCreated");
+      if (event) {
+        toast.success(`Campaign Creation successfully!`);
+        setLoading(false)
+
+      }
+      else {
+        toast.error("Campaign Creation failed!");
+        setLoading(false)
+
+      }
+    }
+    reset();
   }
+
 
   return (
     <div className="w-full max-w-3xl mx-auto px-4 py-8 ">
@@ -76,7 +129,7 @@ const page = () => {
           <input
             type="file"
             {...register("file", { required: "Campaign image is required" })}
-            accept=".jpg, .jpeg, .png"
+            accept=".jpg, .jpeg, .png, .jfif"
             className="w-full text-white file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-[#8b5cf6] file:text-white hover:file:bg-[#7c3aed]"
           />
           {errors.file && (
@@ -116,7 +169,7 @@ const page = () => {
             id="duration"
             name="duration"
             min={1}
-            max={30}
+            max={150}
             {...register("duration", { required: "Campaign duration is required" })}
             placeholder="e.g. 30"
             className="w-full px-4 py-2 rounded-md border text-white border-gray-300  focus:outline-none focus:ring-2 focus:ring-[#8b5cf6]"
@@ -132,7 +185,16 @@ const page = () => {
             type="submit"
             className="bg-[#8b5cf6] hover:bg-[#7c3aed] text-white font-semibold py-3 px-6 rounded-lg shadow-md transition-all duration-300 w-full "
           >
-            Create Campaign
+            {
+              loading ? (
+                <div className="flex items-center justify-center gap-2 text-white ">
+                  <Loader2 className="animate-spin " />
+                  <span >Pending...</span>
+                </div>
+              ) : (
+                <div >Create Campaign</div>
+              )
+            }
           </button>
         </div>) : (<div className="text-center pt-4">
           <button
@@ -149,6 +211,10 @@ const page = () => {
           </div>
         </div>)}
       </form>
+      <Toaster
+        position="bottom-right"
+        reverseOrder={false}
+      />
     </div>
   )
 }
