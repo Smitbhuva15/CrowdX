@@ -8,6 +8,7 @@ import { ThirdwebStorage } from "@thirdweb-dev/storage";
 import { useSelector } from 'react-redux';
 import { ethers } from 'ethers';
 import toast, { Toaster } from 'react-hot-toast';
+import Banner2 from '@/components/Banner/Banner2';
 
 
 const page = () => {
@@ -51,7 +52,7 @@ const page = () => {
     const goal = ethers.utils.parseEther(data?.amount.toString());
     const transaction = await campaignContract.connect(signer).createCampaign(data?.name, data?.description, ipfsUrl, goal, data?.duration);
     const recipt = await transaction.wait();
-    console.log(recipt);
+    
     if (recipt.status !== 1) {
       toast.error(" Campaign Creation failed!")
       setLoading(false)
@@ -75,7 +76,9 @@ const page = () => {
 
 
   return (
-    <div className="w-full max-w-3xl mx-auto px-4 py-8 ">
+    
+      account?(
+         <div className="w-full max-w-3xl mx-auto px-4 py-8 ">
       <div className="mb-8">
         <Banner title="Create a New Campaign" />
       </div>
@@ -216,6 +219,13 @@ const page = () => {
         reverseOrder={false}
       />
     </div>
+      ):(
+        <div>
+            <Banner2 title={'Connect Your Wallet to Continue'} model={'You must connect your wallet to launch a new campaign.'}/>
+        </div>
+      )
+    
+   
   )
 }
 
