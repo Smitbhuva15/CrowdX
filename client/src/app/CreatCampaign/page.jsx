@@ -1,32 +1,51 @@
+"use client"
+import { useForm } from 'react-hook-form';
 import { Banner } from '@/components/Banner/Banner'
 import React from 'react'
 
+
+
 const page = () => {
+
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm()
-  
 
-  
+  const onSubmit = (data) => {
+    console.log(data)
+  }
+
   return (
     <div className="w-full max-w-3xl mx-auto px-4 py-8 ">
       <div className="mb-8">
         <Banner title="Create a New Campaign" />
       </div>
 
-      <form className="space-y-6 bg-[#0a0a0a] p-6 rounded-2xl  border border-[#1f1f1f] shadow-[#9674e6] shadow-lg">
+      <form className="space-y-6 bg-[#0a0a0a] p-6 rounded-2xl  border border-[#1f1f1f] shadow-[#9674e6] shadow-lg" onSubmit={handleSubmit(onSubmit)}>
         {/* Campaign Name */}
+
         <div>
           <label className="block text-sm font-semibold text-white mb-1">Campaign Name</label>
           <input
             type="text"
             placeholder="e.g. Education for All"
+            {...register("name", {
+              required: "Campaign name is required",
+              minLength: {
+                value: 15,
+                message: "Minimum length is 15 characters",
+              },
+            })}
             className="w-full px-4 py-2 rounded-md border border-gray-300 text-white focus:outline-none focus:ring-2 focus:ring-[#8b5cf6]"
           />
+          {errors.name && (
+            <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
+          )}
         </div>
+
 
         {/* Campaign Description */}
         <div>
@@ -34,8 +53,18 @@ const page = () => {
           <textarea
             id="description"
             placeholder="Describe the purpose of the campaign..."
+            {...register("description", {
+              required: "Campaign description is required",
+              minLength: {
+                value: 30,
+                message: "Minimum length is 30 characters",
+              },
+            })}
             className="w-full px-4 py-2 rounded-md border border-gray-300 text-white h-32 resize-none focus:outline-none focus:ring-2 focus:ring-[#8b5cf6]"
           ></textarea>
+          {errors.description && (
+            <p className="text-red-500 text-sm mt-1">{errors.description.message}</p>
+          )}
         </div>
 
         {/* Campaign Image */}
@@ -43,8 +72,13 @@ const page = () => {
           <label className="block text-sm font-semibold text-white mb-1">Campaign Image</label>
           <input
             type="file"
+            {...register("file", { required: "Campaign image is required" })}
+             accept=".jpg, .jpeg, .png"
             className="w-full text-white file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-[#8b5cf6] file:text-white hover:file:bg-[#7c3aed]"
           />
+          {errors.file && (
+            <p className="text-red-500 text-sm mt-1">{errors.file.message}</p>
+          )}
         </div>
 
         {/* Target Amount */}
@@ -52,9 +86,20 @@ const page = () => {
           <label className="block text-sm font-semibold text-white mb-1">Target Amount (in ETH)</label>
           <input
             type="number"
+            step="0.01"
             placeholder="e.g. 100"
+            {...register("amount",
+               { required: "Campaign target amount required", 
+                min:{
+                  value:0.01,
+                  message:"Target amount must be greater than 0.01 ETH"
+                }
+               })}
             className="w-full px-4 py-2 rounded-md border border-gray-300 text-white focus:outline-none focus:ring-2 focus:ring-[#8b5cf6]"
           />
+          {errors.amount && (
+            <p className="text-red-500 text-sm mt-1">{errors.amount.message}</p>
+          )}
         </div>
 
         {/* Duration */}
@@ -67,9 +112,14 @@ const page = () => {
             id="duration"
             name="duration"
             min={1}
+            max={30}
+            {...register("duration", { required: "Campaign duration is required" })}
             placeholder="e.g. 30"
             className="w-full px-4 py-2 rounded-md border text-white border-gray-300  focus:outline-none focus:ring-2 focus:ring-[#8b5cf6]"
           />
+          {errors.duration && (
+            <p className="text-red-500 text-sm mt-1">{errors.duration.message}</p>
+          )}
         </div>
 
         {/* Submit Button */}
@@ -83,7 +133,7 @@ const page = () => {
         </div>
       </form>
     </div>
-    )
+  )
 }
 
 export default page
