@@ -7,6 +7,7 @@ import { sepolia } from "thirdweb/chains";
 import { Search, TextSearch } from 'lucide-react';
 import { LoadallData } from "@/lib/LoadData";
 import { useDispatch } from "react-redux";
+import Link from "next/link";
 
 
 
@@ -31,7 +32,7 @@ const Navbar = () => {
 
       <div className="flex justify-between items-center w-full flex-wrap gap-4">
       
-        <h2 className="font-extrabold xs:text-3xl whitespace-nowrap text-xl text-[#8b5cf6]">Crowd<span className="xs:text-5xl text-3xl text-white ">X</span> </h2>
+       <Link href={'/'}> <h2 className="font-extrabold xs:text-3xl whitespace-nowrap text-xl text-[#8b5cf6]">Crowd<span className="xs:text-5xl text-3xl text-white ">X</span> </h2></Link>
 
        
         <div className="hidden md:block w-full  lg:max-w-md max-w-sm">

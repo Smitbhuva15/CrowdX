@@ -2,9 +2,9 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   provider:{},
-  champaignContract:{},
+  campaignContract:{},
   chainId:{},
-  Allchampaigns:[]
+  Allcampaigns:[]
 }
 
 export const CampaignSlice = createSlice({
@@ -15,13 +15,13 @@ export const CampaignSlice = createSlice({
     state.provider=action.payload;
    },
    getcontract(state,action){
-    state.champaignContract=action.payload;
+    state.campaignContract=action.payload;
    },
    getchainId(state,action){
     state.chainId=action.payload;
    },
    getCampaignEvents(state,action){
-     state.Allchampaigns=action.payload
+     state.Allcampaigns=action.payload
    }
   },
 })
