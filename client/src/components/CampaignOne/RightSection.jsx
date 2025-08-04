@@ -3,16 +3,16 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { Loader2 } from 'lucide-react';
 import { useSelector } from 'react-redux';
-import { useForm } from 'react-hook-form';
+import { set, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { ethers } from 'ethers';
 import { LoadEvents } from '@/lib/LoadData';
 
 
-const RightSection = ({ currentCampaign, raised,account }) => {
+const RightSection = ({ currentCampaign, raised, account }) => {
 
   const dispatch = useDispatch();
-  
+
   const [loading, setLoading] = useState(false);
 
   const campaignContract = useSelector((state) => state?.campaign?.campaignContract)
@@ -38,27 +38,49 @@ const RightSection = ({ currentCampaign, raised,account }) => {
 
 
     const signer = await provider.getSigner();
-    const transaction = await campaignContract.connect(signer).donate(id, { value: donationAmount });
-    const recipt = await transaction.wait();
+    try {
+      const transaction = await campaignContract.connect(signer).donate(id, { value: donationAmount });
+      const recipt = await transaction.wait();
 
-    if (recipt.status !== 1) {
-      toast.error("Donation failed!")
+      if (recipt.status !== 1) {
+        toast.error("Donation failed!")
+        setLoading(false)
+        return;
+      }
+      else if (recipt.status === 1) {
+        const event = recipt.events?.find(e => e.event === "Donate");
+        if (event) {
+          toast.success(`Donate successfully!`);
+          setLoading(false)
+
+        }
+        else {
+          toast.error("Donation failed!");
+          setLoading(false)
+
+        }
+      }
+    }
+    catch (error) {
+      let message = "Something went wrong";
+
+      if (error?.error?.data?.message) {
+        message = error.error.data.message;
+      } else if (error?.data?.message) {
+        message = error.data.message;
+      } else if (error?.reason) {
+        message = error.reason;
+      } else if (error?.message) {
+        message = error.message;
+      }
+
+      toast.error(`Transaction failed: ${message}`);
       setLoading(false)
-      return;
-    }
-    else if (recipt.status === 1) {
-      const event = recipt.events?.find(e => e.event === "Donate");
-      if (event) {
-        toast.success(`Donate successfully!`);
-        setLoading(false)
 
-      }
-      else {
-        toast.error("Donation failed!");
-        setLoading(false)
-
-      }
     }
+
+
+
     LoadEvents(dispatch, campaignContract)
     reset();
 

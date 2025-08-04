@@ -4,8 +4,8 @@ import { useSelector } from 'react-redux';
 import { ExternalLink } from 'lucide-react';
 
 
-const LeftSection = ({ currentCampaign, goal }) => {
-
+const LeftSection = ({ currentCampaign, goal,orders }) => {
+   
   const chainId = useSelector((state) => state?.campaign?.chainId);
 
   return (
@@ -49,12 +49,12 @@ const LeftSection = ({ currentCampaign, goal }) => {
 
       <div className="p-4 bg-[#1e1f24] rounded-2xl">
         <p className="text-gray-400">Number of Requests</p>
-        <p className="text-[#34d399]">5</p>
+        <p className="text-[#34d399]">{orders}</p>
       </div>
 
       <div className="p-4 bg-[#1e1f24] rounded-2xl">
         <p className="text-gray-400">Number of Donors</p>
-        <p className="text-[#60a5fa]">5</p>
+        <p className="text-[#60a5fa]">{orders}</p>
       </div>
     </div>
   )

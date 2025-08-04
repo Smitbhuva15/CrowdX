@@ -21,16 +21,15 @@ const page = () => {
 
   const [goal, setGoal] = useState("0");
   const [raised, setRaised] = useState("0");
+  const [orders, setOrders] = useState();
 
   const campaignContract = useSelector((state) => state?.campaign?.campaignContract)
   const Allcampaigns = useSelector((state) => state?.campaign?.Allcampaigns);
-
+  const Allorders = useSelector((state) => state?.campaign?.Allorders)
 
   const campaign = Allcampaigns?.filter((c) => c?.id.toString() === id.toString());
   const currentCampaign = campaign?.[0];
-
-
- 
+  
   useEffect(() => {
     if (currentCampaign?.goal) {
       try {
@@ -43,6 +42,10 @@ const page = () => {
       }
     }
   }, [currentCampaign]);
+
+  useEffect(() => {
+    setOrders(Allorders?.filter((order) => order?.args?.id.toString() === id.toString()));
+  }, [Allorders])
 
   useEffect(() => {
     if (campaignContract && account) {
@@ -68,10 +71,10 @@ const page = () => {
             <div className="max-w-6xl mx-auto flex flex-col lg:flex-row gap-10">
 
               {/* Section 1 */}
-              <LeftSection currentCampaign={currentCampaign} goal={goal} />
+              <LeftSection currentCampaign={currentCampaign} goal={goal} orders={orders.length} />
 
               {/* Section 2 */}
-              <RightSection currentCampaign={currentCampaign} raised={raised} account={account}/>
+              <RightSection currentCampaign={currentCampaign} raised={raised} account={account} />
 
             </div>
             <Toaster

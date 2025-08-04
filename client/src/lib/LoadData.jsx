@@ -3,7 +3,7 @@
 import { ethers } from "ethers"
 import config from '../config.json';
 import campaignabi from '@/abis/Campaign.json';
-import { getProvider, getcontract, getchainId, getCampaignEvents } from "@/store/slice/campaignSlice";
+import { getProvider, getcontract, getchainId, getCampaignEvents, getOrdersEvents } from "@/store/slice/campaignSlice";
 
 export const LoadallData = async (dispatch) => {
 
@@ -25,24 +25,22 @@ export const LoadEvents = async (dispatch, campaignContract) => {
   const latestblock = await provider.getBlockNumber()
   // const fromBlock = Math.max(latestblock, 0)
 
-  let CampaignStream = await campaignContract.queryFilter('CampaignCreated',0, latestblock)
-  CampaignStream=decorateCampaign(CampaignStream);
+  let CampaignStream = await campaignContract.queryFilter('CampaignCreated', 0, latestblock)
+  CampaignStream = decorateCampaign(CampaignStream);
 
-   // Map to live data from contract storage
+  // Map to live data from contract storage
   const campaigns = await Promise.all(
     CampaignStream.map(async (event) => {
       const id = event.args.id;
-      const liveData = await campaignContract.campaigns(id); 
+      const liveData = await campaignContract.campaigns(id);
       return liveData;
     })
   );
 
-   let donationStream = await campaignContract.queryFilter('Donate', 0, latestblock)
-  //  console.log(donationStream)
-
+  let donationStream = await campaignContract.queryFilter('Donate', 0, latestblock)
 
   dispatch(getCampaignEvents(campaigns))
-
+  dispatch(getOrdersEvents(donationStream))
 }
 
 const decorateCampaign = (CampaignStream) => {
