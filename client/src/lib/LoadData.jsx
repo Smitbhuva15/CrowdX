@@ -23,10 +23,33 @@ export const LoadEvents = async (dispatch, campaignContract) => {
 
   const provider = new ethers.providers.Web3Provider(window.ethereum);
   const latestblock = await provider.getBlockNumber()
-  const fromBlock = Math.max(latestblock - 49999, 0)
+  // const fromBlock = Math.max(latestblock, 0)
 
-  let CampaignStream = await campaignContract.queryFilter('CampaignCreated', fromBlock, latestblock)
+  let CampaignStream = await campaignContract.queryFilter('CampaignCreated',0, latestblock)
+  CampaignStream=decorateCampaign(CampaignStream);
 
-  dispatch(getCampaignEvents(CampaignStream))
+   // Map to live data from contract storage
+  const campaigns = await Promise.all(
+    CampaignStream.map(async (event) => {
+      const id = event.args.id;
+      const liveData = await campaignContract.campaigns(id); 
+      return liveData;
+    })
+  );
+
+   let donationStream = await campaignContract.queryFilter('Donate', 0, latestblock)
+  //  console.log(donationStream)
+
+
+  dispatch(getCampaignEvents(campaigns))
 
 }
+
+const decorateCampaign = (CampaignStream) => {
+  const now = Math.floor(Date.now() / 1000);
+
+  return CampaignStream.filter((campaign) => {
+    return campaign?.args?.deadline?.toNumber() > now;
+  });
+};
+

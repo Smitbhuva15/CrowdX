@@ -14,7 +14,7 @@ export const MyCart = () => {
 
     const Allcampaigns = useSelector((state) => state?.campaign?.Allcampaigns)
 
-
+    
     function getDaysLeft(deadline) {
         if (!deadline || !deadline._isBigNumber) return "N/A";
 
@@ -39,17 +39,17 @@ export const MyCart = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pr-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                     {Allcampaigns.map((campaign, index) => {
-                        const goal = ethers.utils.formatEther(campaign?.args?.goal);
-                        const raised = ethers.utils.formatEther(campaign?.args?.raised);
+                        const goal = ethers.utils.formatEther(campaign?.goal);
+                        const raised = ethers.utils.formatEther(campaign?.raised);
 
 
                         return (
-                            <a href={`/${campaign?.args?.id}`}>
+                            <a href={`/${campaign?.id}`}>
                                 <Card key={index} className="w-[85%] mx-auto shadow-md  my-3 ">
                                     <CardHeader className="p-0">
                                         <Image
-                                            src={campaign?.args?.imageUrl}
-                                            alt={campaign?.args?.title}
+                                            src={campaign?.imageUrl}
+                                            alt={campaign?.title}
                                             width={4000}
                                             height={400}
                                             quality={100}
@@ -58,11 +58,11 @@ export const MyCart = () => {
                                     </CardHeader>
 
                                     <CardContent className="pb-1">
-                                        <h2 className="xs:text-lg text-md font-bold text-white mb-1">{campaign?.args?.title}</h2>
+                                        <h2 className="xs:text-lg text-md font-bold text-white mb-1">{campaign?.title}</h2>
                                         <p className="text-xs text-gray-400 flex items-center gap-1">
                                             <User className="w-4 h-4 text-[#8b5cf6]" />
 
-                                            {`by ${campaign?.args?.creator.slice(0, 9)}...${campaign?.args?.creator.slice(-9)}`}
+                                            {`by ${campaign?.creator.slice(0, 9)}...${campaign?.creator.slice(-9)}`}
 
                                         </p>
                                         <div className="mt-4 flex justify-between text-sm text-gray-300">
@@ -80,7 +80,7 @@ export const MyCart = () => {
                                         <div className="mt-4 flex justify-between text-sm text-gray-300">
                                             <div>
                                                 <p className="font-bold text-[#8b5cf6]">Deadline</p>
-                                                <p className="font-semibold"> {getDaysLeft(campaign?.args?.deadline)}</p>
+                                                <p className="font-semibold"> {getDaysLeft(campaign?.deadline)}</p>
                                             </div>
                                             <div className="text-right mt-3">
                                                 {goal <= raised ? (
