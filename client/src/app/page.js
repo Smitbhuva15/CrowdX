@@ -51,7 +51,7 @@ function CampaignList() {
         <Banner title={'Open Campaigns'} />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 ">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pr-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {Allchampaigns.map((champaign, index) => {
             const goal = ethers.utils.formatEther(champaign?.args?.goal);
@@ -66,7 +66,7 @@ function CampaignList() {
                   width={4000}
                   height={400}
 
-                  className="rounded-t-lg  w-full xs:h-48"
+                  className="rounded-t-lg  w-full xs:h-55"
                 />
               </CardHeader>
 
