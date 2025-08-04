@@ -3,7 +3,8 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
   provider:{},
   champaignContract:{},
-  chainId:{}
+  chainId:{},
+  Allchampaigns:[]
 }
 
 export const CampaignSlice = createSlice({
@@ -18,11 +19,14 @@ export const CampaignSlice = createSlice({
    },
    getchainId(state,action){
     state.chainId=action.payload;
+   },
+   getCampaignEvents(state,action){
+     state.Allchampaigns=action.payload
    }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const {getProvider,getcontract,getchainId  } = CampaignSlice.actions
+export const {getProvider,getcontract,getchainId,getCampaignEvents } = CampaignSlice.actions
 
 export default CampaignSlice.reducer
