@@ -7,6 +7,8 @@ import Image from "next/image";
 import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card";
 import { User } from "lucide-react";
 import Banner2 from '../Banner/Banner2';
+import { BadgeCheck } from 'lucide-react'
+import { BadgeX } from 'lucide-react';
 
 
 export const MyCart = ({Allcampaigns}) => {
@@ -84,11 +86,11 @@ export const MyCart = ({Allcampaigns}) => {
                                             <div className="text-right mt-3">
                                                 {goal <= raised ? (
                                                     <div className="inline-flex flex-col items-end text-green-600">
-                                                        <CheckCircle className="w-6 h-6" />
+                                                        <BadgeCheck className="w-6 h-6" />
                                                     </div>
                                                 ) : (
                                                     <div className="inline-flex flex-col items-end text-red-600">
-                                                        <XCircle className="w-6 h-6" />
+                                                        <BadgeX className="w-6 h-6" />
                                                     </div>
                                                 )}
                                             </div>
