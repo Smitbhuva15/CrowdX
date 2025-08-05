@@ -26,6 +26,8 @@ const page = () => {
   const campaignContract = useSelector((state) => state?.campaign?.campaignContract)
   const Allcampaigns = useSelector((state) => state?.campaign?.Allcampaigns);
   const Allorders = useSelector((state) => state?.campaign?.Allorders)
+   const provider= useSelector((state) => state?.campaign?.provider);
+
 
   const campaign = Allcampaigns?.filter((c) => c?.id.toString() === id.toString());
   const currentCampaign = campaign?.[0];
@@ -48,10 +50,10 @@ const page = () => {
   }, [Allorders])
 
   useEffect(() => {
-    if (campaignContract && account) {
-      LoadEvents(dispatch, campaignContract);
+    if (campaignContract && account && provider) {
+      LoadEvents(dispatch,provider, campaignContract,"Decore","Donor");
     }
-  }, [account]);
+  }, [account,campaignContract,provider]);
 
 
 

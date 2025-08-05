@@ -16,7 +16,8 @@ const RightSection = ({ currentCampaign, raised, account }) => {
   const [loading, setLoading] = useState(false);
 
   const campaignContract = useSelector((state) => state?.campaign?.campaignContract)
-  const provider = useSelector((state) => state?.campaign?.provider)
+  const provider= useSelector((state) => state?.campaign?.provider);
+ 
 
   const {
     register,
@@ -78,10 +79,9 @@ const RightSection = ({ currentCampaign, raised, account }) => {
       setLoading(false)
 
     }
-
-
-
-    LoadEvents(dispatch, campaignContract)
+    if(campaignContract && account && provider){
+    LoadEvents(dispatch,provider, campaignContract,"Decore","Donor")
+    }
     reset();
 
   }

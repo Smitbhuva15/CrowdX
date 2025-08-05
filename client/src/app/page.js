@@ -15,11 +15,13 @@ function CampaignList() {
   const account = useActiveAccount();
 
   const campaignContract = useSelector((state) => state?.campaign?.campaignContract)
- const Allcampaigns = useSelector((state) => state?.campaign?.Allcampaigns)
+  const Allcampaigns = useSelector((state) => state?.campaign?.Allcampaigns)
+  const provider= useSelector((state) => state?.campaign?.provider);
 
   useEffect(() => {
-    LoadEvents(dispatch, campaignContract)
-  }, [account])
+    if(campaignContract && account && provider){
+    LoadEvents(dispatch,provider, campaignContract,"Decore","nodonor")}
+  }, [account,campaignContract ,provider])
 
 
   return (

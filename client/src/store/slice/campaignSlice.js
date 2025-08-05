@@ -6,6 +6,7 @@ const initialState = {
   chainId: {},
   Allcampaigns: [],
   Allorders: [],
+  Allwithdraws:[]
 }
 
 export const CampaignSlice = createSlice({
@@ -27,10 +28,13 @@ export const CampaignSlice = createSlice({
     getOrdersEvents(state, action) {
       state.Allorders = action.payload
     },
+    getwithdrawEvents(state, action) {
+      state.Allwithdraws = action.payload
+    },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { getProvider, getcontract, getchainId, getCampaignEvents, getOrdersEvents } = CampaignSlice.actions
+export const { getProvider, getcontract, getchainId, getCampaignEvents, getOrdersEvents,getwithdrawEvents } = CampaignSlice.actions
 
 export default CampaignSlice.reducer

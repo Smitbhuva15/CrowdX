@@ -17,10 +17,14 @@ const page = () => {
 
   const campaignContract = useSelector((state) => state?.campaign?.campaignContract)
   const Allcampaigns = useSelector((state) => state?.campaign?.Allcampaigns)
+   const provider= useSelector((state) => state?.campaign?.provider);
+
 
   useEffect(() => {
-    LoadEvents(dispatch, campaignContract)
-  }, [account])
+    if(campaignContract && account && provider){
+    LoadEvents(dispatch,provider, campaignContract,"Decore","noDonor")
+    }
+  }, [account,campaignContract,provider])
 
   useEffect(()=>{
    setMyCampaign(Allcampaigns?.filter((campaign)=>campaign?.creator.toString() === account?.address.toString()))
@@ -38,7 +42,7 @@ const page = () => {
 
       </div>) : (
         <div >
-          <Banner2 title={'Connect Your Wallet to Continue.'} model={'You must connect your wallet to launch a new campaign.'} active={''} />
+          <Banner2 title={'Connect Your Wallet to Continue.'} model={''} active={''} />
         </div>
       )
   );
