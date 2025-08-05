@@ -3,6 +3,7 @@
 
 
 @theme {
+  --breakpoint-xxs:300px;
   --breakpoint-xs:425px;
   --breakpoint-sm: 640px;
   --breakpoint-md:820px;
@@ -23,3 +24,6 @@
   letter-spacing: 1px;
 }
 
+/* * {
+  outline: 1px solid red;
+} */
