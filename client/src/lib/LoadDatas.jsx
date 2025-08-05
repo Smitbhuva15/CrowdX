@@ -18,10 +18,14 @@ export const LoadallData = async (dispatch) => {
 
 }
 
+export const LoadDonations = async (dispatch, provider, campaignContract) => {
+  const latestblock = await provider.getBlockNumber()
+  let donationStream = await campaignContract.queryFilter('Donate', 0, latestblock)
+  dispatch(getOrdersEvents(donationStream))
+}
 
-export const LoadEvents = async (dispatch,provider, campaignContract, Decorate, donor) => {
-  console
-  // const provider = new ethers.providers.Web3Provider(window.ethereum);
+export const LoadEvents = async (dispatch, provider, campaignContract, Decorate, donor) => {
+ 
   const latestblock = await provider.getBlockNumber()
   // const fromBlock = Math.max(latestblock, 0)
 
@@ -41,13 +45,15 @@ export const LoadEvents = async (dispatch,provider, campaignContract, Decorate, 
   );
 
   if (donor == 'Donor') {
-    let donationStream = await campaignContract.queryFilter('Donate', 0, latestblock)
-    dispatch(getOrdersEvents(donationStream))
+    LoadDonations(dispatch, provider, campaignContract)
   }
 
   dispatch(getCampaignEvents(campaigns))
 
 }
+
+
+
 
 // export const LoadWithdrawEvents = async (dispatch, campaignContract, account) => {
 

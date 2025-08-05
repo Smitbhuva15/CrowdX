@@ -44,7 +44,7 @@ const items = [
     icon: Banknote,
   },
   {
-    title: "Claim Refund",
+    title: "Refund Donation",
     url: "/refund",
     icon: HandCoins,
   },

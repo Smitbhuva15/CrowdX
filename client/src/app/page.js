@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useActiveAccount } from "thirdweb/react";
-import { LoadEvents } from "@/lib/LoadData";
+import { LoadEvents } from "@/lib/LoadDatas";
 import { MyCart } from "@/components/Cart/MyCart";
 import Banner2 from "@/components/Banner/Banner2";
 
@@ -16,12 +16,17 @@ function CampaignList() {
 
   const campaignContract = useSelector((state) => state?.campaign?.campaignContract)
   const Allcampaigns = useSelector((state) => state?.campaign?.Allcampaigns)
-  const provider= useSelector((state) => state?.campaign?.provider);
+  const provider = useSelector((state) => state?.campaign?.provider);
+
+  const isReady = provider && Object.keys(provider).length > 0 &&
+    campaignContract && Object.keys(campaignContract).length > 0;
 
   useEffect(() => {
-    if(campaignContract && account && provider){
-    LoadEvents(dispatch,provider, campaignContract,"Decore","nodonor")}
-  }, [account,campaignContract ,provider])
+    if (isReady && account) {
+      LoadEvents(dispatch, provider, campaignContract, 'Decore', 'Donor');
+    }
+  }, [isReady, account]);
+
 
 
   return (
@@ -31,12 +36,12 @@ function CampaignList() {
           <Banner title={`Active Campaigns (${Allcampaigns?.length})`} />
         </div>
         <div>
-          <MyCart Allcampaigns={Allcampaigns}/>
+          <MyCart Allcampaigns={Allcampaigns} />
         </div>
 
       </div>) : (
         <div >
-          <Banner2 title={'Hey there! Connect your wallet to join the campaign experience.'} model={""} active={''}/>
+          <Banner2 title={'Hey there! Connect your wallet to join the campaign experience.'} model={""} active={''} />
         </div>
       )
   );

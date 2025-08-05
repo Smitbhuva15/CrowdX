@@ -12,7 +12,7 @@ import {
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { useActiveAccount } from "thirdweb/react";
-import { LoadEvents } from '@/lib/LoadData'
+import { LoadEvents } from '@/lib/LoadDatas'
 import Banner2 from '@/components/Banner/Banner2'
 import { Banner } from '@/components/Banner/Banner'
 import { ethers } from 'ethers'
@@ -35,13 +35,18 @@ const Page = () => {
   const provider = useSelector((state) => state?.campaign?.provider);
 
 
-  useEffect(() => {
-    if (campaignContract && account && provider) {
-      LoadEvents(dispatch, provider, campaignContract, "nonDecore", "noDonor")
-    }
-  }, [account, campaignContract, provider])
+ const isReady = provider && Object.keys(provider).length > 0 &&
+    campaignContract && Object.keys(campaignContract).length > 0;
 
   useEffect(() => {
+    if (isReady && account) {
+      LoadEvents(dispatch, provider, campaignContract, 'Decore', 'Donor');
+    }
+  }, [isReady, account]);
+
+
+  useEffect(() => {
+    if(Allcampaigns)
     setMyCampaign(Allcampaigns?.filter((campaign) => campaign?.creator.toString() === account?.address.toString()))
   }, [Allcampaigns])
 

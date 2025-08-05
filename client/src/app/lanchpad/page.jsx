@@ -2,7 +2,7 @@
 import { Banner } from '@/components/Banner/Banner';
 import Banner2 from '@/components/Banner/Banner2';
 import { MyCart } from '@/components/Cart/MyCart';
-import { LoadEvents } from '@/lib/LoadData';
+import { LoadEvents } from '@/lib/LoadDatas';
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
@@ -11,24 +11,30 @@ import { useActiveAccount } from "thirdweb/react";
 
 const page = () => {
 
-   const [myCampaign,setMyCampaign]=useState();
+  const [myCampaign, setMyCampaign] = useState();
   const dispatch = useDispatch();
   const account = useActiveAccount();
 
   const campaignContract = useSelector((state) => state?.campaign?.campaignContract)
   const Allcampaigns = useSelector((state) => state?.campaign?.Allcampaigns)
-   const provider= useSelector((state) => state?.campaign?.provider);
+  const provider = useSelector((state) => state?.campaign?.provider);
+
+
+  const isReady = provider && Object.keys(provider).length > 0 &&
+    campaignContract && Object.keys(campaignContract).length > 0;
+
+  useEffect(() => {
+    if (isReady && account) {
+      LoadEvents(dispatch, provider, campaignContract, 'Decore', 'Donor');
+    }
+  }, [isReady, account]);
 
 
   useEffect(() => {
-    if(campaignContract && account && provider){
-    LoadEvents(dispatch,provider, campaignContract,"Decore","noDonor")
+    if (Allcampaigns) {
+      setMyCampaign(Allcampaigns?.filter((campaign) => campaign?.creator.toString() === account?.address.toString()))
     }
-  }, [account,campaignContract,provider])
-
-  useEffect(()=>{
-   setMyCampaign(Allcampaigns?.filter((campaign)=>campaign?.creator.toString() === account?.address.toString()))
-  },[Allcampaigns])
+  }, [Allcampaigns])
 
   return (
     account ?

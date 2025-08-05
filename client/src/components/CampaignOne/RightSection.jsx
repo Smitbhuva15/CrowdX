@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { set, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { ethers } from 'ethers';
-import { LoadEvents } from '@/lib/LoadData';
+import { LoadEvents } from '@/lib/LoadDatas';
 
 
 const RightSection = ({ currentCampaign, raised, account }) => {

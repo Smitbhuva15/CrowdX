@@ -5,7 +5,7 @@ import { ConnectButton, useActiveAccount } from "thirdweb/react";
 import { createWallet } from "thirdweb/wallets";
 import { sepolia } from "thirdweb/chains";
 import { Search, TextSearch } from 'lucide-react';
-import { LoadallData } from "@/lib/LoadData";
+import { LoadallData } from "@/lib/LoadDatas";
 import { useDispatch } from "react-redux";
 import Link from "next/link";
 
@@ -23,6 +23,7 @@ const Navbar = () => {
 
 
   useEffect(() => {
+    if(account)
     LoadallData(dipatch);
   }, [account])
 

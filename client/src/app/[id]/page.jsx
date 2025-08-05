@@ -1,6 +1,6 @@
 "use client"
 import Banner2 from '@/components/Banner/Banner2';
-import { LoadEvents } from '@/lib/LoadData';
+import { LoadEvents } from '@/lib/LoadDatas';
 import { ethers } from 'ethers';
 import { Loader2 } from 'lucide-react';
 import { useParams } from 'next/navigation'
@@ -26,12 +26,12 @@ const page = () => {
   const campaignContract = useSelector((state) => state?.campaign?.campaignContract)
   const Allcampaigns = useSelector((state) => state?.campaign?.Allcampaigns);
   const Allorders = useSelector((state) => state?.campaign?.Allorders)
-   const provider= useSelector((state) => state?.campaign?.provider);
+  const provider = useSelector((state) => state?.campaign?.provider);
 
 
   const campaign = Allcampaigns?.filter((c) => c?.id.toString() === id.toString());
   const currentCampaign = campaign?.[0];
-  
+
   useEffect(() => {
     if (currentCampaign?.goal) {
       try {
@@ -46,14 +46,19 @@ const page = () => {
   }, [currentCampaign]);
 
   useEffect(() => {
-    setOrders(Allorders?.filter((order) => order?.args?.id.toString() === id.toString()));
+    if (Allorders)
+      setOrders(Allorders?.filter((order) => order?.args?.id.toString() === id.toString()));
   }, [Allorders])
 
+  const isReady = provider && Object.keys(provider).length > 0 &&
+    campaignContract && Object.keys(campaignContract).length > 0;
+
   useEffect(() => {
-    if (campaignContract && account && provider) {
-      LoadEvents(dispatch,provider, campaignContract,"Decore","Donor");
+    if (isReady && account) {
+      LoadEvents(dispatch, provider, campaignContract, 'Decore', 'Donor');
     }
-  }, [account,campaignContract,provider]);
+  }, [isReady, account]);
+
 
 
 
