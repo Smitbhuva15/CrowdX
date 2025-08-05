@@ -31,7 +31,7 @@ export const LoadEvents = async (dispatch, campaignContract) => {
   // Map to live data from contract storage
   const campaigns = await Promise.all(
     CampaignStream.map(async (event) => {
-      const id = event.args.id;
+      const id = event?.args?.id;
       const liveData = await campaignContract.campaigns(id);
       return liveData;
     })

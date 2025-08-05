@@ -15,7 +15,7 @@ function CampaignList() {
   const account = useActiveAccount();
 
   const campaignContract = useSelector((state) => state?.campaign?.campaignContract)
-
+ const Allcampaigns = useSelector((state) => state?.campaign?.Allcampaigns)
 
   useEffect(() => {
     LoadEvents(dispatch, campaignContract)
@@ -26,10 +26,10 @@ function CampaignList() {
     account ?
       (<div className="bg-black min-h-screen">
         <div className="sm:pl-10 pl-5">
-          <Banner title={'Open Campaigns'} />
+          <Banner title={`Active Campaigns (${Allcampaigns?.length})`} />
         </div>
         <div>
-          <MyCart />
+          <MyCart Allcampaigns={Allcampaigns}/>
         </div>
 
       </div>) : (

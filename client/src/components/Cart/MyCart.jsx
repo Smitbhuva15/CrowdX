@@ -6,13 +6,12 @@ import { XCircle } from "lucide-react";
 import Image from "next/image";
 import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card";
 import { User } from "lucide-react";
-import { useSelector } from 'react-redux';
 import Banner2 from '../Banner/Banner2';
-import { Link } from 'lucide-react';
 
-export const MyCart = () => {
 
-    const Allcampaigns = useSelector((state) => state?.campaign?.Allcampaigns)
+export const MyCart = ({Allcampaigns}) => {
+
+    
 
     
     function getDaysLeft(deadline) {
@@ -44,7 +43,7 @@ export const MyCart = () => {
 
 
                         return (
-                            <a href={`/${campaign?.id}`}>
+                            <a href={`/${campaign?.id}`} key={index}>
                                 <Card key={index} className="w-[85%] mx-auto shadow-md  my-3 ">
                                     <CardHeader className="p-0">
                                         <Image
