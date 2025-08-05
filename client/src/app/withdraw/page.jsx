@@ -16,14 +16,16 @@ import { LoadEvents } from '@/lib/LoadData'
 import Banner2 from '@/components/Banner/Banner2'
 import { Banner } from '@/components/Banner/Banner'
 import { ethers } from 'ethers'
-import { XCircle } from 'lucide-react'
 import { ShieldCheck } from 'lucide-react'
 import { ShieldX } from 'lucide-react'
+import toast from 'react-hot-toast'
+import { Toaster } from 'react-hot-toast'
+import { Loader2 } from 'lucide-react'
 
 
 const Page = () => {
   const [myCampaign, setMyCampaign] = useState();
-
+  const [loading, setLoading] = useState(0);
 
   const dispatch = useDispatch();
   const account = useActiveAccount();
@@ -43,7 +45,57 @@ const Page = () => {
     setMyCampaign(Allcampaigns?.filter((campaign) => campaign?.creator.toString() === account?.address.toString()))
   }, [Allcampaigns])
 
-  console.log(myCampaign)
+  const handelwithdraw = async (e, id) => {
+    e.preventDefault();
+    if (campaignContract && provider) {
+      setLoading(id)
+      toast('withdrawal pending...', {
+        icon: '⏳',
+      });
+      const signer = await provider.getSigner();
+      try {
+        let transaction = await campaignContract.connect(signer).withdrawFund(id);
+        let recipt = await transaction.wait();
+        if (recipt.status !== 1) {
+          toast.error("withdrawal failed!")
+          setLoading(0)
+          return;
+        }
+        else if (recipt.status === 1) {
+          const event = recipt.events?.find(e => e.event === "Withdraw");
+          if (event) {
+            toast.success(`withdrawal successfully!`);
+            setLoading(0)
+
+          }
+          else {
+            toast.error("withdrawal failed!");
+            setLoading(0)
+
+          }
+        }
+      } catch (error) {
+        let message = "Something went wrong";
+
+        if (error?.error?.data?.message) {
+          message = error.error.data.message;
+        } else if (error?.data?.message) {
+          message = error.data.message;
+        } else if (error?.reason) {
+          message = error.reason;
+        } else if (error?.message) {
+          message = error.message;
+        }
+
+        toast.error(`Transaction failed: ${message}`);
+        setLoading(0)
+      }
+
+    LoadEvents(dispatch, provider, campaignContract, "nonDecore", "noDonor")
+    }
+    
+  }
+
   return (
     account ?
       (<div className="min-h-screen bg-black py-10">
@@ -110,8 +162,20 @@ const Page = () => {
                                 <button
                                   type="submit"
                                   className="px-4 py-2 bg-[#8b5cf6] text-white font-medium rounded-md hover:bg-[#7a4ee0] transition"
+                                  onClick={(e) => { handelwithdraw(e, campaign?.id.toString()) }}
                                 >
-                                  Withdraw
+                                  {
+                                    loading==campaign?.id.toString() ? (
+                                      <div className="flex items-center justify-center gap-0.5 text-white text-sm">
+                                        <Loader2 className="animate-spin size-4" />
+                                        <span >Pending</span>
+                                      </div>
+                                    ) : (
+                                      <div >Withdraw</div>
+
+                                    )
+                                  }
+
                                 </button>
                               )}
 
@@ -130,6 +194,10 @@ const Page = () => {
 
             )
         }
+        <Toaster
+          position="bottom-right"
+          reverseOrder={false}
+        />
       </div>
       ) : (
         <Banner2 title={'Connect Wallet'} model={''} active={''} />
