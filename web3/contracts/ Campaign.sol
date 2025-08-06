@@ -212,7 +212,7 @@ contract Campaign {
         // Reset their contribution
         contributions[_id][msg.sender] = 0;
 
-        emit Refund(_id, msg.sender, amountToRefund);
+        emit Refund(_id, msg.sender, amountToRefund,c.creator,c.title);
     }
 
     /////////////////////// HELPER (TEST) /////////////////////////

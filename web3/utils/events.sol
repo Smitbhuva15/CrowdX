@@ -63,5 +63,7 @@ event Withdraw(
 event Refund(
     uint256 id,
     address donor,
-    uint256 amount
+    uint256 amount,
+    address creator,
+    string title
 );
