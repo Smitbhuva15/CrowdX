@@ -7,11 +7,13 @@ import { User } from "lucide-react";
 import Banner2 from '../Banner/Banner2';
 import { BadgeCheck } from 'lucide-react'
 import { BadgeX } from 'lucide-react';
+import { useSelector } from 'react-redux';
 
 
 export const MyCart = ({Allcampaigns}) => {
 
-    
+  const search = useSelector((state) => state?.campaign?.search);
+   let  campaigns=Allcampaigns.filter((campaign)=>campaign?.title.toLowerCase().includes(search.toLowerCase()));
 
     
     function getDaysLeft(deadline) {
@@ -29,7 +31,7 @@ export const MyCart = ({Allcampaigns}) => {
     }
 
     return (
-        !Allcampaigns || Allcampaigns.length == 0 ? (
+        !campaigns || campaigns.length == 0 ? (
             <div>
                 <Banner2 title={'There are currently no live campaigns.'} model={""} active={'true'} />
             </div>
@@ -37,7 +39,7 @@ export const MyCart = ({Allcampaigns}) => {
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pr-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-                    {Allcampaigns.map((campaign, index) => {
+                    {campaigns.map((campaign, index) => {
                         const goal = ethers.utils.formatEther(campaign?.goal);
                         const raised = ethers.utils.formatEther(campaign?.raised);
 

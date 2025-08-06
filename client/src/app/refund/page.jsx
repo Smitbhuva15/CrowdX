@@ -32,6 +32,7 @@ const page = () => {
   const donations = useSelector((state) => state?.campaign?.donations)
   const campaignContract = useSelector((state) => state?.campaign?.campaignContract)
   const provider = useSelector((state) => state?.campaign?.provider);
+   const search = useSelector((state) => state?.campaign?.search);
 
   const isReady = provider && Object.keys(provider).length > 0 &&
     campaignContract && Object.keys(campaignContract).length > 0;
@@ -94,7 +95,11 @@ const page = () => {
     }
   }
 
-  // console.log(myDonation)
+  let serchMyDonation;
+  if(myDonation){
+    // serchMyDonation=myDonation.filter((donation)=>{ donation?.args?.title.toLowerCase().includes(search.toLowerCase()) });
+  }
+
   return (
     account ? ((<div className="min-h-screen bg-black py-10">
       <div className="sm:pl-10 pl-5 mb-6">

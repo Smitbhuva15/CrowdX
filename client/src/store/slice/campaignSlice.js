@@ -7,7 +7,8 @@ const initialState = {
   Allcampaigns: [],
   Allorders: [],
   Allwithdraws:[],
-  donations:[]
+  donations:[],
+  search:""
 }
 
 export const CampaignSlice = createSlice({
@@ -34,11 +35,14 @@ export const CampaignSlice = createSlice({
     },
     getRefundDonation(state,action){
       state.donations=action.payload
+    },
+    getSearch(state,action){
+      state.search=action.payload
     }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { getProvider, getcontract, getchainId, getCampaignEvents, getOrdersEvents,getwithdrawEvents,getRefundDonation } = CampaignSlice.actions
+export const { getProvider, getcontract, getchainId, getCampaignEvents, getOrdersEvents,getwithdrawEvents,getRefundDonation ,getSearch} = CampaignSlice.actions
 
 export default CampaignSlice.reducer

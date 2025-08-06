@@ -18,6 +18,7 @@ function CampaignList() {
   const Allcampaigns = useSelector((state) => state?.campaign?.Allcampaigns)
   const provider = useSelector((state) => state?.campaign?.provider);
 
+
   const isReady = provider && Object.keys(provider).length > 0 &&
     campaignContract && Object.keys(campaignContract).length > 0;
 

@@ -21,7 +21,7 @@ import { ShieldX } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { Toaster } from 'react-hot-toast'
 import { Loader2 } from 'lucide-react'
-import  errorconfig from '@/config/errorconfig.json';
+import errorconfig from '@/config/errorconfig.json';
 
 
 
@@ -35,6 +35,7 @@ const Page = () => {
   const Allcampaigns = useSelector((state) => state?.campaign?.Allcampaigns);
   const campaignContract = useSelector((state) => state?.campaign?.campaignContract)
   const provider = useSelector((state) => state?.campaign?.provider);
+  const search = useSelector((state) => state?.campaign?.search);
 
 
   const isReady = provider && Object.keys(provider).length > 0 &&
@@ -46,13 +47,19 @@ const Page = () => {
     }
   }, [isReady, account]);
 
-  
+
   useEffect(() => {
     if (Allcampaigns)
       setMyCampaign(Allcampaigns?.filter((campaign) => campaign?.creator.toString() === account?.address.toString()))
   }, [Allcampaigns])
 
-  console.log(myCampaign)
+
+  let campaigns
+  if (myCampaign) {
+    campaigns = myCampaign.filter((campaign) => campaign?.title.toLowerCase().includes(search.toLowerCase()))
+  }
+
+
   const handelwithdraw = async (e, id) => {
     e.preventDefault();
     if (campaignContract && provider) {
@@ -86,9 +93,9 @@ const Page = () => {
         let message = "Something went wrong";
 
         const data = error?.error?.data;
-        
+
         message = errorconfig[data]?.message;
-        if(message==undefined){
+        if (message == undefined) {
           toast.error(`Transaction failed: Something went wrong`)
         }
         toast.error(`Transaction failed: ${message}`);
@@ -107,7 +114,7 @@ const Page = () => {
           <Banner title="Fund Withdrawal" />
         </div>
         {
-          !myCampaign || myCampaign.length == 0
+          !campaigns || campaigns.length == 0
             ?
             (
               <Banner2 title={'No funds available for withdrawal yet.'}
@@ -123,7 +130,7 @@ const Page = () => {
 
                   <Table className=" overflow-x-hidden lg:min-w-[720px] md:min-w-[550px] sm:min-w-[400px]  rounded-2xl ">
                     <TableCaption className="text-zinc-400 text-sm mt-2">
-                      {`Found ${myCampaign?.length} Requests`}
+                      {`Found ${campaigns?.length} Requests`}
                     </TableCaption>
 
                     <TableHeader className=" overflow-x-hidden ">
@@ -138,7 +145,7 @@ const Page = () => {
                     </TableHeader>
 
                     <TableBody className=" overflow-x-hidden">
-                      {myCampaign.map((campaign, index) => {
+                      {campaigns.map((campaign, index) => {
                         const goal = ethers.utils.formatEther(campaign?.goal);
                         const raised = ethers.utils.formatEther(campaign?.raised);
 

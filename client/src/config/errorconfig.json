@@ -1,44 +1,44 @@
 {
   "0x857a6e90": {
-    "message": "The Campaign Is Still Active And Has Not Ended"
+    "message": "The campaign is still active and has not ended"
   },
   "0xbf2cfade": {
-    "message": "Campaign Goal Must Be Greater Than Zero"
+    "message": "Campaign goal must be greater than zero"
   },
   "0xcf478f23": {
-    "message": "Campaign Duration Must Be A Positive Value"
+    "message": "Campaign duration must be a positive value"
   },
   "0x6ff36e16": {
-    "message": "No Campaign Found With The Provided ID"
+    "message": "No campaign found with the provided ID"
   },
   "0x33a34732": {
-    "message": "Please Enter A Valid Donation Amount Greater Than Zero"
+    "message": "Please enter a valid donation amount greater than zero"
   },
   "0x83b6e869": {
-    "message": "This Campaign Is Either Inactive Or Has Been Closed"
+    "message": "This campaign is either inactive or has been closed"
   },
   "0x58795c68": {
-    "message": "You Cannot Donate Because The Campaign Deadline Has Passed"
+    "message": "You cannot donate because the campaign deadline has passed"
   },
   "0x19ded6e9": {
-    "message": "Campaign Creators Cannot Contribute To Their Own Campaigns"
+    "message": "Campaign creators cannot contribute to their own campaigns"
   },
   "0xb57c7dc2": {
-    "message": "The Donation Or Refund Amount Entered Is Not Valid"
+    "message": "The donation or refund amount entered is not valid"
   },
   "0xfdc9d49c": {
-    "message": "Funds Have Already Been Claimed From This Campaign"
+    "message": "Funds have already been claimed from this campaign"
   },
   "0x9d6d345e": {
-    "message": "Only The Campaign Owner Can Perform This Operation"
+    "message": "Only the campaign owner can perform this operation"
   },
   "0xad4ed287": {
-    "message": "Withdrawal Not Allowed As The Campaign Goal Was Not Reached"
+    "message": "Withdrawal not allowed as the campaign goal was not reached"
   },
   "0x68e2eaa1": {
-    "message": "No Donation Record Found From You For This Campaign"
+    "message": "No donation record found from you for this campaign"
   },
   "0xe305f37c": {
-    "message": "Refund Not Allowed Because The Funding Target Was Achieved"
+    "message": "Refund not allowed because the funding target was achieved"
   }
 }

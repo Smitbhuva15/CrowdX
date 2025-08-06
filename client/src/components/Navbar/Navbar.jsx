@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { createThirdwebClient } from "thirdweb";
 import { ConnectButton, useActiveAccount } from "thirdweb/react";
 import { createWallet } from "thirdweb/wallets";
@@ -8,6 +8,7 @@ import { Search, TextSearch } from 'lucide-react';
 import { LoadallData } from "@/lib/LoadDatas";
 import { useDispatch } from "react-redux";
 import Link from "next/link";
+import { getSearch } from "@/store/slice/campaignSlice";
 
 
 
@@ -17,15 +18,19 @@ const client = createThirdwebClient({
 
 const Navbar = () => {
   const dipatch = useDispatch();
+  const[search,setSearch]=useState("");
 
   const account = useActiveAccount();
-
-
 
   useEffect(() => {
     if(account)
     LoadallData(dipatch);
+
   }, [account])
+  
+  useEffect(()=>{
+   dipatch(getSearch(search));
+  },[search])
 
   return (
     
@@ -41,7 +46,8 @@ const Navbar = () => {
             <input
               type="text"
               className="lg:w-full w-xs pl-12 pr-4 py-3 rounded-2xl text-white border-2  focus:outline-none border-[#8b5cf6] transition-all duration-300 shadow-lg shadow-[#9674e6]"
-              placeholder="Search..."
+              placeholder="Search Campaign..."
+              onChange={(e)=>setSearch(e.target.value)}
             />
             <div className="absolute left-4 top-1/2 -translate-y-1/2 text-black pointer-events-none">
               <Search className="text-[#8b5cf6] "/>
