@@ -1,7 +1,7 @@
 // "use client"
 
 import { ethers } from "ethers"
-import config from '../config.json';
+import config from '@/config/config.json';
 import campaignabi from '@/abis/Campaign.json';
 import { getProvider, getcontract, getchainId, getCampaignEvents, getOrdersEvents, getwithdrawEvents, getRefundDonation } from "@/store/slice/campaignSlice";
 
@@ -105,20 +105,6 @@ const decorateDonationRefund = async (donation, dispatch, provider, campaignCont
 
 
 
-// export const LoadWithdrawEvents = async (dispatch, campaignContract, account) => {
-
-//   const campaigns = await LoadEvents(dispatch, campaignContract, 'noDecorate');
-
-//   const provider = new ethers.providers.Web3Provider(window.ethereum);
-//   const latestblock = await provider.getBlockNumber()
-//   // const fromBlock = Math.max(latestblock, 0)
-
-//   let withdrawStream = await campaignContract?.queryFilter('Withdraw', 0, latestblock);
-//   withdrawStream = decorateWithdraw(campaigns, withdrawStream, account);
-//   dispatch(getwithdrawEvents(withdrawStream))
-
-// }
-
 const decorateCampaign = (CampaignStream) => {
   const now = Math.floor(Date.now() / 1000);
 
@@ -126,27 +112,5 @@ const decorateCampaign = (CampaignStream) => {
     return campaign?.args?.deadline?.toNumber() > now;
   });
 };
-
-// const decorateWithdraw = async (campaigns, withdrawStream, account) => {
-//   // Filter only campaigns created by the current account
-//   let mycampaign = campaigns.filter(
-//     (campaign) => campaign?.creator?.toString() === account?.address?.toString()
-//   );
-
-//   // Decorate each campaign with withdraw status
-//   mycampaign = mycampaign.map((campaign) => {
-//     const hasWithdraw = withdrawStream.some(
-//       (withdraw) => withdraw?.args?.id?.toString() === campaign?.id?.toString()
-//     );
-
-//     return {
-//       ...campaign,
-//       withdraw: hasWithdraw,
-//     };
-//   });
-
-//   console.log(mycampaign, "}}");
-//   return mycampaign;
-// };
 
 

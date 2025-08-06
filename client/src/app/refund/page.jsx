@@ -20,8 +20,8 @@ import { ShieldX } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { Toaster } from 'react-hot-toast'
 import { Loader2 } from 'lucide-react'
-import { LoadDonations, LoadRefundWithDonation } from '@/lib/LoadDatas'
-
+import {  LoadRefundWithDonation } from '@/lib/LoadDatas'
+import  errorconfig from '@/config/errorconfig.json';
 
 const page = () => {
   const [myDonation, setMyDonation] = useState();
@@ -81,16 +81,11 @@ const page = () => {
       } catch (error) {
         let message = "Something went wrong";
 
-        if (error?.error?.data?.message) {
-          message = error.error.data.message;
-        } else if (error?.data?.message) {
-          message = error.data.message;
-        } else if (error?.reason) {
-          message = error.reason;
-        } else if (error?.message) {
-          message = error.message;
+        const data=error?.error?.data ;
+        message=errorconfig[data]?.message;
+        if(message==undefined){
+          toast.error(`Transaction failed: Something went wrong`)
         }
-
         toast.error(`Transaction failed: ${message}`);
         setLoading(-1)
       }
@@ -99,7 +94,7 @@ const page = () => {
     }
   }
 
-  console.log(myDonation)
+  // console.log(myDonation)
   return (
     account ? ((<div className="min-h-screen bg-black py-10">
       <div className="sm:pl-10 pl-5 mb-6">
@@ -146,7 +141,7 @@ const page = () => {
                         return (
                           <TableRow className="text-white hover:bg-[#2a2b31] transition overflow-x-hidden" key={index}>
                             <TableCell className="font-medium whitespace-nowrap">{index + 1}</TableCell>
-                            <TableCell className="whitespace-nowrap">donation?.title</TableCell>
+                            <TableCell className="whitespace-nowrap">{donation?.args?.title}</TableCell>
                             <TableCell className="whitespace-nowrap">{donation?.args?.creator}</TableCell>
                             <TableCell className="whitespace-nowrap">{amount}</TableCell>
                             <TableCell className="whitespace-nowrap">

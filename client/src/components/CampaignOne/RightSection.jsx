@@ -7,6 +7,7 @@ import { set, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { ethers } from 'ethers';
 import { LoadEvents } from '@/lib/LoadDatas';
+import  errorconfig from '@/config/errorconfig.json';
 
 
 const RightSection = ({ currentCampaign, raised, account }) => {
@@ -16,8 +17,8 @@ const RightSection = ({ currentCampaign, raised, account }) => {
   const [loading, setLoading] = useState(false);
 
   const campaignContract = useSelector((state) => state?.campaign?.campaignContract)
-  const provider= useSelector((state) => state?.campaign?.provider);
- 
+  const provider = useSelector((state) => state?.campaign?.provider);
+
 
   const {
     register,
@@ -65,22 +66,17 @@ const RightSection = ({ currentCampaign, raised, account }) => {
     catch (error) {
       let message = "Something went wrong";
 
-      if (error?.error?.data?.message) {
-        message = error.error.data.message;
-      } else if (error?.data?.message) {
-        message = error.data.message;
-      } else if (error?.reason) {
-        message = error.reason;
-      } else if (error?.message) {
-        message = error.message;
-      }
-
+      const data = error?.error?.data;
+      message = errorconfig[data]?.message;
+      if(message==undefined){
+          toast.error(`Transaction failed: Something went wrong`)
+        }
       toast.error(`Transaction failed: ${message}`);
       setLoading(false)
 
     }
-    if(campaignContract && account && provider){
-    LoadEvents(dispatch,provider, campaignContract,"Decore","Donor")
+    if (campaignContract && account && provider) {
+      LoadEvents(dispatch, provider, campaignContract, "nonDecore", "Donor")
     }
     reset();
 

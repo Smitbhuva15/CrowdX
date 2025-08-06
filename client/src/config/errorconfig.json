@@ -1,0 +1,44 @@
+{
+  "0x857a6e90": {
+    "message": "The Campaign Is Still Active And Has Not Ended"
+  },
+  "0xbf2cfade": {
+    "message": "Campaign Goal Must Be Greater Than Zero"
+  },
+  "0xcf478f23": {
+    "message": "Campaign Duration Must Be A Positive Value"
+  },
+  "0x6ff36e16": {
+    "message": "No Campaign Found With The Provided ID"
+  },
+  "0x33a34732": {
+    "message": "Please Enter A Valid Donation Amount Greater Than Zero"
+  },
+  "0x83b6e869": {
+    "message": "This Campaign Is Either Inactive Or Has Been Closed"
+  },
+  "0x58795c68": {
+    "message": "You Cannot Donate Because The Campaign Deadline Has Passed"
+  },
+  "0x19ded6e9": {
+    "message": "Campaign Creators Cannot Contribute To Their Own Campaigns"
+  },
+  "0xb57c7dc2": {
+    "message": "The Donation Or Refund Amount Entered Is Not Valid"
+  },
+  "0xfdc9d49c": {
+    "message": "Funds Have Already Been Claimed From This Campaign"
+  },
+  "0x9d6d345e": {
+    "message": "Only The Campaign Owner Can Perform This Operation"
+  },
+  "0xad4ed287": {
+    "message": "Withdrawal Not Allowed As The Campaign Goal Was Not Reached"
+  },
+  "0x68e2eaa1": {
+    "message": "No Donation Record Found From You For This Campaign"
+  },
+  "0xe305f37c": {
+    "message": "Refund Not Allowed Because The Funding Target Was Achieved"
+  }
+}

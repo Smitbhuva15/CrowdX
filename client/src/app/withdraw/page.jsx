@@ -21,6 +21,8 @@ import { ShieldX } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { Toaster } from 'react-hot-toast'
 import { Loader2 } from 'lucide-react'
+import  errorconfig from '@/config/errorconfig.json';
+
 
 
 const Page = () => {
@@ -35,21 +37,22 @@ const Page = () => {
   const provider = useSelector((state) => state?.campaign?.provider);
 
 
- const isReady = provider && Object.keys(provider).length > 0 &&
+  const isReady = provider && Object.keys(provider).length > 0 &&
     campaignContract && Object.keys(campaignContract).length > 0;
 
   useEffect(() => {
     if (isReady && account) {
-      LoadEvents(dispatch, provider, campaignContract, 'Decore', 'Donor');
+      LoadEvents(dispatch, provider, campaignContract, 'nonDecore', 'nonDonor');
     }
   }, [isReady, account]);
 
-
+  
   useEffect(() => {
-    if(Allcampaigns)
-    setMyCampaign(Allcampaigns?.filter((campaign) => campaign?.creator.toString() === account?.address.toString()))
+    if (Allcampaigns)
+      setMyCampaign(Allcampaigns?.filter((campaign) => campaign?.creator.toString() === account?.address.toString()))
   }, [Allcampaigns])
 
+  console.log(myCampaign)
   const handelwithdraw = async (e, id) => {
     e.preventDefault();
     if (campaignContract && provider) {
@@ -82,23 +85,19 @@ const Page = () => {
       } catch (error) {
         let message = "Something went wrong";
 
-        if (error?.error?.data?.message) {
-          message = error.error.data.message;
-        } else if (error?.data?.message) {
-          message = error.data.message;
-        } else if (error?.reason) {
-          message = error.reason;
-        } else if (error?.message) {
-          message = error.message;
+        const data = error?.error?.data;
+        
+        message = errorconfig[data]?.message;
+        if(message==undefined){
+          toast.error(`Transaction failed: Something went wrong`)
         }
-
         toast.error(`Transaction failed: ${message}`);
         setLoading(0)
       }
 
-    LoadEvents(dispatch, provider, campaignContract, "nonDecore", "noDonor")
+      LoadEvents(dispatch, provider, campaignContract, "nonDecore", "noDonor")
     }
-    
+
   }
 
   return (
@@ -170,7 +169,7 @@ const Page = () => {
                                   onClick={(e) => { handelwithdraw(e, campaign?.id.toString()) }}
                                 >
                                   {
-                                    loading==campaign?.id.toString() ? (
+                                    loading == campaign?.id.toString() ? (
                                       <div className="flex items-center justify-center gap-0.5 text-white text-sm">
                                         <Loader2 className="animate-spin size-4" />
                                         <span >Pending</span>

@@ -1,5 +1,5 @@
 import React from 'react'
-import config from '@/config.json';
+import config from '@/config/config.json';
 import { useSelector } from 'react-redux';
 import { ExternalLink } from 'lucide-react';
 

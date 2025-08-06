@@ -25,7 +25,7 @@ const page = () => {
 
   useEffect(() => {
     if (isReady && account) {
-      LoadEvents(dispatch, provider, campaignContract, 'Decore', 'Donor');
+      LoadEvents(dispatch, provider, campaignContract, 'Decore', 'nonDonor');
     }
   }, [isReady, account]);
 
