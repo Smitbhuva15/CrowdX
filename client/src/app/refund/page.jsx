@@ -20,7 +20,7 @@ import { ShieldX } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { Toaster } from 'react-hot-toast'
 import { Loader2 } from 'lucide-react'
-import { LoadDonations } from '@/lib/LoadDatas'
+import { LoadDonations, LoadRefundWithDonation } from '@/lib/LoadDatas'
 
 
 const page = () => {
@@ -29,7 +29,7 @@ const page = () => {
 
   const dispatch = useDispatch();
   const account = useActiveAccount();
-  const donations = useSelector((state) => state?.campaign?.Allorders)
+  const donations = useSelector((state) => state?.campaign?.donations)
   const campaignContract = useSelector((state) => state?.campaign?.campaignContract)
   const provider = useSelector((state) => state?.campaign?.provider);
 
@@ -38,7 +38,7 @@ const page = () => {
 
   useEffect(() => {
     if (isReady && account && provider) {
-      LoadDonations(dispatch, provider, campaignContract)
+      LoadRefundWithDonation(dispatch, provider, campaignContract)
     }
   }, [account, isReady])
 
@@ -48,7 +48,7 @@ const page = () => {
     }
   }, [donations])
 
-
+   console.log(myDonation)
   return (
     account ? ((<div className="min-h-screen bg-black py-10">
       <div className="sm:pl-10 pl-5 mb-6">
@@ -78,24 +78,26 @@ const page = () => {
                     <TableRow className="text-zinc-300 text-sm  overflow-x-hidden">
                       <TableHead className="w-[80px] whitespace-nowrap">#</TableHead>
                       <TableHead className="whitespace-nowrap">Campaign Title</TableHead>
-                      <TableHead className="whitespace-nowrap">Target (ETH)</TableHead>
-                      <TableHead className="whitespace-nowrap">Raised (ETH)</TableHead>
-                      <TableHead className="whitespace-nowrap">Claimable</TableHead>
-                      <TableHead className="text-right whitespace-nowrap">Withdraw Action</TableHead>
+                       <TableHead className="whitespace-nowrap">Creator</TableHead>
+                      <TableHead className="whitespace-nowrap">Donation (ETH)</TableHead>
+                      <TableHead className="whitespace-nowrap">Refundable</TableHead>
+                      <TableHead className="text-right whitespace-nowrap">Refund Action</TableHead>
                     </TableRow>
                   </TableHeader>
 
                   <TableBody className=" overflow-x-hidden">
-                    {myDonation.map((donation, index) => {
-                      // const goal = ethers.utils.formatEther(campaign?.goal);
-                      // const raised = ethers.utils.formatEther(campaign?.raised);
+                    { 
+                    myDonation.map((donation, index) => {
+
+                      const amount = ethers.utils.formatEther(donation?.args?.amount);
+                     
 
                       return (
                         <TableRow className="text-white hover:bg-[#2a2b31] transition overflow-x-hidden" key={index}>
                           <TableCell className="font-medium whitespace-nowrap">{index + 1}</TableCell>
-                          {/* <TableCell className="whitespace-nowrap">{campaign?.title}</TableCell> */}
-                          {/* <TableCell className="whitespace-nowrap">{goal}</TableCell>
-                          <TableCell className="whitespace-nowrap">{raised}</TableCell> */}
+                          <TableCell className="whitespace-nowrap">donation?.title</TableCell>
+                          <TableCell className="whitespace-nowrap">donation?.creator</TableCell>
+                          <TableCell className="whitespace-nowrap">{amount}</TableCell>
                           {/* <TableCell className="whitespace-nowrap">
                             <span className={`font-bold `}>{goal <= raised ? <ShieldCheck className="w-6 h-6 text-green-600 ml-4" /> : <ShieldX className="w-6 h-6 text-red-500 ml-4" />}</span>
                           </TableCell> */}

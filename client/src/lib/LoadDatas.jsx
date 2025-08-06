@@ -3,7 +3,7 @@
 import { ethers } from "ethers"
 import config from '../config.json';
 import campaignabi from '@/abis/Campaign.json';
-import { getProvider, getcontract, getchainId, getCampaignEvents, getOrdersEvents, getwithdrawEvents } from "@/store/slice/campaignSlice";
+import { getProvider, getcontract, getchainId, getCampaignEvents, getOrdersEvents, getwithdrawEvents, getRefundDonation } from "@/store/slice/campaignSlice";
 
 export const LoadallData = async (dispatch) => {
 
@@ -22,10 +22,11 @@ export const LoadDonations = async (dispatch, provider, campaignContract) => {
   const latestblock = await provider.getBlockNumber()
   let donationStream = await campaignContract.queryFilter('Donate', 0, latestblock)
   dispatch(getOrdersEvents(donationStream))
+  return donationStream;
 }
 
 export const LoadEvents = async (dispatch, provider, campaignContract, Decorate, donor) => {
- 
+
   const latestblock = await provider.getBlockNumber()
   // const fromBlock = Math.max(latestblock, 0)
 
@@ -49,9 +50,58 @@ export const LoadEvents = async (dispatch, provider, campaignContract, Decorate,
   }
 
   dispatch(getCampaignEvents(campaigns))
+  return campaigns;
+}
+
+export const LoadRefundWithDonation = async (dispatch, provider, campaignContract) => {
+  const latestBlock = await provider.getBlockNumber();
+
+  let donationstream = await LoadDonations(dispatch, provider, campaignContract);
+  let refundstream = await campaignContract.queryFilter('Refund', 0, latestBlock);
+
+  let refundDonation = await Promise.all(
+    donationstream.map(async (donation) => {
+      // Await the decorated donation
+      donation = await decorateDonationRefund(donation, dispatch, provider, campaignContract);
+
+      // Check if this donation has already been refunded
+      const hashrefund = refundstream.some((refund) => {
+        return refund?.args?.id.toString() === donation?.args?.id.toString();
+      });
+
+      return {
+        ...donation,
+        refunded: hashrefund,
+      };
+    })
+  );
+
+  dispatch(getRefundDonation(refundDonation))
 
 }
 
+const decorateDonationRefund = async (donation, dispatch, provider, campaignContract) => {
+
+  const now = Math.floor(Date.now() / 1000);
+
+  const campaigns = await LoadEvents(dispatch, provider, campaignContract, "noDecore", "noDonor");
+
+
+  // Find the campaign that matches the donation ID
+  const matchedCampaign = campaigns.find(
+    (campaign) => campaign?.id.toString() === donation?.args?.id.toString()
+  );
+  const readyForRefund =
+    matchedCampaign &&
+    matchedCampaign.goal > matchedCampaign.raised
+    matchedCampaign.deadline.toNumber() < now;
+
+  return {
+    ...donation,
+    readyForRefund,
+  };
+
+}
 
 
 
