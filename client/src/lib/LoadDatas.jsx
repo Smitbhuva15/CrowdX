@@ -93,7 +93,7 @@ const decorateDonationRefund = async (donation, dispatch, provider, campaignCont
   );
   const readyForRefund =
     matchedCampaign &&
-    matchedCampaign.goal > matchedCampaign.raised
+    matchedCampaign.goal > matchedCampaign.raised &&
     matchedCampaign.deadline.toNumber() < now;
 
   return {

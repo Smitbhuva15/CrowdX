@@ -25,7 +25,7 @@ import { LoadDonations, LoadRefundWithDonation } from '@/lib/LoadDatas'
 
 const page = () => {
   const [myDonation, setMyDonation] = useState();
-  const [loading, setLoading] = useState(0);
+  const [loading, setLoading] = useState(-1);
 
   const dispatch = useDispatch();
   const account = useActiveAccount();
@@ -33,7 +33,7 @@ const page = () => {
   const campaignContract = useSelector((state) => state?.campaign?.campaignContract)
   const provider = useSelector((state) => state?.campaign?.provider);
 
-   const isReady = provider && Object.keys(provider).length > 0 &&
+  const isReady = provider && Object.keys(provider).length > 0 &&
     campaignContract && Object.keys(campaignContract).length > 0;
 
   useEffect(() => {
@@ -48,7 +48,58 @@ const page = () => {
     }
   }, [donations])
 
-   console.log(myDonation)
+  const handelrefund =async (e, id,index) => {
+    e.preventDefault();
+
+      if (campaignContract && provider) {
+      setLoading(index)
+      toast('Refund pending...', {
+        icon: '⏳',
+      });
+     const signer = await provider.getSigner();
+      try {
+         const transaction=await campaignContract.connect(signer).refund(id);
+      const recipt=await transaction.wait();
+        if (recipt.status !== 1) {
+          toast.error("Refund failed!")
+          setLoading(-1)
+          return;
+        }
+        else if (recipt.status === 1) {
+          const event = recipt.events?.find(e => e.event === "Refund");
+          if (event) {
+            toast.success(`Refund successful!`);
+            setLoading(-1)
+
+          }
+          else {
+            toast.error("Refund failed!");
+            setLoading(-1)
+
+          }
+        }
+      } catch (error) {
+        let message = "Something went wrong";
+
+        if (error?.error?.data?.message) {
+          message = error.error.data.message;
+        } else if (error?.data?.message) {
+          message = error.data.message;
+        } else if (error?.reason) {
+          message = error.reason;
+        } else if (error?.message) {
+          message = error.message;
+        }
+
+        toast.error(`Transaction failed: ${message}`);
+        setLoading(-1)
+      }
+
+   LoadRefundWithDonation(dispatch, provider, campaignContract)
+    }
+  }
+
+  console.log(myDonation)
   return (
     account ? ((<div className="min-h-screen bg-black py-10">
       <div className="sm:pl-10 pl-5 mb-6">
@@ -78,7 +129,7 @@ const page = () => {
                     <TableRow className="text-zinc-300 text-sm  overflow-x-hidden">
                       <TableHead className="w-[80px] whitespace-nowrap">#</TableHead>
                       <TableHead className="whitespace-nowrap">Campaign Title</TableHead>
-                       <TableHead className="whitespace-nowrap">Creator</TableHead>
+                      <TableHead className="whitespace-nowrap">Creator</TableHead>
                       <TableHead className="whitespace-nowrap">Donation (ETH)</TableHead>
                       <TableHead className="whitespace-nowrap">Refundable</TableHead>
                       <TableHead className="text-right whitespace-nowrap">Refund Action</TableHead>
@@ -86,57 +137,57 @@ const page = () => {
                   </TableHeader>
 
                   <TableBody className=" overflow-x-hidden">
-                    { 
-                    myDonation.map((donation, index) => {
+                    {
+                      myDonation.map((donation, index) => {
 
-                      const amount = ethers.utils.formatEther(donation?.args?.amount);
-                     
+                        const amount = ethers.utils.formatEther(donation?.args?.amount);
 
-                      return (
-                        <TableRow className="text-white hover:bg-[#2a2b31] transition overflow-x-hidden" key={index}>
-                          <TableCell className="font-medium whitespace-nowrap">{index + 1}</TableCell>
-                          <TableCell className="whitespace-nowrap">donation?.title</TableCell>
-                          <TableCell className="whitespace-nowrap">donation?.creator</TableCell>
-                          <TableCell className="whitespace-nowrap">{amount}</TableCell>
-                          {/* <TableCell className="whitespace-nowrap">
-                            <span className={`font-bold `}>{goal <= raised ? <ShieldCheck className="w-6 h-6 text-green-600 ml-4" /> : <ShieldX className="w-6 h-6 text-red-500 ml-4" />}</span>
-                          </TableCell> */}
 
-                          <TableCell className="text-right whitespace-nowrap">
-                            {/* {campaign?.withdrawn == true ? (
-                              <button
-                                type="button"
-                                className="px-4 py-2 bg-gray-400 text-white font-medium rounded-md cursor-not-allowed"
-                                disabled
-                              >
-                                Already Claimed
-                              </button>
+                        return (
+                          <TableRow className="text-white hover:bg-[#2a2b31] transition overflow-x-hidden" key={index}>
+                            <TableCell className="font-medium whitespace-nowrap">{index + 1}</TableCell>
+                            <TableCell className="whitespace-nowrap">donation?.title</TableCell>
+                            <TableCell className="whitespace-nowrap">{donation?.args?.creator}</TableCell>
+                            <TableCell className="whitespace-nowrap">{amount}</TableCell>
+                            <TableCell className="whitespace-nowrap">
+                              <span className={`font-bold `}>{donation?.readyForRefund ? <ShieldCheck className="w-6 h-6 text-green-600 ml-4" /> : <ShieldX className="w-6 h-6 text-red-500 ml-4" />}</span>
+                            </TableCell>
 
-                            ) : (
-                              <button
-                                type="submit"
-                                className="px-4 py-2 bg-[#8b5cf6] text-white font-medium rounded-md hover:bg-[#7a4ee0] transition"
-                                // onClick={(e) => { handelwithdraw(e, campaign?.id.toString()) }}
-                              >
-                                {
-                                  loading == campaign?.id.toString() ? (
-                                    <div className="flex items-center justify-center gap-0.5 text-white text-sm">
-                                      <Loader2 className="animate-spin size-4" />
-                                      <span >Pending</span>
-                                    </div>
-                                  ) : (
-                                    <div >Withdraw</div>
+                            <TableCell className="text-right whitespace-nowrap">
+                              {donation?.refunded == true ? (
+                                <button
+                                  type="button"
+                                  className="px-4 py-2 bg-gray-400 text-white font-medium rounded-md cursor-not-allowed"
+                                  disabled
+                                >
+                                  Already Claimed
+                                </button>
 
-                                  )
-                                }
+                              ) : (
+                                <button
+                                  type="submit"
+                                  className="px-4 py-2 bg-[#8b5cf6] text-white font-medium rounded-md hover:bg-[#7a4ee0] transition"
+                                  onClick={(e) => { handelrefund(e, donation?.args?.id.toString(),index) }}
+                                >
+                                  {
+                                    loading == index ? (
+                                      <div className="flex items-center justify-center gap-0.5 text-white text-sm">
+                                        <Loader2 className="animate-spin size-4" />
+                                        <span >Pending</span>
+                                      </div>
+                                    ) : (
+                                      <div >Refund</div>
 
-                              </button>
-                            )} */}
+                                    )
+                                  }
 
-                          </TableCell>
-                        </TableRow>
-                      )
-                    })}
+                                </button>
+                              )}
+
+                            </TableCell>
+                          </TableRow>
+                        )
+                      })}
                   </TableBody>
                 </Table>
 
