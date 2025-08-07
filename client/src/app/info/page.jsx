@@ -1,5 +1,6 @@
 import { Section1 } from '@/components/info/Section1'
 import { Section2 } from '@/components/info/Section2'
+import { Section3 } from '@/components/info/Section3'
 import { ArrowBigRight } from 'lucide-react'
 import { ExternalLink } from 'lucide-react'
 import Image from 'next/image'
@@ -12,6 +13,7 @@ const page = () => {
 
         <Section1 />
         <Section2 />
+        <Section3 />
       </div>
     </div>
 

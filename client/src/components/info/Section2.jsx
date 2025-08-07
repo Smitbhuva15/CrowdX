@@ -5,7 +5,7 @@ export const Section2 = () => {
         <>
             <div className='space-y-4'>
                 <div >
-                    <span className='md:text-xl text-sm font-bold'> 2.</span>  <a
+                    <span className='md:text-xl text-sm font-bold mr-2'> 2.</span>  <a
                         href="/"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-1 underline text-[#8b5cf6] transition-colors"
@@ -29,7 +29,7 @@ export const Section2 = () => {
                 <img
                     src="./create campaign.png"
                     alt="Campaign creation"
-                    className="w-full max-w-md mx-auto rounded-2xl"
+                    className="w-full max-w-md sm:ml-10 sm:mx-0 mx-auto rounded-2xl"
                 />
             </div>
 
