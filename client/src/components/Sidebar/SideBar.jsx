@@ -48,11 +48,6 @@ const items = [
     url: "/refund",
     icon: HandCoins,
   },
-   {
-    title: "Search",
-    url: "/search",
-    icon: Search,
-  },
   {
     title: "More Info",
     url: "/info",

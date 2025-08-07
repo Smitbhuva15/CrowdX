@@ -4,7 +4,7 @@ import { createThirdwebClient } from "thirdweb";
 import { ConnectButton, useActiveAccount } from "thirdweb/react";
 import { createWallet } from "thirdweb/wallets";
 import { sepolia } from "thirdweb/chains";
-import { Search, TextSearch } from 'lucide-react';
+import { Search } from 'lucide-react';
 import { LoadallData } from "@/lib/LoadDatas";
 import { useDispatch } from "react-redux";
 import Link from "next/link";
@@ -46,7 +46,7 @@ const Navbar = () => {
             <input
               type="text"
               className="lg:w-full w-xs pl-12 pr-4 py-3 rounded-2xl text-white border-2  focus:outline-none border-[#8b5cf6] transition-all duration-300 shadow-lg shadow-[#9674e6]"
-              placeholder="Search Campaign..."
+              placeholder="Search ..."
               onChange={(e)=>setSearch(e.target.value)}
             />
             <div className="absolute left-4 top-1/2 -translate-y-1/2 text-black pointer-events-none">

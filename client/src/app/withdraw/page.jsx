@@ -124,7 +124,7 @@ const Page = () => {
             :
             (
 
-              <div className="bg-[#1e1f24] lg:max-w-6xl md:lg-max-w-4xl mx-auto sm:max-w-xl xs:max-w-sm xxs:max-w-[240px] px-4 overflow-x-auto rounded-2xl md:mt-24 mt-20" >
+              <div className="bg-[#1e1f24] lg:max-w-6xl md:max-w-3xl mx-auto sm:max-w-xl xs:max-w-sm xxs:max-w-[240px] px-4 overflow-x-auto rounded-2xl md:mt-24 mt-20" >
                 <div className="  rounded-2xl shadow-md p-6">
                   {/* Make table wide enough to cause scroll on smaller devices */}
 

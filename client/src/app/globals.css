@@ -4,9 +4,9 @@
 
 @theme {
   --breakpoint-xxs:300px;
-  --breakpoint-xs:425px;
+  --breakpoint-xs:450px;
   --breakpoint-sm: 640px;
-  --breakpoint-md:820px;
+  --breakpoint-md:910px;
   --breakpoint-lg:1024px;
   --breakpoint-xl:1280px;
   --breakpoint-2xl: 1536px;
