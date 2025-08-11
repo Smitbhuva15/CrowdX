@@ -11,6 +11,8 @@ const page = () => {
     <div className="bg-black text-zinc-300 px-4 py-10">
       <div className="md:w-[90%] w-full mx-auto space-y-10">
 
+
+
         <Section1 />
         <Section2 />
         <Section3 />
