@@ -13,10 +13,10 @@
   --breakpoint-3xl: 120rem;
 }
 
-/* * {
-  background-color: #0a0a0a;
+* {
+font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif
 
-} */
+}
 
 .title {
   font-family: 'Orbitron', sans-serif;
