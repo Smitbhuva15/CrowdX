@@ -5,7 +5,7 @@ export const Section4 = () => {
         <>
             <div className=" space-y-4 ">
                 <p className=" md:text-xl text-sm font-bold">
-                    <span> <span className='mr-2'>5.</span> Securely transfer your earned </span>
+                    <span> <span className='mr-2'>6.</span> Securely transfer your earned </span>
                     <a
                         href="/withdraw"
                         rel="noopener noreferrer"
@@ -16,6 +16,25 @@ export const Section4 = () => {
                 </p>
                 <img
                     src="./withdraw.png"
+                    alt="Campaign creation"
+                    className="w-full max-w-5xl   mx-auto rounded-2xl" 
+                    />
+            </div>
+
+            <div className=" space-y-4 ">
+                <p className=" md:text-xl text-sm font-bold">
+                    <span> <span className='mr-2'>7.</span> Secure a full </span>
+                    <a
+                        href="/refund"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 underline text-[#8b5cf6] transition-colors"
+                    >
+                        <span>  refund  </span> 
+                        </a> if the campaign’s funding target is not successfully reached.
+
+                </p>
+                <img
+                    src="./refund.png"
                     alt="Campaign creation"
                     className="w-full max-w-5xl   mx-auto rounded-2xl" 
                     />
