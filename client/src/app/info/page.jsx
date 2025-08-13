@@ -1,6 +1,7 @@
 import { Section1 } from '@/components/info/Section1'
 import { Section2 } from '@/components/info/Section2'
 import { Section3 } from '@/components/info/Section3'
+import { Section4 } from '@/components/info/Section4'
 import { ArrowBigRight } from 'lucide-react'
 import { ExternalLink } from 'lucide-react'
 import Image from 'next/image'
@@ -11,11 +12,10 @@ const page = () => {
     <div className="bg-black text-zinc-300 px-4 py-10">
       <div className="md:w-[90%] w-full mx-auto space-y-10">
 
-
-
         <Section1 />
         <Section2 />
         <Section3 />
+        <Section4 />
       </div>
     </div>
 
