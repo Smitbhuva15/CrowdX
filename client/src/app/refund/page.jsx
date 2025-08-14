@@ -48,7 +48,7 @@ const page = () => {
       setMyDonation(donations.filter((donation) => donation?.args?.donor?.toString() === account?.address.toString()))
     }
   }, [donations])
-
+// console.log(donations)
   const handelrefund =async (e, id,index) => {
     e.preventDefault();
 
@@ -141,13 +141,13 @@ const page = () => {
                       myDonation.map((donation, index) => {
 
                         const amount = ethers.utils.formatEther(donation?.args?.amount);
-
+                        // console.log(donation)
 
                         return (
                           <TableRow className="text-white hover:bg-[#2a2b31] transition overflow-x-hidden" key={index}>
                             <TableCell className="font-medium whitespace-nowrap">{index + 1}</TableCell>
-                            <TableCell className="whitespace-nowrap">{donation?.args?.title}</TableCell>
-                            <TableCell className="whitespace-nowrap">{donation?.args?.creator}</TableCell>
+                            <TableCell className="whitespace-nowrap">{donation?.args?.donor}</TableCell>
+                            <TableCell className="whitespace-nowrap">{donation?.args?.donor}</TableCell>
                             <TableCell className="whitespace-nowrap">{amount}</TableCell>
                             <TableCell className="whitespace-nowrap">
                               <span className={`font-bold `}>{donation?.readyForRefund ? <ShieldCheck className="w-6 h-6 text-green-600 ml-4" /> : <ShieldX className="w-6 h-6 text-red-500 ml-4" />}</span>

@@ -284,6 +284,7 @@ describe("Campaign", () => {
                 expect(args.donor).to.be.equal(signer.address);
                 expect(args.amount).to.be.equal(amountToDonation);
                 expect(args.creator).to.be.equal(realcampaign.creator);
+                console.log(args)
                 expect(args.title).to.be.equal(realcampaign.title);
 
 

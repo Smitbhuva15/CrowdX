@@ -9,9 +9,9 @@ const Footer = () => {
         {/* Logo */}
         <div className="text-center mb-6">
           <Link href="/">
-            <h2 className="font-extrabold text-3xl whitespace-nowrap text-[#8b5cf6] hover:text-[#7c3aed] transition-colors">
-              Crowd<span className="text-5xl text-white">X</span>
-            </h2>
+            <div className='flex justify-center'> 
+              <img src='./logo2.png' className="sm:w-36 w-24 text-3xl transition-colors" />
+            </div>
           </Link>
         </div>
 
@@ -35,7 +35,7 @@ const Footer = () => {
             href="/info"
             className="transition-colors"
           >
-            About 
+            About
           </Link>
         </div>
 
