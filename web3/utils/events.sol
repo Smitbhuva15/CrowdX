@@ -39,7 +39,9 @@ event CampaignCreated(
 event Donate(
     uint256 id,
     address donor,
-    uint256 amount
+    uint256 amount,
+    address creator,
+    string title
 );
 
 /**
@@ -48,11 +50,7 @@ event Donate(
  * @param creator Address of the campaign creator.
  * @param raised Total amount raised that was withdrawn.
  */
-event Withdraw(
-    uint256 id,
-    address creator,
-    uint256 raised
-);
+event Withdraw(uint256 id, address creator, uint256 raised);
 
 /**
  * @notice Emitted when a donor is refunded after an unsuccessful campaign.

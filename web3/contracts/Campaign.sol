@@ -133,7 +133,7 @@ contract Campaign {
         // Record the donation
         contributions[_id][msg.sender] += msg.value;
 
-        emit Donate(c.id, msg.sender, msg.value);
+        emit Donate(c.id, msg.sender, msg.value,c.creator,c.title);
     }
 
     /////////////////////// WITHDRAW FUNDS /////////////////////////

@@ -104,13 +104,15 @@ describe("Campaign", () => {
                 transaction = await campaign.connect(signer).donate(1, { value: donationAmount });
                 result = await transaction.wait();
 
+                const realcampaign = await campaign.campaigns(1);
                 const event = result.events[0];
                 const args = event.args;
                 expect(event.event).to.be.equal('Donate');
                 expect(args.id).to.be.equal(1);
                 expect(args.donor).to.be.equal(signer.address);
                 expect(args.amount).to.be.equal(ethers.utils.parseEther('1'));
-
+                expect(args.creator).to.be.equal(realcampaign.creator);
+                expect(args.title).to.be.equal(realcampaign.title);
             })
         })
 
@@ -272,10 +274,10 @@ describe("Campaign", () => {
             it("emit Refund event", async () => {
 
                 const amountToDonation = await campaign.getcontributions(1, signer.address);
-            
+
                 transaction = await campaign.connect(signer).refund(1);;
                 result = await transaction.wait();
-                const realcampaign=await campaign.campaigns(1);
+                const realcampaign = await campaign.campaigns(1);
 
                 const event = result.events[0];
                 const args = event.args;
@@ -284,7 +286,6 @@ describe("Campaign", () => {
                 expect(args.donor).to.be.equal(signer.address);
                 expect(args.amount).to.be.equal(amountToDonation);
                 expect(args.creator).to.be.equal(realcampaign.creator);
-                console.log(args)
                 expect(args.title).to.be.equal(realcampaign.title);
 
 
