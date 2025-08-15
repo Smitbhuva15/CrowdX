@@ -20,6 +20,7 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
 } from "@/components/ui/sidebar"; // Update path based on your project
+import Link from "next/link";
 
 const items = [
   {
@@ -60,8 +61,8 @@ export function SideBar() {
     <Sidebar>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className="text-3xl font-extrabold mb-5 mt-2 text-[#8b5cf6]">
-            Crowd<span className="text-white font-extrabold text-5xl">X</span>
+          <SidebarGroupLabel className="mt-10 mb-10 ">
+             <Link href={'/'}> <h2 className="font-extrabold xs:text-3xl whitespace-nowrap text-xl text-[#8b5cf6]"><img src='./logo2.png' className="sm:w-28 w-24 ml-8" /> </h2></Link>
           </SidebarGroupLabel>
 
           <SidebarGroupContent>

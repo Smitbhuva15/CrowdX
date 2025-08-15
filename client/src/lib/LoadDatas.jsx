@@ -14,7 +14,6 @@ export const LoadallData = async (dispatch) => {
   dispatch(getchainId(chainId))
 
   const campaign = new ethers.Contract(config[chainId].campaign.address, campaignabi, provider)
-  console.log(campaign)
   dispatch(getcontract(campaign))
 
 }
@@ -59,7 +58,6 @@ export const LoadRefundWithDonation = async (dispatch, provider, campaignContrac
 
   let donationstream = await LoadDonations(dispatch, provider, campaignContract);
   let refundstream = await campaignContract.queryFilter('Refund', 0, latestBlock);
-  console.log(donationstream,"}}}")
   let refundDonation = await Promise.all(
     donationstream.map(async (donation) => {
       // Await the decorated donation
