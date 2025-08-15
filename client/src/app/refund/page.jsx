@@ -144,7 +144,7 @@ const page = () => {
 
 
                         return (
-                          <TableRow className="text-white hover:bg-[#2a2b31] transition overflow-x-hidden" key={index}>
+                          <TableRow className="text-zinc-300 hover:bg-[#2a2b31] transition overflow-x-hidden" key={index}>
                             <TableCell className="font-medium whitespace-nowrap">{index + 1}</TableCell>
                             <TableCell className="whitespace-nowrap">{donation?.args?.title}</TableCell>
                             <TableCell className="whitespace-nowrap">{donation?.args?.creator}</TableCell>
@@ -157,7 +157,7 @@ const page = () => {
                               {donation?.refunded == true ? (
                                 <button
                                   type="button"
-                                  className="px-4 py-2 bg-gray-400 text-white font-medium rounded-md cursor-not-allowed"
+                                  className="px-4 py-2 bg-gray-400 text-zinc-300 font-medium rounded-md cursor-not-allowed"
                                   disabled
                                 >
                                   Already Claimed
@@ -166,12 +166,12 @@ const page = () => {
                               ) : (
                                 <button
                                   type="submit"
-                                  className="px-4 py-2 bg-[#8b5cf6] text-white font-medium rounded-md hover:bg-[#7a4ee0] transition"
+                                  className="px-4 py-2 bg-[#003b67] text-zinc-300 font-medium rounded-md hover:bg-[#002847] transition"
                                   onClick={(e) => { handelrefund(e, donation?.args?.id.toString(),index) }}
                                 >
                                   {
                                     loading == index ? (
-                                      <div className="flex items-center justify-center gap-0.5 text-white text-sm">
+                                      <div className="flex items-center justify-center gap-0.5 text-zinc-300 text-sm">
                                         <Loader2 className="animate-spin size-4" />
                                         <span >Pending</span>
                                       </div>

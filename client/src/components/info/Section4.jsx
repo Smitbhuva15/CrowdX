@@ -9,7 +9,7 @@ export const Section4 = () => {
                     <a
                         href="/withdraw"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 underline text-[#8b5cf6] transition-colors"
+                        className="inline-flex items-center gap-1 underline text-[#003b67] transition-colors"
                     >
                         <span> funds </span>
                     </a> after your campaign ends and successfully meets its funding requirements.
@@ -27,7 +27,7 @@ export const Section4 = () => {
                     <a
                         href="/refund"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 underline text-[#8b5cf6] transition-colors"
+                        className="inline-flex items-center gap-1 underline text-[#003b67] transition-colors"
                     >
                         <span>  refund  </span> 
                         </a> if the campaign’s funding target is not successfully reached.

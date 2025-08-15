@@ -8,7 +8,7 @@ export const Section3 = () => {
                     <span className='md:text-xl text-sm font-bold mr-2'> 4.</span>  <a
                         href="/lanchpad"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 underline text-[#8b5cf6] transition-colors"
+                        className="inline-flex items-center gap-1 underline text-[#003b67] transition-colors"
                     >
                         <span className='md:text-xl text-sm font-bold'> Explore</span>
                     </a> <span className='md:text-xl text-sm font-bold'> and Manage All the Campaigns You’ve Created.</span>

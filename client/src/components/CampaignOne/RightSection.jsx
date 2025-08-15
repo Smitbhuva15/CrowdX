@@ -90,7 +90,7 @@ const RightSection = ({ currentCampaign, raised, account }) => {
       </div>
 
       <div className="p-6 bg-[#1e1f24] rounded-2xl space-y-4">
-        <h2 className="text-[#8b5cf6] font-semibold text-lg">Contribute Now!</h2>
+        <h2 className="text-[#003b67] font-semibold text-lg">Contribute Now!</h2>
         <form className="space-y-3" onSubmit={handleSubmit(onSubmit)}>
           <label className="block text-sm text-gray-300">Amount you want to contribute</label>
           <div className="relative w-full">
@@ -99,14 +99,14 @@ const RightSection = ({ currentCampaign, raised, account }) => {
               step="0.001"
               placeholder="e.g. 0.1"
               {...register("donationAmount", { required: "Donation Amount is required" })}
-              className="w-full pr-14 px-3 py-2 bg-black border border-[#8b5cf6] text-white rounded-md 
-                      focus:outline-none focus:ring-2 focus:ring-[#8b5cf6]
+              className="w-full pr-14 px-3 py-2 bg-black border border-[#003b67] text-zinc-300 rounded-md 
+                      focus:outline-none focus:ring-2 focus:ring-[#003b67]
                       appearance-none 
                       [&::-webkit-outer-spin-button]:appearance-none 
                       [&::-webkit-inner-spin-button]:appearance-none 
                       [&::-moz-appearance]:textfield"
             />
-            <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-[#8b5cf6] font-medium text-sm">
+            <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-[#003b67] font-medium text-sm">
               ETH
             </span>
 
@@ -131,7 +131,7 @@ const RightSection = ({ currentCampaign, raised, account }) => {
                 loading
                   ?
                   (
-                    <div className="flex items-center justify-center gap-2  w-full bg-[#7c3aed] transition-colors text-white py-2 rounded-md font-semibold">
+                    <div className="flex items-center justify-center gap-2  w-full bg-[#003b67] transition-colors text-zinc-300 py-2 rounded-md font-semibold">
                       <Loader2 className="animate-spin " />
                       <span >Pending...</span>
                     </div>
@@ -139,7 +139,7 @@ const RightSection = ({ currentCampaign, raised, account }) => {
                   :
                   (<button
                     type="submit"
-                    className="w-full bg-[#8b5cf6] hover:bg-[#7c3aed] transition-colors text-white py-2 rounded-md font-semibold"
+                    className="w-full bg-[#003b67] hover:bg-[#002847] transition-colors text-zinc-300 py-2 rounded-md font-semibold"
                   >
                     Donate
                   </button>

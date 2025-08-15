@@ -84,11 +84,11 @@ const page = () => {
           <Banner title="Create a New Campaign" />
         </div>
 
-        <form className="space-y-6 bg-[#0a0a0a] p-6 rounded-2xl  border border-[#1f1f1f] shadow-[#9674e6] shadow-lg" onSubmit={handleSubmit(onSubmit)}>
+        <form className="space-y-6 bg-[#0a0a0a] p-6 rounded-2xl  border border-[#1f1f1f] shadow-[#002847] shadow-xl" onSubmit={handleSubmit(onSubmit)}>
           {/* Campaign Name */}
 
           <div>
-            <label className="block text-sm font-semibold text-white mb-1">Campaign Name</label>
+            <label className="block text-sm font-semibold text-zinc-300 mb-1">Campaign Name</label>
             <input
               type="text"
               placeholder="e.g. Education for All"
@@ -103,7 +103,7 @@ const page = () => {
                   message: "Maximum length is 30 characters",
                 }
               })}
-              className="w-full px-4 py-2 rounded-md border border-gray-300 text-white focus:outline-none focus:ring-2 focus:ring-[#8b5cf6]"
+              className="w-full px-4 py-2 rounded-md border border-gray-300 text-zinc-300 focus:outline-none focus:ring-2 focus:ring-[#003b67]"
             />
             {errors.name && (
               <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
@@ -113,7 +113,7 @@ const page = () => {
 
           {/* Campaign Description */}
           <div>
-            <label className="block text-sm font-semibold text-white mb-1">Campaign Description</label>
+            <label className="block text-sm font-semibold text-zinc-300 mb-1">Campaign Description</label>
             <textarea
               id="description"
               placeholder="Describe the purpose of the campaign..."
@@ -124,7 +124,7 @@ const page = () => {
                   message: "Minimum length is 30 characters",
                 },
               })}
-              className="w-full px-4 py-2 rounded-md border border-gray-300 text-white h-32 resize-none focus:outline-none focus:ring-2 focus:ring-[#8b5cf6]"
+              className="w-full px-4 py-2 rounded-md border border-gray-300 text-zinc-300 h-32 resize-none focus:outline-none focus:ring-2 focus:ring-[#003b67]"
             ></textarea>
             {errors.description && (
               <p className="text-red-500 text-sm mt-1">{errors.description.message}</p>
@@ -133,12 +133,12 @@ const page = () => {
 
           {/* Campaign Image */}
           <div>
-            <label className="block text-sm font-semibold text-white mb-1">Campaign Image</label>
+            <label className="block text-sm font-semibold text-zinc-300 mb-1">Campaign Image</label>
             <input
               type="file"
               {...register("file", { required: "Campaign image is required" })}
               accept=".jpg, .jpeg, .png, .jfif"
-              className="w-full text-white file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-[#8b5cf6] file:text-white hover:file:bg-[#7c3aed]"
+              className="w-full text-zinc-300 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-[#003b67] file:text-zinc-300 hover:file:bg-[#002847]"
             />
             {errors.file && (
               <p className="text-red-500 text-sm mt-1">{errors.file.message}</p>
@@ -147,7 +147,7 @@ const page = () => {
 
           {/* Target Amount */}
           <div>
-            <label className="block text-sm font-semibold text-white mb-1">Target Amount (in ETH)</label>
+            <label className="block text-sm font-semibold text-zinc-300 mb-1">Target Amount (in ETH)</label>
             <input
               type="number"
               step="0.01"
@@ -160,7 +160,7 @@ const page = () => {
                     message: "Target amount must be greater than 0.01 ETH"
                   }
                 })}
-              className="w-full px-4 py-2 rounded-md border border-gray-300 text-white focus:outline-none focus:ring-2 focus:ring-[#8b5cf6]"
+              className="w-full px-4 py-2 rounded-md border border-gray-300 text-zinc-300 focus:outline-none focus:ring-2 focus:ring-[#003b67]"
             />
             {errors.amount && (
               <p className="text-red-500 text-sm mt-1">{errors.amount.message}</p>
@@ -169,7 +169,7 @@ const page = () => {
 
           {/* Duration */}
           <div>
-            <label htmlFor="duration" className="block text-sm font-semibold text-white mb-1">
+            <label htmlFor="duration" className="block text-sm font-semibold text-zinc-300 mb-1">
               Duration (in Days)
             </label>
             <input
@@ -180,7 +180,7 @@ const page = () => {
               max={150}
               {...register("duration", { required: "Campaign duration is required" })}
               placeholder="e.g. 30"
-              className="w-full px-4 py-2 rounded-md border text-white border-gray-300  focus:outline-none focus:ring-2 focus:ring-[#8b5cf6]"
+              className="w-full px-4 py-2 rounded-md border text-zinc-300 border-gray-300  focus:outline-none focus:ring-2 focus:ring-[#003b67]"
             />
             {errors.duration && (
               <p className="text-red-500 text-sm mt-1">{errors.duration.message}</p>
@@ -191,11 +191,11 @@ const page = () => {
           {account ? (<div className="text-center pt-4">
             <button
               type="submit"
-              className="bg-[#8b5cf6] hover:bg-[#7c3aed] text-white font-semibold py-3 px-6 rounded-lg shadow-md transition-all duration-300 w-full "
+              className="bg-[#003b67] hover:bg-[#002847] text-zinc-300 font-semibold py-3 px-6 rounded-lg shadow-md transition-all duration-300 w-full "
             >
               {
                 loading ? (
-                  <div className="flex items-center justify-center gap-2 text-white ">
+                  <div className="flex items-center justify-center gap-2 text-zinc-300 ">
                     <Loader2 className="animate-spin " />
                     <span >Pending...</span>
                   </div>
@@ -207,7 +207,7 @@ const page = () => {
           </div>) : (<div className="text-center pt-4">
             <button
               disabled
-              className="bg-[#8b5cf6] hover:bg-[#7c3aed] text-white font-semibold py-3 px-6 rounded-lg shadow-md transition-all duration-300 w-full "
+              className="bg-[#003b67] hover:bg-[#002847] text-zinc-300 font-semibold py-3 px-6 rounded-lg shadow-md transition-all duration-300 w-full "
             >
               Connect Wallet
             </button>

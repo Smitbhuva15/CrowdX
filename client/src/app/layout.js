@@ -23,7 +23,7 @@ export default function RootLayout({ children }) {
         <ThirdWebprovider>
           <ReduxProvider>
             <SidebarProvider >
-              <div className="flex min-h-screen w-full bg-black text-white">
+              <div className="flex min-h-screen w-full bg-black text-zinc-300">
                 {/* Sidebar with trigger inside */}
                 <div className="flex flex-col items-center bg-[#0a0a0a]">
                   <SideBar />

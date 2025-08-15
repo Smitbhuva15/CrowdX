@@ -62,7 +62,7 @@ export function SideBar() {
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel className="mt-10 mb-10 ">
-             <Link href={'/'}> <h2 className="font-extrabold xs:text-3xl whitespace-nowrap text-xl text-[#8b5cf6]"><img src='./logo2.png' className="sm:w-28 w-24 ml-8" /> </h2></Link>
+             <Link href={'/'}> <h2 className="font-extrabold xs:text-3xl whitespace-nowrap text-xl text-[#003b67]"><img src='./logo2.png' className="sm:w-28 w-24 ml-8" /> </h2></Link>
           </SidebarGroupLabel>
 
           <SidebarGroupContent>
@@ -77,8 +77,8 @@ export function SideBar() {
                         href={item.url}
                         className="flex items-center gap-3 px-2 py-2 rounded hover:bg-[#1a1a1a] transition-all"
                       >
-                        <Icon className="w-5 h-5 text-[#8b5cf6]" />
-                        <span className="text-[#8b5cf6] font-medium">
+                        <Icon className="w-5 h-5 text-zinc-300" />
+                        <span className="text-zinc-300 font-medium">
                           {item.title}
                         </span>
                       </a>

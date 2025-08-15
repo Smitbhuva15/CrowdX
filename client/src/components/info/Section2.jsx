@@ -8,7 +8,7 @@ export const Section2 = () => {
                     <span className='md:text-xl text-sm font-bold mr-2'> 2.</span>  <a
                         href="/"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 underline text-[#8b5cf6] transition-colors"
+                        className="inline-flex items-center gap-1 underline text-[#003b67] transition-colors"
                     >
                         <span className='md:text-xl text-sm font-bold'> Explore</span>
                     </a> <span className='md:text-xl text-sm font-bold'> all active campaigns currently accepting contributions.</span>
@@ -21,7 +21,7 @@ export const Section2 = () => {
                     <a
                         href="/CreatCampaign"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 underline text-[#8b5cf6] transition-colors"
+                        className="inline-flex items-center gap-1 underline text-[#003b67] transition-colors"
                     >
                         <span> Campaign</span>
                     </a> in just a few steps.

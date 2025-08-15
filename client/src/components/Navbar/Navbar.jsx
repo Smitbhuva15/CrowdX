@@ -34,23 +34,23 @@ const Navbar = () => {
 
   return (
     
-    <div className="mt-6 text-white px-4 w-full border-b pb-4  border-white/10 ">
+    <div className="mt-6 text-zinc-300 px-4 w-full border-b pb-4  border-white/10 ">
 
       <div className="flex justify-between items-center w-full flex-wrap gap-4">
       
-       <Link href={'/'}> <h2 className="font-extrabold xs:text-3xl whitespace-nowrap text-xl text-[#8b5cf6]"><img src='./logo2.png' className="sm:w-36 xs:w-24 w-16" /> </h2></Link>
+       <Link href={'/'}> <h2 className="font-extrabold xs:text-3xl whitespace-nowrap text-xl"><img src='./logo2.png' className="sm:w-36 xs:w-24 w-16" /> </h2></Link>
 
        
         <div className="hidden md:block w-full  lg:max-w-md max-w-sm">
           <div className="relative">
             <input
               type="text"
-              className="lg:w-full w-xs pl-12 pr-4 py-3 rounded-2xl text-white border-2  focus:outline-none border-[#8b5cf6] transition-all duration-300 shadow-lg shadow-[#9674e6]"
+              className="lg:w-full w-xs pl-12 pr-4 py-3 rounded-2xl text-zinc-300 border-2  focus:outline-none border-[#003b67] transition-all duration-300 shadow-lg shadow-[#003b67]"
               placeholder="Search ..."
               onChange={(e)=>setSearch(e.target.value)}
             />
             <div className="absolute left-4 top-1/2 -translate-y-1/2 text-black pointer-events-none">
-              <Search className="text-[#8b5cf6] "/>
+              <Search className="text-[#003b67] "/>
             </div>
           </div>
         </div>

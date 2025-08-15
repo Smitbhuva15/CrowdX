@@ -10,12 +10,12 @@ const LeftSection = ({ currentCampaign, goal,orders }) => {
 
   return (
     <div className="w-full lg:w-1/2 space-y-6">
-      <h1 className="sm:text-3xl text-xl font-bold text-[#8b5cf6]">
+      <h1 className="sm:text-3xl text-xl font-bold text-[#003b67]">
         {currentCampaign?.title}
       </h1>
       <p className="text-zinc-300 text-dm sm:text-md">{currentCampaign?.description}</p>
 
-      <div className="inline-flex items-center gap-1 text-[#8b5cf6] hover:text-violet-400 transition-colors duration-200 underline cursor-pointer">
+      <div className="inline-flex items-center gap-1 text-[#003b67] hover:text-[#034e88] transition-colors duration-200 underline cursor-pointer">
         <a
           href={`https://sepolia.etherscan.io/address/${config[chainId].campaign.address}`}
           target="_blank"

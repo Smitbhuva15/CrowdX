@@ -69,12 +69,12 @@ const page = () => {
         ?
         (
           <div className="flex items-center justify-center h-[78vh]">
-            <Loader2 className="h-10 w-10 text-[#8b5cf6] animate-spin" />
+            <Loader2 className="h-10 w-10 text-[#003b67] animate-spin" />
           </div>
         )
         :
         (
-          <div className="w-full  text-white py-8 px-4 ">
+          <div className="w-ful  text-zinc-300  py-8 px-4 ">
             <div className="max-w-6xl mx-auto flex flex-col lg:flex-row gap-10">
 
               {/* Section 1 */}

@@ -59,20 +59,20 @@ export const MyCart = ({Allcampaigns}) => {
                                     </CardHeader>
 
                                     <CardContent className="pb-1">
-                                        <h2 className="xs:text-lg text-md font-bold text-white mb-1">{campaign?.title}</h2>
+                                        <h2 className="xs:text-lg text-md font-bold text-zinc-300 mb-1">{campaign?.title}</h2>
                                         <p className="text-xs text-gray-400 flex items-center gap-1">
-                                            <User className="w-4 h-4 text-[#8b5cf6]" />
+                                            <User className="w-4 h-4 text-[#003b67]" />
 
                                             {`by ${campaign?.creator.slice(0, 9)}...${campaign?.creator.slice(-9)}`}
 
                                         </p>
                                         <div className="mt-4 flex justify-between text-sm text-gray-300">
                                             <div>
-                                                <p className="font-bold text-[#8b5cf6]">Target</p>
+                                                <p className="font-bold text-[#003b67]">Target</p>
                                                 <p className="font-semibold"> {goal} ETH</p>
                                             </div>
                                             <div className="text-right">
-                                                <p className="font-bold flex items-center gap-1 justify-end text-[#8b5cf6]">
+                                                <p className="font-bold flex items-center gap-1 justify-end text-[#003b67]">
                                                     Raised
                                                 </p>
                                                 <p className="font-semibold">{raised} ETH</p>
@@ -80,7 +80,7 @@ export const MyCart = ({Allcampaigns}) => {
                                         </div>
                                         <div className="mt-4 flex justify-between text-sm text-gray-300">
                                             <div>
-                                                <p className="font-bold text-[#8b5cf6]">Deadline</p>
+                                                <p className="font-bold text-[#003b67]">Deadline</p>
                                                 <p className="font-semibold"> {getDaysLeft(campaign?.deadline)}</p>
                                             </div>
                                             <div className="text-right mt-3">

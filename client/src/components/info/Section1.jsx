@@ -5,8 +5,8 @@ export const Section1 = () => {
   return (
     <>
         {/* Title */}
-        <h1 className="text-xl sm:text-4xl font-bold text-[#8b5cf6] text-center">
-          Welcome to Crowd<span className="text-white font-extrabold text-3xl sm:text-5xl">X</span>
+        <h1 className="text-xl sm:text-4xl font-bold text-zinc-300 text-center">
+          Welcome to <span className='text-[#003b67]'>Crowd</span><span className="text-amber-900 font-extrabold text-3xl sm:text-5xl">X</span>
         </h1>
 
         {/* Intro Section */}
@@ -16,7 +16,7 @@ export const Section1 = () => {
             <a
               href="/" 
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 underline text-[#8b5cf6] transition-colors"
+              className="inline-flex items-center gap-1 underline text-[#003b67] transition-colors"
             >
               <span> Connect </span>
             </a> your wallet to get started.
@@ -27,7 +27,7 @@ export const Section1 = () => {
         {/* Wallet Popup Section */}
         <div className=" space-y-4 ">
           <p className=" md:text-xl text-sm font-bold list flex">
-            <span className='mr-2 text-[#8b5cf6]'><ArrowBigRight /></span>
+            <span className='mr-2 text-[#003b67]'><ArrowBigRight /></span>
             <span>When you connect, a popup will allow you to choose from 350+ supported wallets including MetaMask, Coinbase Wallet, and Rainbow.</span>
           </p>
           <img

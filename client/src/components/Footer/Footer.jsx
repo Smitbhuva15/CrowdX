@@ -4,10 +4,10 @@ import React from 'react';
 
 const Footer = () => {
   return (
-    <footer className="bg-black text-white">
-      <div className="bg-[#1e1f24] px-4 py-8">
+    <footer className="bg-black text-zinc-300">
+      <div className="bg-[#1e1f24] px-4 py-6">
         {/* Logo */}
-        <div className="text-center mb-6">
+        <div className="text-center ">
           <Link href="/">
             <div className='flex justify-center'> 
               <img src='./logo2.png' className="sm:w-36 w-24 text-3xl transition-colors" />
@@ -43,14 +43,14 @@ const Footer = () => {
         <div>
           <div className="flex flex-col sm:flex-row justify-between items-center  pt-4 gap-4 sm:w-[90%] sm:mx-auto" >
             <p className="text-sm text-zinc-400 text-center sm:text-left">
-              Designed & Developed by <span className="font-semibold">Smit Bhuva</span>
+              Designed & Developed by <span className="font-extrabold">Smit Bhuva</span>
             </p>
             <div className="flex gap-4">
               <a
                 href="https://github.com/Smitbhuva15"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-full bg-[#8b5cf6] hover:bg-[#7c3aed] transition-colors"
+                className="p-2 rounded-full bg-[#003b67] hover:bg-[#002847] transition-colors"
               >
                 <Github className="w-5 h-5" />
               </a>
@@ -58,14 +58,14 @@ const Footer = () => {
                 href="https://www.linkedin.com/in/smit-bhuva-1007ba314/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-full bg-[#8b5cf6] hover:bg-[#7c3aed] transition-colors"
+                className="p-2 rounded-full bg-[#003b67] hover:bg-[#002847] transition-colors"
               >
                 <Linkedin className="w-5 h-5" />
               </a>
               <Link
                 href={'/'}
                 rel="noopener noreferrer"
-                className="p-2 rounded-full bg-[#8b5cf6] hover:bg-[#7c3aed] transition-colors"
+                className="p-2 rounded-full bg-[#003b67] hover:bg-[#002847] transition-colors"
               >
                 <Globe className="w-5 h-5" />
               </Link>
