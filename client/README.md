@@ -1,10 +1,11 @@
 
-<div align="center" style="display: flex; flex-direction: row; justify-content: center; align-items: center; ">
+<div align="center" style="display: flex; flex-direction: row;  align-items: center; margin-left:0px">
   <img src="./public/logo.png" width="80"/>
   <h1 style="margin-top:28px">CrowdX</h1>
   <img src="./public/logo.png" width="80"/>
 </div>
 
+<br>
 
 - CrowdX is a **decentralized crowdfunding platform**.  
 - The frontend connects with the CrowdX smart contract, enabling users to **create campaigns, contribute ETH, withdraw funds, and claim refunds** in a **secure and transparent way**.

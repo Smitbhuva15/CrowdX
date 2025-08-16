@@ -1,10 +1,11 @@
 
-<div align="center" style="display: flex; flex-direction: row; justify-content: center; align-items: center; ">
-  <img src="./public/logo.png" width="80"/>
+<div align="center" style="display: flex; flex-direction: row;  align-items: center; margin-left:30px">
+  <img src="./client/public/logo.png" width="80"/>
   <h1 style="margin-top:28px">CrowdX</h1>
-  <img src="./public/logo.png" width="80"/>
+  <img src="./client/public/logo.png" width="80"/>
 </div>
 
+<br>
 
 - CrowdX is a **decentralized crowdfunding platform**.  
 - The frontend connects with the CrowdX smart contract, enabling users to **create campaigns, contribute ETH, withdraw funds, and claim refunds** in a **secure and transparent way**.
@@ -21,7 +22,7 @@
    <br>
 
    <p align="center">
-     <img src="public/walletpopup.png" alt="wallet" width="400" height="400"/>
+     <img src="./client/public/walletpopup.png" alt="wallet" width="400" height="400"/>
    </p> 
 
    ---
@@ -42,7 +43,7 @@
    <br>
 
     <p align="center">
-     <img src="public/createcampaign.png" alt="wallet" width="400" height="400"/>
+     <img src="./client/public/createcampaign.png" alt="wallet" width="400" height="400"/>
    </p> 
  
  ---
@@ -55,7 +56,7 @@
 
 
     <p align="center">
-     <img src="public/campaign.png" alt="wallet" width="230" height="300"/>
+     <img src="./client/public/campaign.png" alt="wallet" width="230" height="300"/>
    </p> 
  
  ---
@@ -67,7 +68,7 @@
    - Every transaction is logged on-chain.  
    <br>
     <p align="center">
-     <img src="public/donate.png" alt="wallet" width="1000" height="600"/>
+     <img src="./client/public/donate.png" alt="wallet" width="1000" height="600"/>
    </p> 
 
    ---
@@ -77,7 +78,7 @@
    - Campaign owners can securely withdraw funds once funding goals are met and the campaign ends.  
     <br>
     <p align="center">
-     <img src="public/withdrawfund.png" alt="wallet" width="1000" height="600"/>
+     <img src="./client/public/withdrawfund.png" alt="wallet" width="1000" height="600"/>
    </p> 
 
    ---
@@ -88,7 +89,7 @@
    - Contributors can claim a **full refund** if a campaign does not reach its funding target before the deadline.  
  <br>
     <p align="center">
-     <img src="public/refunddonation.png" alt="wallet" width="1000" height="600"/>
+     <img src="./client/public/refunddonation.png" alt="wallet" width="1000" height="600"/>
    </p> 
 
    
