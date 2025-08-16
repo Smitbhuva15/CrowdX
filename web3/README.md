@@ -53,13 +53,14 @@ This contract is designed to ensure **trustless fundraising** without the need f
 
 ##  How It Works
 
----
+
 
 
 <p align="center">
-  <img src="https://github.com/Smitbhuva15/CrowdX/tree/main/web3/utils/chart1.png" alt="How It Works Flowchart" width="600" height="400"/>
+  <img src="assets/chart1.png" alt="How" width="600" height="1200"/>
 </p>
 
+---
 1. **Campaign Creation**  
    - A user creates a campaign with a funding goal and deadline.  
 
@@ -76,4 +77,23 @@ This contract is designed to ensure **trustless fundraising** without the need f
    - **Failed campaign** → donors withdraw their ETH back.  
 
 ---
+
+##  Connect
+
+- 🌐 Project Repository: [GitHub Repo](https://github.com/Smitbhuva15/CrowdX/)  
+- 👔 LinkedIn: [Smit Bhuva](https://www.linkedin.com/in/smit-bhuva-1007ba314/)  
+- 📧 Email: bhuvasmit1507@gmail.com  
+
+---
+
+## ✨ Created By
+
+**Smit Bhuva**  
+ Web3 Developer | Solidity | Full Stack Developer  
+
+- GitHub: [Smitbhuva15](https://github.com/Smitbhuva15)  
+- LinkedIn: [Smit Bhuva](https://www.linkedin.com/in/smit-bhuva-1007ba314/)  
+- 📧 Email: bhuvasmit1507@gmail.com  
+
+
 
