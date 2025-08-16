@@ -1,4 +1,4 @@
-<div align="center" style="display: flex; justify-content: center; align-items: center; gap: 10px;">
+<div align="center" style="display: flex; justify-content: center; align-items: center; ">
   <img src="./public/logo.png" width="80"/>
   <h1 style="margin-top:28px">CrowdX</h1>
   <img src="./public/logo.png" width="80"/>
@@ -8,7 +8,7 @@
 - CrowdX is a **decentralized crowdfunding platform**.  
 - The frontend connects with the CrowdX smart contract, enabling users to **create campaigns, contribute ETH, withdraw funds, and claim refunds** in a **secure and transparent way**.
 
----
+<br>
 
 ##  Features
 
@@ -16,7 +16,8 @@
    - Connect your wallet to get started.  
    - Supports 350+ wallets including **MetaMask, Coinbase Wallet, Rainbow**, and more.  
    - Secure popup integration powered by Web3 libraries. 
-   ---
+   
+   <br>
 
    <p align="center">
      <img src="public/walletpopup.png" alt="wallet" width="400" height="400"/>
@@ -30,26 +31,67 @@
    - Search and filter campaigns easily.  
    - Track funding progress in real-time.  
 
+   ---
+   <br>
+
 3. **Create Campaign**  
    - Launch your own campaign in just a few steps.  
    - Add title, description, funding goal, and deadline.  
    - Instantly deployed on-chain.  
+   <br>
+
+    <p align="center">
+     <img src="public/createcampaign.png" alt="wallet" width="400" height="400"/>
+   </p> 
+ 
+ ---
+ <br>
 
 4. **Manage Campaigns**  
    - Explore and manage all campaigns you’ve created.  
-   - Track contributions and monitor progress from your dashboard.  
+   - Track contributions and monitor progress from your dashboard. 
+   <br>
+
+
+    <p align="center">
+     <img src="public/campaign.png" alt="wallet" width="230" height="300"/>
+   </p> 
+ 
+ ---
+ <br>
 
 5. **Donate to Campaigns**  
    - Contribute directly to powerful campaigns using your crypto wallet.  
    - Fast, secure, and transparent donations.  
    - Every transaction is logged on-chain.  
+   <br>
+    <p align="center">
+     <img src="public/donate.png" alt="wallet" width="1000" height="600"/>
+   </p> 
+
+   ---
+   <br>
 
 6. **Withdraw Funds**  
    - Campaign owners can securely withdraw funds once funding goals are met and the campaign ends.  
+    <br>
+    <p align="center">
+     <img src="public/withdrawfund.png" alt="wallet" width="1000" height="600"/>
+   </p> 
+
+   ---
+   <br>
+
 
 7. **Refund System**  
    - Contributors can claim a **full refund** if a campaign does not reach its funding target before the deadline.  
+ <br>
+    <p align="center">
+     <img src="public/refunddonation.png" alt="wallet" width="1000" height="600"/>
+   </p> 
 
+   
+   <br>
 ---
 
 ## 🛠 Tech Stack
