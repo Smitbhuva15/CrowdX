@@ -53,6 +53,13 @@ This contract is designed to ensure **trustless fundraising** without the need f
 
 ##  How It Works
 
+---
+
+
+<p align="center">
+  <img src="https://github.com/Smitbhuva15/CrowdX/tree/main/web3/utils/chart1.png" alt="How It Works Flowchart" width="600" height="400"/>
+</p>
+
 1. **Campaign Creation**  
    - A user creates a campaign with a funding goal and deadline.  
 
