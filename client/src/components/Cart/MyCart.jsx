@@ -10,12 +10,11 @@ import { BadgeX } from 'lucide-react';
 import { useSelector } from 'react-redux';
 
 
-export const MyCart = ({Allcampaigns}) => {
-
-  const search = useSelector((state) => state?.campaign?.search);
-   let  campaigns=Allcampaigns.filter((campaign)=>campaign?.title.toLowerCase().includes(search.toLowerCase()));
+export const MyCart = ({ campaigns }) => {
 
     
+
+
     function getDaysLeft(deadline) {
         if (!deadline || !deadline._isBigNumber) return "N/A";
 

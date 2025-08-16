@@ -18,6 +18,13 @@ const page = () => {
   const campaignContract = useSelector((state) => state?.campaign?.campaignContract)
   const Allcampaigns = useSelector((state) => state?.campaign?.Allcampaigns)
   const provider = useSelector((state) => state?.campaign?.provider);
+  const search = useSelector((state) => state?.campaign?.search);
+
+
+  let campaigns = [];
+  if (Allcampaigns?.length >= 1) {
+    campaigns = Allcampaigns.filter((campaign) => campaign?.title.toLowerCase().includes(search.toLowerCase()));
+  }
 
 
   const isReady = provider && Object.keys(provider).length > 0 &&
@@ -40,10 +47,10 @@ const page = () => {
     account ?
       (<div className="bg-black min-h-screen">
         <div className="sm:pl-10 pl-5">
-          <Banner title={`Live Campaigns by You (${myCampaign?.length})`} />
+          <Banner title={`Live Campaigns by You (${ campaigns?.length})`} />
         </div>
         <div>
-          <MyCart Allcampaigns={myCampaign} />
+          <MyCart  campaigns={ campaigns} />
         </div>
 
       </div>) : (

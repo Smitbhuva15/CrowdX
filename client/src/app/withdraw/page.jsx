@@ -54,8 +54,8 @@ const Page = () => {
   }, [Allcampaigns])
 
 
-  let campaigns
-  if (myCampaign) {
+  let campaigns=[]
+  if (myCampaign?.length >= 1) {
     campaigns = myCampaign.filter((campaign) => campaign?.title.toLowerCase().includes(search.toLowerCase()))
   }
 
@@ -194,6 +194,7 @@ const Page = () => {
                           </TableRow>
                         )
                       })}
+                     
                     </TableBody>
                   </Table>
 

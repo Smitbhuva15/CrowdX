@@ -20,8 +20,8 @@ import { ShieldX } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { Toaster } from 'react-hot-toast'
 import { Loader2 } from 'lucide-react'
-import {  LoadRefundWithDonation } from '@/lib/LoadDatas'
-import  errorconfig from '@/config/errorconfig.json';
+import { LoadRefundWithDonation } from '@/lib/LoadDatas'
+import errorconfig from '@/config/errorconfig.json';
 
 const page = () => {
   const [myDonation, setMyDonation] = useState();
@@ -32,7 +32,7 @@ const page = () => {
   const donations = useSelector((state) => state?.campaign?.donations)
   const campaignContract = useSelector((state) => state?.campaign?.campaignContract)
   const provider = useSelector((state) => state?.campaign?.provider);
-   const search = useSelector((state) => state?.campaign?.search);
+  const search = useSelector((state) => state?.campaign?.search);
 
   const isReady = provider && Object.keys(provider).length > 0 &&
     campaignContract && Object.keys(campaignContract).length > 0;
@@ -49,18 +49,18 @@ const page = () => {
     }
   }, [donations])
 
-  const handelrefund =async (e, id,index) => {
+  const handelrefund = async (e, id, index) => {
     e.preventDefault();
 
-      if (campaignContract && provider) {
+    if (campaignContract && provider) {
       setLoading(index)
       toast('Refund pending...', {
         icon: '⏳',
       });
-     const signer = await provider.getSigner();
+      const signer = await provider.getSigner();
       try {
-         const transaction=await campaignContract.connect(signer).refund(id);
-      const recipt=await transaction.wait();
+        const transaction = await campaignContract.connect(signer).refund(id);
+        const recipt = await transaction.wait();
         if (recipt.status !== 1) {
           toast.error("Refund failed!")
           setLoading(-1)
@@ -82,22 +82,28 @@ const page = () => {
       } catch (error) {
         let message = "Something went wrong";
 
-        const data=error?.error?.data ;
-        message=errorconfig[data]?.message;
-        if(message==undefined){
+        const data = error?.error?.data;
+        message = errorconfig[data]?.message;
+        if (message == undefined) {
           toast.error(`Transaction failed: Something went wrong`)
         }
         toast.error(`Transaction failed: ${message}`);
         setLoading(-1)
       }
 
-   LoadRefundWithDonation(dispatch, provider, campaignContract)
+      LoadRefundWithDonation(dispatch, provider, campaignContract)
     }
   }
 
-  let serchMyDonation;
-  if(myDonation){
-    // serchMyDonation=myDonation.filter((donation)=>{ donation?.args?.title.toLowerCase().includes(search.toLowerCase()) });
+  let searchMyDonation = [];
+
+  if (myDonation?.length >= 1) {
+    searchMyDonation = myDonation.filter((donation) =>
+      donation?.args?.title
+        ?.toLowerCase()
+        .includes(search.toLowerCase())
+    );
+
   }
 
   return (
@@ -106,7 +112,7 @@ const page = () => {
         <Banner title="Refund Donation" />
       </div>
       {
-        !myDonation || myDonation.length == 0
+        !searchMyDonation || searchMyDonation.length == 0
           ?
           (
             <Banner2 title={'No funds available for Refund yet.'}
@@ -122,7 +128,7 @@ const page = () => {
 
                 <Table className=" overflow-x-hidden lg:min-w-[720px] md:min-w-[550px] sm:min-w-[400px]  rounded-2xl ">
                   <TableCaption className="text-zinc-400 text-sm mt-2">
-                    {`Found ${myDonation?.length} Requests`}
+                    {`Found ${searchMyDonation?.length} Requests`}
                   </TableCaption>
 
                   <TableHeader className=" overflow-x-hidden ">
@@ -138,7 +144,7 @@ const page = () => {
 
                   <TableBody className=" overflow-x-hidden">
                     {
-                      myDonation.map((donation, index) => {
+                      searchMyDonation.map((donation, index) => {
 
                         const amount = ethers.utils.formatEther(donation?.args?.amount);
 
@@ -146,8 +152,9 @@ const page = () => {
                         return (
                           <TableRow className="text-zinc-300 hover:bg-[#2a2b31] transition overflow-x-hidden" key={index}>
                             <TableCell className="font-medium whitespace-nowrap">{index + 1}</TableCell>
+
                             <TableCell className="whitespace-nowrap">{donation?.args?.title}</TableCell>
-                            <TableCell className="whitespace-nowrap">{donation?.args?.creator}</TableCell>
+                            <TableCell className="whitespace-nowrap"> {`${donation?.args?.creator.slice(0, 11)}...${donation?.args?.creator.slice(-11)}`}</TableCell>
                             <TableCell className="whitespace-nowrap">{amount}</TableCell>
                             <TableCell className="whitespace-nowrap">
                               <span className={`font-bold `}>{donation?.readyForRefund ? <ShieldCheck className="w-6 h-6 text-green-600 ml-4" /> : <ShieldX className="w-6 h-6 text-red-500 ml-4" />}</span>
@@ -167,7 +174,7 @@ const page = () => {
                                 <button
                                   type="submit"
                                   className="px-4 py-2 bg-[#003b67] text-zinc-300 font-medium rounded-md hover:bg-[#002847] transition"
-                                  onClick={(e) => { handelrefund(e, donation?.args?.id.toString(),index) }}
+                                  onClick={(e) => { handelrefund(e, donation?.args?.id.toString(), index) }}
                                 >
                                   {
                                     loading == index ? (
@@ -187,8 +194,13 @@ const page = () => {
                             </TableCell>
                           </TableRow>
                         )
-                      })}
+                      })
+                      
+                      
+                      }
+                       
                   </TableBody>
+                  
                 </Table>
 
 

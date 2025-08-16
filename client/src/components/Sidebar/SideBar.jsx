@@ -21,6 +21,9 @@ import {
   SidebarMenuButton,
 } from "@/components/ui/sidebar"; // Update path based on your project
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { getSearch } from "@/store/slice/campaignSlice";
 
 const items = [
   {
@@ -57,6 +60,14 @@ const items = [
 ];
 
 export function SideBar() {
+  const dipatch = useDispatch();
+
+    const[search,setSearch]=useState("");
+
+      useEffect(()=>{
+       dipatch(getSearch(search));
+      },[search])
+  
   return (
     <Sidebar>
       <SidebarContent>
@@ -86,6 +97,19 @@ export function SideBar() {
                   </SidebarMenuItem>
                 );
               })}
+                 <div className="w-[240px]">
+                        <div className="relative">
+                          <input
+                            type="text"
+                            className="w-[240px] pl-12 pr-4 py-3 rounded-2xl text-zinc-300 border-2  focus:outline-none border-[#003b67] transition-all duration-300 shadow-lg shadow-[#003b67]"
+                            placeholder="Search ..."
+                            onChange={(e)=>setSearch(e.target.value)}
+                          />
+                          <div className="absolute left-4 top-1/2 -translate-y-1/2 text-black pointer-events-none">
+                            <Search className="text-[#003b67] "/>
+                          </div>
+                        </div>
+                      </div>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

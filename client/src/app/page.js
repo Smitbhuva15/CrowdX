@@ -17,6 +17,7 @@ function CampaignList() {
   const campaignContract = useSelector((state) => state?.campaign?.campaignContract)
   const Allcampaigns = useSelector((state) => state?.campaign?.Allcampaigns)
   const provider = useSelector((state) => state?.campaign?.provider);
+  const search = useSelector((state) => state?.campaign?.search);
 
 
   const isReady = provider && Object.keys(provider).length > 0 &&
@@ -28,16 +29,19 @@ function CampaignList() {
     }
   }, [isReady, account]);
 
-
+  let campaigns = [];
+  if (Allcampaigns?.length >= 1) {
+    campaigns = Allcampaigns.filter((campaign) => campaign?.title.toLowerCase().includes(search.toLowerCase()));
+  }
 
   return (
     account ?
       (<div className="bg-black min-h-screen">
         <div className="sm:pl-10 pl-5">
-          <Banner title={`Active Campaigns (${Allcampaigns?.length})`} />
+          <Banner title={`Active Campaigns (${campaigns?.length})`} />
         </div>
         <div>
-          <MyCart Allcampaigns={Allcampaigns} />
+          <MyCart campaigns={campaigns} />
         </div>
 
       </div>) : (
