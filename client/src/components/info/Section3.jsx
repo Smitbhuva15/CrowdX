@@ -14,7 +14,7 @@ export const Section3 = () => {
                     </a> <span className='md:text-xl text-sm font-bold'> and Manage All the Campaigns You’ve Created.</span>
                 </div>
                 <img
-                    src="./launchpad.png"
+                    src="./campaign.png"
                     alt="launchpad"
                     className="w-full max-w-[300px]  sm:ml-16 sm:mx-0 mx-auto rounded-2xl"
                 />
@@ -25,7 +25,7 @@ export const Section3 = () => {
                    <span className='mr-2'>5.</span> Donate to Specific powerful campaign directly using your crypto wallet - fast, secure, and transparent.
                 </div>
                 <img
-                    src="./donation.png"
+                    src="./donate.png"
                     alt="launchpad"
                     className="w-full max-w-5xl   mx-auto rounded-2xl"
                 />

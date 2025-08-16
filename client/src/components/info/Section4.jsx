@@ -15,7 +15,7 @@ export const Section4 = () => {
                     </a> after your campaign ends and successfully meets its funding requirements.
                 </p>
                 <img
-                    src="./withdraw.png"
+                    src="./withdrawfund.png"
                     alt="Campaign creation"
                     className="w-full max-w-5xl   mx-auto rounded-2xl" 
                     />
@@ -34,7 +34,7 @@ export const Section4 = () => {
 
                 </p>
                 <img
-                    src="./refund.png"
+                    src="./refunddonation.png"
                     alt="Campaign creation"
                     className="w-full max-w-5xl   mx-auto rounded-2xl" 
                     />

@@ -13,10 +13,9 @@
   --breakpoint-3xl: 120rem;
 }
 
-/* * {
-font-family:
-
-} */
+* {
+font-family: 'Manrope', sans-serif;
+}
 
 .title {
   font-family: 'Orbitron', sans-serif;

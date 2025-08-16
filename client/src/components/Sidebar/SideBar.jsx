@@ -97,7 +97,7 @@ export function SideBar() {
                   </SidebarMenuItem>
                 );
               })}
-                 <div className="w-[240px]">
+                 <div className="w-[240px] mt-1">
                         <div className="relative">
                           <input
                             type="text"

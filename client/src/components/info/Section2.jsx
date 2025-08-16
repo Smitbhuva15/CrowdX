@@ -27,7 +27,7 @@ export const Section2 = () => {
                     </a> in just a few steps.
                 </p>
                 <img
-                    src="./create campaign.png"
+                    src="./createcampaign.png"
                     alt="Campaign creation"
                     className="w-full max-w-md sm:ml-10 sm:mx-0 mx-auto rounded-2xl"
                 />
