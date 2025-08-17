@@ -91,7 +91,41 @@
 
    
    <br>
+
+
+
 ---
+
+
+##  How It Works
+
+<br>
+
+
+1. **Campaign Creation**  
+   - A user creates a campaign with a funding goal and deadline.  
+
+2. **Funding the Campaign**  
+   - Supporters donate ETH directly on-chain.  
+   - Each donation is tracked and linked to the donor.  
+
+3. **Checking Progress**  
+   - If total funds ≥ goal **before deadline** → campaign marked as successful.  
+   - Otherwise → campaign marked as failed.  
+
+4. **Post-Campaign Actions**  
+   - **Successful campaign** → owner withdraws funds.  
+   - **Failed campaign** → donors withdraw their ETH back.  
+
+
+
+<p align="center">
+  <img src="public/chart1.png" alt="How it work" width="600" height="1200"/>
+</p>
+
+
+---
+
 
 ##  Tech Stack
 
