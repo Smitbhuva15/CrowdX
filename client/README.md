@@ -1,9 +1,6 @@
 
-<div align="center" style="display: flex; flex-direction: row;  align-items: center; margin-left:0px">
-  <img src="./public/logo.png" width="80"/>
-  <h1 style="margin-top:28px">CrowdX</h1>
-  <img src="./public/logo.png" width="80"/>
-</div>
+  <h1 align="center">🤝 CrowdX 🤝</h1>
+
 
 <br>
 
@@ -100,6 +97,7 @@
 
 - **Next.js** – React-based frontend framework  
 - **Tailwind CSS** – Modern utility-first CSS styling 
+- **shadcn/ui** – Reusable and accessible UI components for a clean design 
 - **Solidity** – Powers the decentralized backend logic of CrowdX
 - **Ethers.js / Thirdweb** – Wallet connection & blockchain interaction  
 - **Hardhat** – Smart contract development & testing framework  
