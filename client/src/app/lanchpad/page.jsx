@@ -22,8 +22,8 @@ const page = () => {
 
 
   let campaigns = [];
-  if (Allcampaigns?.length >= 1) {
-    campaigns = Allcampaigns.filter((campaign) => campaign?.title.toLowerCase().includes(search.toLowerCase()));
+  if (myCampaign?.length >= 1) {
+    campaigns = myCampaign.filter((campaign) => campaign?.title.toLowerCase().includes(search.toLowerCase()));
   }
 
 
