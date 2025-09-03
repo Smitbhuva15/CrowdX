@@ -3,9 +3,9 @@ import React from 'react'
 export const Section2 = () => {
     return (
         <>
-            <div className='space-y-4'>
+            <div className=''>
                 <div >
-                    <span className='md:text-xl text-sm font-bold mr-2'> 2.</span>  <a
+                    <span className='md:text-xl text-sm font-semibold mr-2'> 2.</span>  <a
                         href="/"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-1 underline text-[#003b67] transition-colors"
@@ -15,8 +15,8 @@ export const Section2 = () => {
                 </div>
             </div>
 
-            <div className=" space-y-4 ">
-                <p className=" md:text-xl text-sm font-bold">
+            <div className=" -mt-5">
+                <p className=" md:text-xl text-sm font-semibold mb-3">
                     <span> <span className='mr-2'>3.</span> Create a  </span>
                     <a
                         href="/CreatCampaign"
@@ -29,7 +29,7 @@ export const Section2 = () => {
                 <img
                     src="./createcampaign.png"
                     alt="Campaign creation"
-                    className="w-full max-w-md sm:ml-10 sm:mx-0 mx-auto rounded-2xl"
+                    className="w-full max-w-md sm:ml-10 sm:mx-0 mx-auto rounded-2xl transition-transform duration-300 hover:scale-105"
                 />
             </div>
 

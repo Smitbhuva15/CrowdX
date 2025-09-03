@@ -5,13 +5,13 @@ export const Section1 = () => {
   return (
     <>
         {/* Title */}
-        <h1 className="text-xl sm:text-4xl font-bold text-zinc-300 text-center">
-          Welcome to <span className='text-[#003b67]'>Crowd</span><span className="text-amber-900 font-extrabold text-3xl sm:text-5xl">X</span>
+        <h1 className="text-2xl sm:text-5xl font-bold text-zinc-300 sm:text-center text-left">
+          Welcome to <span className='text-[#003b67]'>Crowd</span><span className="text-amber-900 font-extrabold text-4xl sm:text-6xl">X</span>
         </h1>
 
         {/* Intro Section */}
-        <div className=" space-y-2">
-          <p className=" md:text-xl text-sm font-bold">
+        <div className="">
+          <p className=" md:text-xl text-sm font-semibold">
             <span> <span className='mr-2'>1.</span> CrowdX is your gateway to decentralized crowdfunding.  </span>
             <a
               href="/" 
@@ -25,15 +25,15 @@ export const Section1 = () => {
         </div>
 
         {/* Wallet Popup Section */}
-        <div className=" space-y-4 ">
-          <p className=" md:text-xl text-sm font-bold list flex">
+        <div className="-mt-6 ">
+          <p className=" md:text-xl text-sm font-semibold list flex mb-4">
             <span className='mr-2 text-[#003b67]'><ArrowBigRight /></span>
             <span>When you connect, a popup will allow you to choose from 350+ supported wallets including MetaMask, Coinbase Wallet, and Rainbow.</span>
           </p>
           <img
             src="./walletpopup.png"
             alt="Wallet connection popup"
-            className="w-full max-w-md sm:ml-16 sm:mx-0 mx-auto rounded-2xl"
+            className="w-full max-w-md sm:ml-16 sm:mx-0 mx-auto rounded-2xl transition-transform duration-300 hover:scale-105"
           />
         </div>
     </>
