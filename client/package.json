@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@magic-ext/oauth": "^23.4.1",
+    "@radix-ui/react-accordion": "^1.2.12",
     "@radix-ui/react-dialog": "^1.1.14",
     "@radix-ui/react-label": "^2.1.7",
     "@radix-ui/react-separator": "^1.1.7",

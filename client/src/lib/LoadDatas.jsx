@@ -108,6 +108,10 @@ const decorateDonationRefund = async (donation, dispatch, provider, campaignCont
 const decorateCampaign = (CampaignStream) => {
   const now = Math.floor(Date.now() / 1000);
 
+  CampaignStream = CampaignStream.sort(
+  (a, b) => Number(a?.args?.deadline) - Number(b?.args?.deadline)
+);
+
   return CampaignStream.filter((campaign) => {
     return campaign?.args?.deadline?.toNumber() > now;
   });

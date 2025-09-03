@@ -44,4 +44,3 @@ export const Section4 = () => {
 }
 
 //  funds after your campaign ends and successfully meets its funding requirements.
-
