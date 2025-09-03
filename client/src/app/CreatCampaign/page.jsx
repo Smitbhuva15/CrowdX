@@ -160,7 +160,11 @@ const page = () => {
                     message: "Target amount must be greater than 0.01 ETH"
                   }
                 })}
-              className="w-full px-4 py-2 rounded-md border border-gray-300 text-zinc-300 focus:outline-none focus:ring-2 focus:ring-[#003b67]"
+              className="w-full px-4 py-2 rounded-md border border-gray-300 text-zinc-300 focus:outline-none focus:ring-2 focus:ring-[#003b67]
+              appearance-none 
+                      [&::-webkit-outer-spin-button]:appearance-none 
+                      [&::-webkit-inner-spin-button]:appearance-none 
+                      [&::-moz-appearance]:textfield"
             />
             {errors.amount && (
               <p className="text-red-500 text-sm mt-1">{errors.amount.message}</p>
@@ -180,7 +184,11 @@ const page = () => {
               max={150}
               {...register("duration", { required: "Campaign duration is required" })}
               placeholder="e.g. 30"
-              className="w-full px-4 py-2 rounded-md border text-zinc-300 border-gray-300  focus:outline-none focus:ring-2 focus:ring-[#003b67]"
+              className="w-full px-4 py-2 rounded-md border text-zinc-300 border-gray-300  focus:outline-none focus:ring-2 focus:ring-[#003b67]
+              appearance-none 
+                      [&::-webkit-outer-spin-button]:appearance-none 
+                      [&::-webkit-inner-spin-button]:appearance-none 
+                      [&::-moz-appearance]:textfield"
             />
             {errors.duration && (
               <p className="text-red-500 text-sm mt-1">{errors.duration.message}</p>

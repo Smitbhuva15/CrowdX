@@ -4,7 +4,7 @@ function Banner2({ title, model,active }) {
   return (
    <div
       className={`flex items-center justify-center ${
-        active === 'true' ? 'h-[60vh]' : 'h-[80vh]'
+        active === 'true' ? 'h-[50vh]' : 'h-[65vh]'
       } px-4 text-center md:w-1/2 md:mx-auto`}
     >
       <div>

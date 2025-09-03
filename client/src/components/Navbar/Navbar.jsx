@@ -58,8 +58,8 @@ const Navbar = () => {
         {/* Connect Button */}
         <div>
           <ConnectButton
-            client={client}
-            chain={sepolia}
+            client={client} 
+            chains={[sepolia]}
             wallets={[
               createWallet("io.metamask"),
               createWallet("com.coinbase.wallet"),

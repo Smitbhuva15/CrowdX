@@ -28,6 +28,7 @@ import errorconfig from '@/config/errorconfig.json';
 const Page = () => {
   const [myCampaign, setMyCampaign] = useState();
   const [loading, setLoading] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   const dispatch = useDispatch();
   const account = useActiveAccount();
@@ -42,11 +43,21 @@ const Page = () => {
     campaignContract && Object.keys(campaignContract).length > 0;
 
   useEffect(() => {
-    if (isReady && account) {
-      LoadEvents(dispatch, provider, campaignContract, 'nonDecore', 'nonDonor');
+    const loadevent = async () => {
+      if (isReady && account) {
+        setIsLoading(true)
+        try {
+          await LoadEvents(dispatch, provider, campaignContract, 'nonDecore', 'nonDonor');
+        } catch (error) {
+          console.log("error :", error)
+        }
+        finally {
+          setIsLoading(false)
+        }
+      }
     }
+    loadevent();
   }, [isReady, account]);
-
 
   useEffect(() => {
     if (Allcampaigns)
@@ -54,7 +65,7 @@ const Page = () => {
   }, [Allcampaigns])
 
 
-  let campaigns=[]
+  let campaigns = []
   if (myCampaign?.length >= 1) {
     campaigns = myCampaign.filter((campaign) => campaign?.title.toLowerCase().includes(search.toLowerCase()))
   }
@@ -109,108 +120,112 @@ const Page = () => {
 
   return (
     account ?
-      (<div className="min-h-screen bg-black py-10">
-        <div className="sm:pl-10 pl-5 mb-6">
-          <Banner title="Fund Withdrawal" />
+      (isLoading ? (
+        <div className='flex justify-center items-center h-[70vh]'>
+          <Loader2 className="h-10 w-10 text-[#003b67] animate-spin " />
         </div>
-        {
-          !campaigns || campaigns.length == 0
-            ?
-            (
-              <Banner2 title={'No funds available for withdrawal yet.'}
-                model={"Looks like there's nothing to withdraw at the moment."}
-                active={'true'} />
-            )
-            :
-            (
+      ) : (
+        <div className="min-h-screen bg-black py-10">
+          <div className="sm:pl-10 pl-5 mb-6">
+            <Banner title="Fund Withdrawal" />
+          </div>
+          {
+            !campaigns || campaigns.length == 0
+              ?
+              (
+                <Banner2 title={'No funds available for withdrawal yet.'}
+                  model={"Looks like there's nothing to withdraw at the moment."}
+                  active={'true'} />
+              )
+              :
+              (
 
-              <div className="bg-[#1e1f24] lg:max-w-6xl md:max-w-3xl mx-auto sm:max-w-xl xs:max-w-sm xxs:max-w-[240px] px-4 overflow-x-auto rounded-2xl md:mt-24 mt-20" >
-                <div className="  rounded-2xl shadow-md p-6">
-                  {/* Make table wide enough to cause scroll on smaller devices */}
+                <div className="bg-[#1e1f24] lg:max-w-6xl md:max-w-3xl mx-auto sm:max-w-xl xs:max-w-sm xxs:max-w-[240px] px-4 overflow-x-auto rounded-2xl md:mt-24 mt-20" >
+                  <div className="  rounded-2xl shadow-md p-6">
 
-                  <Table className=" overflow-x-hidden lg:min-w-[720px] md:min-w-[550px] sm:min-w-[400px]  rounded-2xl ">
-                    <TableCaption className="text-zinc-400 text-sm mt-2">
-                      {`Found ${campaigns?.length} Requests`}
-                    </TableCaption>
+                    <Table className=" overflow-x-hidden lg:min-w-[720px] md:min-w-[550px] sm:min-w-[400px]  rounded-2xl ">
+                      <TableCaption className="text-zinc-400 text-sm mt-2">
+                        {`Found ${campaigns?.length} Requests`}
+                      </TableCaption>
 
-                    <TableHeader className=" overflow-x-hidden ">
-                      <TableRow className="text-zinc-300 text-sm  overflow-x-hidden">
-                        <TableHead className="w-[80px] whitespace-nowrap">#</TableHead>
-                        <TableHead className="whitespace-nowrap">Campaign Title</TableHead>
-                        <TableHead className="whitespace-nowrap">Target (ETH)</TableHead>
-                        <TableHead className="whitespace-nowrap">Raised (ETH)</TableHead>
-                        <TableHead className="whitespace-nowrap">Claimable</TableHead>
-                        <TableHead className="text-right whitespace-nowrap">Withdraw Action</TableHead>
-                      </TableRow>
-                    </TableHeader>
+                      <TableHeader className=" overflow-x-hidden ">
+                        <TableRow className="text-zinc-300 text-sm  overflow-x-hidden">
+                          <TableHead className="w-[80px] whitespace-nowrap">#</TableHead>
+                          <TableHead className="whitespace-nowrap">Campaign Title</TableHead>
+                          <TableHead className="whitespace-nowrap">Target (ETH)</TableHead>
+                          <TableHead className="whitespace-nowrap">Raised (ETH)</TableHead>
+                          <TableHead className="whitespace-nowrap">Claimable</TableHead>
+                          <TableHead className="text-right whitespace-nowrap">Withdraw Action</TableHead>
+                        </TableRow>
+                      </TableHeader>
 
-                    <TableBody className=" overflow-x-hidden">
-                      {campaigns.map((campaign, index) => {
-                        const goal = ethers.utils.formatEther(campaign?.goal);
-                        const raised = ethers.utils.formatEther(campaign?.raised);
+                      <TableBody className=" overflow-x-hidden">
+                        {campaigns.map((campaign, index) => {
+                          const goal = ethers.utils.formatEther(campaign?.goal);
+                          const raised = ethers.utils.formatEther(campaign?.raised);
 
-                        return (
-                          <TableRow className="text-zinc-300 hover:bg-[#2a2b31] transition overflow-x-hidden" key={index}>
-                            <TableCell className="font-medium whitespace-nowrap">{index + 1}</TableCell>
-                            <TableCell className="whitespace-nowrap">{campaign?.title}</TableCell>
-                            <TableCell className="whitespace-nowrap">{goal}</TableCell>
-                            <TableCell className="whitespace-nowrap">{raised}</TableCell>
-                            <TableCell className="whitespace-nowrap">
-                              <span className={`font-bold `}>{goal <= raised ? <ShieldCheck className="w-6 h-6 text-green-600 ml-4" /> : <ShieldX className="w-6 h-6 text-red-500 ml-4" />}</span>
-                            </TableCell>
+                          return (
+                            <TableRow className="text-zinc-300 hover:bg-[#2a2b31] transition overflow-x-hidden" key={index}>
+                              <TableCell className="font-medium whitespace-nowrap">{index + 1}</TableCell>
+                              <TableCell className="whitespace-nowrap">{campaign?.title}</TableCell>
+                              <TableCell className="whitespace-nowrap">{goal}</TableCell>
+                              <TableCell className="whitespace-nowrap">{raised}</TableCell>
+                              <TableCell className="whitespace-nowrap">
+                                <span className={`font-bold `}>{goal <= raised ? <ShieldCheck className="w-6 h-6 text-green-600 ml-4" /> : <ShieldX className="w-6 h-6 text-red-500 ml-4" />}</span>
+                              </TableCell>
 
-                            <TableCell className="text-right whitespace-nowrap">
-                              {campaign?.withdrawn == true ? (
-                                <button
-                                  type="button"
-                                  className="px-4 py-2 bg-gray-400 text-zinc-300 font-medium rounded-md cursor-not-allowed"
-                                  disabled
-                                >
-                                  Already Claimed
-                                </button>
+                              <TableCell className="text-right whitespace-nowrap">
+                                {campaign?.withdrawn == true ? (
+                                  <button
+                                    type="button"
+                                    className="px-4 py-2 bg-gray-400 text-zinc-300 font-medium rounded-md cursor-not-allowed"
+                                    disabled
+                                  >
+                                    Already Claimed
+                                  </button>
 
-                              ) : (
-                                <button
-                                  type="submit"
-                                  className="px-4 py-2 bg-[#003b67] text-zinc-300 font-medium rounded-md hover:bg-[#002847] transition"
-                                  onClick={(e) => { handelwithdraw(e, campaign?.id.toString()) }}
-                                >
-                                  {
-                                    loading == campaign?.id.toString() ? (
-                                      <div className="flex items-center justify-center gap-0.5 text-zinc-300 text-sm">
-                                        <Loader2 className="animate-spin size-4" />
-                                        <span >Pending</span>
-                                      </div>
-                                    ) : (
-                                      <div >Withdraw</div>
+                                ) : (
+                                  <button
+                                    type="submit"
+                                    className="px-4 py-2 bg-[#003b67] text-zinc-300 font-medium rounded-md hover:bg-[#002847] transition"
+                                    onClick={(e) => { handelwithdraw(e, campaign?.id.toString()) }}
+                                  >
+                                    {
+                                      loading == campaign?.id.toString() ? (
+                                        <div className="flex items-center justify-center gap-0.5 text-zinc-300 text-sm">
+                                          <Loader2 className="animate-spin size-4" />
+                                          <span >Pending</span>
+                                        </div>
+                                      ) : (
+                                        <div >Withdraw</div>
 
-                                    )
-                                  }
+                                      )
+                                    }
 
-                                </button>
-                              )}
+                                  </button>
+                                )}
 
-                            </TableCell>
-                          </TableRow>
-                        )
-                      })}
-                     
-                    </TableBody>
-                  </Table>
+                              </TableCell>
+                            </TableRow>
+                          )
+                        })}
 
+                      </TableBody>
+                    </Table>
+
+
+                  </div>
 
                 </div>
 
-              </div>
 
-
-            )
-        }
-        <Toaster
-          position="bottom-right"
-          reverseOrder={false}
-        />
-      </div>
+              )
+          }
+          <Toaster
+            position="bottom-right"
+            reverseOrder={false}
+          />
+        </div>)
       ) : (
         <Banner2 title={'Connect Wallet'} model={''} active={''} />
       )

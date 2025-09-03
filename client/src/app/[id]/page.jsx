@@ -68,7 +68,7 @@ const page = () => {
       goal === "0"
         ?
         (
-          <div className="flex items-center justify-center h-[78vh]">
+          <div className="flex items-center justify-center h-[70vh]">
             <Loader2 className="h-10 w-10 text-[#003b67] animate-spin" />
           </div>
         )

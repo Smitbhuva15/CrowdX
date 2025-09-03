@@ -15,6 +15,7 @@ describe("Campaign", () => {
         const goal = ethers.utils.parseEther('2');
         transaction = await campaign.connect(deployer).createCampaign('Open Knowledge', 'This image represents the spirit of open-source information, symbolized by the Wikipedia logo. It highlights the collaborative nature of global knowledge sharing.', 'https://ipfs.io/ipfs/QmXoypizjW3WknFiJnKLwHCnL72vedxjQkDDP1mXWo6uco', goal, 7);
         result = await transaction.wait();
+        console.log(result)
     });
 
     describe("createCampaign", () => {

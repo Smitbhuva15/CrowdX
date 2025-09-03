@@ -31,6 +31,7 @@ export const LoadEvents = async (dispatch, provider, campaignContract, Decorate,
   // const fromBlock = Math.max(latestblock, 0)
 
   let CampaignStream = await campaignContract.queryFilter('CampaignCreated', 0, latestblock)
+
   if (Decorate === 'Decore') {
     CampaignStream = decorateCampaign(CampaignStream);
 
