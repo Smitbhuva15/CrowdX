@@ -7,7 +7,7 @@ import { set, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { ethers } from 'ethers';
 import { LoadEvents } from '@/lib/LoadDatas';
-import  errorconfig from '@/config/errorconfig.json';
+import errorconfig from '@/config/errorconfig.json';
 
 
 const RightSection = ({ currentCampaign, raised, account }) => {
@@ -29,58 +29,77 @@ const RightSection = ({ currentCampaign, raised, account }) => {
   } = useForm()
 
   const onSubmit = async (data) => {
+    setLoading(true);
 
-    setLoading(true)
-    toast('Donation pending...', {
-      icon: '⏳',
+
+    toast.loading("Preparing donation...", {
+      id: "donationTx",
     });
 
     const id = currentCampaign?.id.toString();
     const donationAmount = ethers.utils.parseEther(data?.donationAmount);
-
-
     const signer = await provider.getSigner();
-    try {
-      const transaction = await campaignContract.connect(signer).donate(id, { value: donationAmount });
-      const recipt = await transaction.wait();
 
-      if (recipt.status !== 1) {
-        toast.error("Donation failed!")
-        setLoading(false)
+    try {
+
+      toast.loading("Processing donation... Please confirm the transaction in your wallet.", {
+        id: "donationTx",
+      });
+
+      const transaction = await campaignContract
+        .connect(signer)
+        .donate(id, { value: donationAmount });
+
+
+      toast.loading("Transaction submitted. Waiting for confirmation...", {
+        id: "donationTx",
+      });
+
+      const receipt = await transaction.wait();
+
+      if (receipt.status !== 1) {
+        toast.error("Donation failed. Please try again.", {
+          id: "donationTx",
+        });
+        setLoading(false);
         return;
       }
-      else if (recipt.status === 1) {
-        const event = recipt.events?.find(e => e.event === "Donate");
-        if (event) {
-          toast.success(`Donate successfully!`);
-          setLoading(false)
 
-        }
-        else {
-          toast.error("Donation failed!");
-          setLoading(false)
-
-        }
+      const event = receipt.events?.find((e) => e.event === "Donate");
+      if (event) {
+        toast.success("Donation completed successfully.", {
+          id: "donationTx",
+        });
+      } else {
+        toast.error("Transaction confirmed but no Donate event found.", {
+          id: "donationTx",
+        });
       }
-    }
-    catch (error) {
+    } catch (error) {
       let message = "Something went wrong";
-
       const data = error?.error?.data;
       message = errorconfig[data]?.message;
-      if(message==undefined){
-          toast.error(`Transaction failed: Something went wrong`)
-        }
-      toast.error(`Transaction failed: ${message}`);
-      setLoading(false)
 
-    }
-    if (campaignContract && account && provider) {
-      LoadEvents(dispatch, provider, campaignContract, "nonDecore", "Donor")
-    }
-    reset();
+      if (!message) {
+        toast.error("Transaction failed: Something went wrong", {
+          id: "donationTx",
+        });
+      } else {
+        toast.error(`Transaction failed: ${message}`, {
+          id: "donationTx",
+        });
+      }
+    } finally {
+      setLoading(false);
 
-  }
+      if (campaignContract && account && provider) {
+        LoadEvents(dispatch, provider, campaignContract, "nonDecore", "Donor");
+      }
+
+      reset();
+    }
+  };
+
 
   return (
     <div className="w-full lg:w-1/2 space-y-6">

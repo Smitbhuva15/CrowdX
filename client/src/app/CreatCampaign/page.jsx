@@ -33,47 +33,73 @@ const page = () => {
 
   const onSubmit = async (data) => {
 
-    // store full metadata
+    setLoading(true);
 
-    // const metadata = {
-    //   name: data.name,
-    //   description: data.description,
-    //   image: data?.file[0],
-    // };
-
-    // const cid = await storage.upload(metadata);
-    setLoading(true)
-    const signer = await provider.getSigner();
-    toast('Campaign Creation pending...', {
-      icon: '⏳',
+    toast.loading("Preparing campaign creation...", {
+      id: "createCampaignTx",
     });
-    const cid = await storage.upload(data?.file[0]);
-    const ipfsUrl = storage.resolveScheme(cid);
 
-    const goal = ethers.utils.parseEther(data?.amount.toString());
-    const transaction = await campaignContract.connect(signer).createCampaign(data?.name, data?.description, ipfsUrl, goal, data?.duration);
-    const recipt = await transaction.wait();
+    try {
+      const signer = await provider.getSigner();
 
-    if (recipt.status !== 1) {
-      toast.error(" Campaign Creation failed!")
-      setLoading(false)
-      return;
-    }
-    else if (recipt.status === 1) {
-      const event = recipt.events?.find(e => e.event === "CampaignCreated");
+      // Upload image to IPFS
+      toast.loading("Uploading campaign image...", {
+        id: "createCampaignTx",
+      });
+      const cid = await storage.upload(data?.file[0]);
+      const ipfsUrl = storage.resolveScheme(cid);
+
+      // Send transaction
+      const goal = ethers.utils.parseEther(data?.amount.toString());
+
+      toast.loading("Creating campaign... Please confirm the transaction in your wallet.", {
+        id: "createCampaignTx",
+      });
+      const transaction = await campaignContract
+        .connect(signer)
+        .createCampaign(
+          data?.name,
+          data?.description,
+          ipfsUrl,
+          goal,
+          data?.duration
+        );
+
+      toast.loading("Transaction submitted. Waiting for confirmation...", {
+        id: "createCampaignTx",
+      });
+
+      // Wait for confirmation
+      const receipt = await transaction.wait();
+
+      if (receipt.status !== 1) {
+        toast.error("Campaign creation failed. Please try again.", {
+          id: "createCampaignTx",
+        });
+        setLoading(false);
+        return;
+      }
+
+      const event = receipt.events?.find((e) => e.event === "CampaignCreated");
       if (event) {
-        toast.success(`Campaign Creation successfully!`);
-        setLoading(false)
-
+        toast.success("Campaign created successfully!", {
+          id: "createCampaignTx",
+        });
+      } else {
+        toast.error("Transaction confirmed but no CampaignCreated event found.", {
+          id: "createCampaignTx",
+        });
       }
-      else {
-        toast.error("Campaign Creation failed!");
-        setLoading(false)
-
-      }
+    } catch (error) {
+      toast.error("Transaction failed. Please try again.", {
+        id: "createCampaignTx",
+      });
+    } finally {
+      setLoading(false);
+      reset();
     }
-    reset();
-  }
+  };
+
 
 
   return (

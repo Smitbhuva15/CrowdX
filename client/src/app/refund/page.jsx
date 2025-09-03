@@ -62,50 +62,69 @@ const page = () => {
   }, [donations])
 
   const handelrefund = async (e, id, index) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (campaignContract && provider) {
-      setLoading(index)
-      toast('Refund pending...', {
-        icon: '⏳',
+  if (campaignContract && provider) {
+    setLoading(index);
+
+    toast.loading("Preparing refund...", {
+      id: "refundTx",
+    });
+
+    const signer = await provider.getSigner();
+
+    try {
+      toast.loading("Processing refund... Please confirm the transaction in your wallet.", {
+        id: "refundTx",
       });
-      const signer = await provider.getSigner();
-      try {
-        const transaction = await campaignContract.connect(signer).refund(id);
-        const recipt = await transaction.wait();
-        if (recipt.status !== 1) {
-          toast.error("Refund failed!")
-          setLoading(-1)
-          return;
-        }
-        else if (recipt.status === 1) {
-          const event = recipt.events?.find(e => e.event === "Refund");
-          if (event) {
-            toast.success(`Refund successful!`);
-            setLoading(-1)
 
-          }
-          else {
-            toast.error("Refund failed!");
-            setLoading(-1)
+      const transaction = await campaignContract.connect(signer).refund(id);
 
-          }
-        }
-      } catch (error) {
-        let message = "Something went wrong";
+      toast.loading("Transaction submitted. Waiting for confirmation...", {
+        id: "refundTx",
+      });
 
-        const data = error?.error?.data;
-        message = errorconfig[data]?.message;
-        if (message == undefined) {
-          toast.error(`Transaction failed: Something went wrong`)
-        }
-        toast.error(`Transaction failed: ${message}`);
-        setLoading(-1)
+      const receipt = await transaction.wait();
+
+      if (receipt.status !== 1) {
+        toast.error("Refund failed. Please try again.", {
+          id: "refundTx",
+        });
+        setLoading(-1);
+        return;
       }
 
-      LoadRefundWithDonation(dispatch, provider, campaignContract)
+      const event = receipt.events?.find((e) => e.event === "Refund");
+      if (event) {
+        toast.success("Refund completed successfully.", {
+          id: "refundTx",
+        });
+      } else {
+        toast.error("Transaction confirmed but no Refund event found.", {
+          id: "refundTx",
+        });
+      }
+    } catch (error) {
+      let message = "Something went wrong";
+      const data = error?.error?.data;
+      message = errorconfig[data]?.message;
+
+      if (!message) {
+        toast.error("Transaction failed: Something went wrong", {
+          id: "refundTx",
+        });
+      } else {
+        toast.error(`Transaction failed: ${message}`, {
+          id: "refundTx",
+        });
+      }
+    } finally {
+      setLoading(-1);
+      LoadRefundWithDonation(dispatch, provider, campaignContract);
     }
   }
+};
+
 
   let searchMyDonation = [];
 

@@ -72,51 +72,68 @@ const Page = () => {
 
 
   const handelwithdraw = async (e, id) => {
-    e.preventDefault();
-    if (campaignContract && provider) {
-      setLoading(id)
-      toast('withdrawal pending...', {
-        icon: '⏳',
+  e.preventDefault();
+
+  if (campaignContract && provider) {
+    setLoading(id);
+
+    toast.loading("Preparing withdrawal...", {
+      id: "withdrawTx",
+    });
+
+    const signer = await provider.getSigner();
+
+    try {
+      toast.loading("Processing withdrawal... Please confirm the transaction in your wallet.", {
+        id: "withdrawTx",
       });
-      const signer = await provider.getSigner();
-      try {
-        let transaction = await campaignContract.connect(signer).withdrawFund(id);
-        let recipt = await transaction.wait();
-        if (recipt.status !== 1) {
-          toast.error("withdrawal failed!")
-          setLoading(0)
-          return;
-        }
-        else if (recipt.status === 1) {
-          const event = recipt.events?.find(e => e.event === "Withdraw");
-          if (event) {
-            toast.success(`withdrawal successfully!`);
-            setLoading(0)
 
-          }
-          else {
-            toast.error("withdrawal failed!");
-            setLoading(0)
+      let transaction = await campaignContract.connect(signer).withdrawFund(id);
 
-          }
-        }
-      } catch (error) {
-        let message = "Something went wrong";
+      toast.loading("Transaction submitted. Waiting for confirmation...", {
+        id: "withdrawTx",
+      });
 
-        const data = error?.error?.data;
+      let receipt = await transaction.wait();
 
-        message = errorconfig[data]?.message;
-        if (message == undefined) {
-          toast.error(`Transaction failed: Something went wrong`)
-        }
-        toast.error(`Transaction failed: ${message}`);
-        setLoading(0)
+      if (receipt.status !== 1) {
+        toast.error("Withdrawal failed. Please try again.", {
+          id: "withdrawTx",
+        });
+        setLoading(0);
+        return;
       }
 
-      LoadEvents(dispatch, provider, campaignContract, "nonDecore", "noDonor")
-    }
+      const event = receipt.events?.find((e) => e.event === "Withdraw");
+      if (event) {
+        toast.success("Withdrawal completed successfully.", {
+          id: "withdrawTx",
+        });
+      } else {
+        toast.error("Transaction confirmed but no Withdraw event found.", {
+          id: "withdrawTx",
+        });
+      }
+    } catch (error) {
+      let message = "Something went wrong";
+      const data = error?.error?.data;
+      message = errorconfig[data]?.message;
 
+      if (!message) {
+        toast.error("Transaction failed: Something went wrong", {
+          id: "withdrawTx",
+        });
+      } else {
+        toast.error(`Transaction failed: ${message}`, {
+          id: "withdrawTx",
+        });
+      }
+    } finally {
+      setLoading(0);
+      LoadEvents(dispatch, provider, campaignContract, "nonDecore", "noDonor");
+    }
   }
+};
 
   return (
     account ?
