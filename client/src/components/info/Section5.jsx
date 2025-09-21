@@ -40,16 +40,16 @@ const messages = [
 
 const Section5 = () => {
     return (
-        <div>
-            <div className=" space-y-4 ">
-                <h1 className='md:px-10 sm:text-3xl text-xl font-bold'>Guidelines & Help</h1>
+        
+            <div className="mt-18  ">
+                <h1 className='sm:text-3xl text-xl mb-3 font-bold'>Guidelines & Help</h1>
                 {
                     messages.map((message) => (
-                        <div className='md:px-24 '>
+                        <div className=' '>
                             <div className='border-b-2'>
                                 <Accordion type="single" collapsible >
                                     <AccordionItem value="item-1" className={" "}>
-                                        <AccordionTrigger className='md:text-2xl text-lg'>{message?.que}</AccordionTrigger>
+                                        <AccordionTrigger className='md:text-[22px] text-lg'>{message?.que}</AccordionTrigger>
                                         <AccordionContent className={'md:text-lg'}>
                                           {message?.ans}
                                         </AccordionContent>
@@ -61,7 +61,7 @@ const Section5 = () => {
                 }
 
             </div>
-        </div>
+        
     )
 }
 
