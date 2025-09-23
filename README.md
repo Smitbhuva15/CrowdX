@@ -118,11 +118,12 @@
    - **Failed campaign** → donors withdraw their ETH back.  
 
 
-
+<br>
 <p align="center">
-  <img src="client/public/chart1.png" alt="How it work"  width="600" height="1200"/>
+  <img src="client/public/flowchart.png" alt="How it work"  width="800" height="500"/>
 </p>
 
+<br>
 
 ---
 
