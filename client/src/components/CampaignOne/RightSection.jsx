@@ -90,13 +90,12 @@ const RightSection = ({ currentCampaign, raised, account }) => {
         });
       }
     } finally {
+      if (campaignContract && account && provider) {
+        await LoadEvents(dispatch, provider, campaignContract, "nonDecore", "Donor");
+      }
+      reset();
       setLoading(false);
 
-      if (campaignContract && account && provider) {
-        LoadEvents(dispatch, provider, campaignContract, "nonDecore", "Donor");
-      }
-
-      reset();
     }
   };
 

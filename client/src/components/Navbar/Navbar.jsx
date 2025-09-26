@@ -38,7 +38,7 @@ const Navbar = () => {
 
       <div className="flex justify-between items-center w-full flex-wrap gap-4">
       
-       <Link href={'/'}> <h2 className="font-extrabold xs:text-3xl whitespace-nowrap text-xl"><img src='./logo2.png' className="sm:w-36 xs:w-24 w-16" /> </h2></Link>
+       <Link href={'/'}> <h2 className="font-extrabold xs:text-3xl whitespace-nowrap text-xl md:pb-6 pb-0"><img src='./logo2.png' className="sm:w-48 xs:w-36 w-24" /> </h2></Link>
 
        
         <div className="hidden md:block w-full  lg:max-w-md max-w-sm">

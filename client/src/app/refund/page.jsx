@@ -22,12 +22,13 @@ import { Toaster } from 'react-hot-toast'
 import { Loader2 } from 'lucide-react'
 import { LoadRefundWithDonation } from '@/lib/LoadDatas'
 import errorconfig from '@/config/errorconfig.json';
+import { Loader } from '@/components/ui/Loader'
 
 const page = () => {
   const [myDonation, setMyDonation] = useState();
   const [loading, setLoading] = useState(-1);
   const [isLoading, setIsLoading] = useState(true);
-
+  console.log(myDonation)
   const dispatch = useDispatch();
   const account = useActiveAccount();
   const donations = useSelector((state) => state?.campaign?.donations)
@@ -119,8 +120,8 @@ const page = () => {
         });
       }
     } finally {
+     await LoadRefundWithDonation(dispatch, provider, campaignContract);
       setLoading(-1);
-      LoadRefundWithDonation(dispatch, provider, campaignContract);
     }
   }
 };
@@ -141,7 +142,7 @@ const page = () => {
     account ? (
       isLoading ? (
         <div className='flex justify-center items-center h-[70vh]'>
-          <Loader2 className="h-10 w-10 text-[#003b67] animate-spin " />
+         <Loader />
         </div>
       ) : (
         <div className="min-h-screen bg-black py-10">

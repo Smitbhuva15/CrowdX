@@ -11,6 +11,7 @@ import { useActiveAccount } from "thirdweb/react";
 import { Toaster } from 'react-hot-toast';
 import LeftSection from '@/components/CampaignOne/LeftSection';
 import RightSection from '@/components/CampaignOne/RightSection';
+import { Loader } from '@/components/ui/Loader';
 
 
 
@@ -69,7 +70,7 @@ const page = () => {
         ?
         (
           <div className="flex items-center justify-center h-[70vh]">
-            <Loader2 className="h-10 w-10 text-[#003b67] animate-spin" />
+           <Loader />
           </div>
         )
         :

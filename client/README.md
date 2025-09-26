@@ -1,5 +1,7 @@
 
-  <h1 align="center">🤝 CrowdX 🤝</h1>
+  <h1 align="center"><p align="center">
+     <img src="public/logo2.png" alt="logo"width="250" height="70"/>
+   </p> </h1>
 
 
 <br>
@@ -16,13 +18,10 @@
    - Supports 350+ wallets including **MetaMask, Coinbase Wallet, Rainbow**, and more.  
    - Secure popup integration powered by Web3 libraries. 
    
-   <br>
+ 
 
-   <p align="center">
-     <img src="public/walletpopup.png" alt="wallet" width="400" height="400"/>
-   </p> 
+---
 
-   ---
 <br>
 
 2. **Explore Campaigns**  
@@ -30,20 +29,18 @@
    - Search and filter campaigns easily.  
    - Track funding progress in real-time.  
 
-   ---
+---
+
    <br>
 
 3. **Create Campaign**  
    - Launch your own campaign in just a few steps.  
    - Add title, description, funding goal, and deadline.  
    - Instantly deployed on-chain.  
-   <br>
-
-    <p align="center">
-     <img src="public/createcampaign.png" alt="wallet" width="400" height="400"/>
-   </p> 
  
- ---
+
+---
+
  <br>
 
 4. **Manage Campaigns**  
@@ -68,7 +65,7 @@
      <img src="public/donate.png" alt="wallet" width="1000" height="600"/>
    </p> 
 
-   ---
+---
    <br>
 
 6. **Withdraw Funds**  
@@ -78,7 +75,7 @@
      <img src="public/withdrawfund.png" alt="wallet" width="1000" height="600"/>
    </p> 
 
-   ---
+---
    <br>
 
 
@@ -120,7 +117,7 @@
 
 
 <p align="center">
-  <img src="public/chart1.png" alt="How it work" width="600" height="1200"/>
+  <img src="public/flowchart.png" alt="How it work" width="800" height="500"/>
 </p>
 
 
@@ -140,13 +137,7 @@
 ---
 <br>
 
-##  Connect
 
-- 🌐 Project Repository: [GitHub Repo](https://github.com/Smitbhuva15/CrowdX/)  
-- 👔 LinkedIn: [Smit Bhuva](https://www.linkedin.com/in/smit-bhuva-1007ba314/)  
-- 📧 Email: bhuvasmit1507@gmail.com  
-
----
 
 ## ✨ Created By
 

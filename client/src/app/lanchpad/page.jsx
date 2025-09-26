@@ -2,6 +2,7 @@
 import { Banner } from '@/components/Banner/Banner';
 import Banner2 from '@/components/Banner/Banner2';
 import { MyCart } from '@/components/Cart/MyCart';
+import { Loader } from '@/components/ui/Loader';
 import { LoadEvents } from '@/lib/LoadDatas';
 import { Loader2 } from 'lucide-react';
 import React, { useEffect, useState } from 'react'
@@ -60,7 +61,7 @@ const page = () => {
       (
         isLoading ? (
           <div className='flex justify-center items-center h-[70vh]'>
-            <Loader2 className="h-10 w-10 text-[#003b67] animate-spin " />
+           <Loader />
           </div>
         ) :
           (<div className="bg-black min-h-screen">

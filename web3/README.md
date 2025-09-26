@@ -57,7 +57,7 @@ This contract is designed to ensure **trustless fundraising** without the need f
 
 
 <p align="center">
-  <img src="assets/chart1.png" alt="How" width="600" height="1200"/>
+  <img src="assets/flowchart.png" alt="How"  width="800" height="500"/>
 </p>
 
 ---
@@ -78,13 +78,6 @@ This contract is designed to ensure **trustless fundraising** without the need f
 
 ---
 
-##  Connect
-
-- 🌐 Project Repository: [GitHub Repo](https://github.com/Smitbhuva15/CrowdX/)  
-- 👔 LinkedIn: [Smit Bhuva](https://www.linkedin.com/in/smit-bhuva-1007ba314/)  
-- 📧 Email: bhuvasmit1507@gmail.com  
-
----
 
 ## ✨ Created By
 

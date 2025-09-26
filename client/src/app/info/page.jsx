@@ -1,5 +1,6 @@
 import { Section1 } from '@/components/info/Section1'
 import Section5 from '@/components/info/Section5'
+import Image from 'next/image'
 import React from 'react'
 
 const page = () => {
@@ -7,7 +8,14 @@ const page = () => {
     <div className='xl:max-w-6xl lg:max-w-4xl md:max-w-2xl sm:max-w-lg w-[90%] mx-auto text-white py-8'>
       <div className="text-4xl sm:text-5xl font-extrabold mb-6 ">
         <h1>
-          <span className='text-[#003b67]'>Crowd</span><span className="text-amber-900 font-extrabold text-5xl sm:text-6xl">X</span>
+           <Image
+                        src="/logo2.png"
+                        alt="Logo"
+                        width={192}
+                        height={64}
+                        className="sm:w-48 w-36 transition-colors"
+                      />
+
         </h1>
       </div>
       <div>

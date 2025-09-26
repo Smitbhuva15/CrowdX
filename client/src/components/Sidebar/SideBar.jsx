@@ -25,7 +25,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getSearch } from "@/store/slice/campaignSlice";
 
-const items = [
+export const items = [
   {
     title: "Home",
     url: "/",
@@ -73,7 +73,7 @@ export function SideBar() {
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel className="mt-10 mb-10 ">
-             <Link href={'/'}> <h2 className="font-extrabold xs:text-3xl whitespace-nowrap text-xl text-[#003b67]"><img src='./logo2.png' className="sm:w-28 w-24 ml-8" /> </h2></Link>
+             <Link href={'/'}> <h2 className="font-extrabold xs:text-3xl whitespace-nowrap text-xl text-[#003b67]"><img src='./logo2.png' className="sm:w-48 w-36 " /> </h2></Link>
           </SidebarGroupLabel>
 
           <SidebarGroupContent>

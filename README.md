@@ -1,6 +1,6 @@
 
   
-  <h1 align="center">🤝 CrowdX 🤝</h1>
+  <h1 align="center"> <img src="./client/public/logo2.png" alt="logo" width="250" height="70"/></h1>
 
 
 <br>
@@ -19,11 +19,7 @@
    
    <br>
 
-   <p align="center">
-     <img src="./client/public/walletpopup.png" alt="wallet" width="400" height="400"/>
-   </p> 
-
-   ---
+---
 <br>
 
 2. **Explore Campaigns**  
@@ -31,7 +27,7 @@
    - Search and filter campaigns easily.  
    - Track funding progress in real-time.  
 
-   ---
+---
    <br>
 
 3. **Create Campaign**  
@@ -40,10 +36,6 @@
    - Instantly deployed on-chain.  
    <br>
 
-    <p align="center">
-     <img src="./client/public/createcampaign.png" alt="wallet" width="400" height="400"/>
-   </p> 
- 
  ---
  <br>
 
@@ -69,7 +61,7 @@
      <img src="./client/public/donate.png" alt="wallet" width="1000" height="600"/>
    </p> 
 
-   ---
+---
    <br>
 
 6. **Withdraw Funds**  
@@ -79,7 +71,7 @@
      <img src="./client/public/withdrawfund.png" alt="wallet" width="1000" height="600"/>
    </p> 
 
-   ---
+---
    <br>
 
 
@@ -143,13 +135,7 @@
 
 <br>
 
-##  Connect
 
-- 🌐 Project Repository: [GitHub Repo](https://github.com/Smitbhuva15/CrowdX/)  
-- 👔 LinkedIn: [Smit Bhuva](https://www.linkedin.com/in/smit-bhuva-1007ba314/)  
-- 📧 Email: bhuvasmit1507@gmail.com  
-
----
 
 ## ✨ Created By
 
